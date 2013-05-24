@@ -57,20 +57,10 @@ map.show<-function(map.data,y,m){
 }
 
 
-
-map.interact<-function(map.data,startyear,endyear,type,colour){
  
- startyear<-startyear-simstartyear+1
- endyear<-endyear-simstartyear+1
-
-#######################################
-#######################################
- switch.year<<-startyear
- switch.month<<-1
- map.switch<-function(xlim=NULL, ylim=NULL, xaxs="r", yaxs="r"){
-   
-   
-   
+############################################################
+############################################################
+map.switch<-function(map.data,startyear,endyear,xlim=NULL, ylim=NULL, xaxs="r", yaxs="r"){
    map.show(map.data,switch.year,switch.month)   
    devset <- function()
       if (dev.cur() != eventEnv$which) dev.set(eventEnv$which)
@@ -93,7 +83,7 @@ map.interact<-function(map.data,startyear,endyear,type,colour){
                       switch.month<<-switch.month+1
                 }
                 map.show(map.data,switch.year,switch.month)
-                Sys.sleep(0.05) 
+                Sys.sleep(0.1) 
              } 
              if(key=="4"){
                if(switch.year==startyear&&switch.month==1){
@@ -109,7 +99,7 @@ map.interact<-function(map.data,startyear,endyear,type,colour){
                    switch.month<<-switch.month-1 
               }
               map.show(map.data,switch.year,switch.month)
-              Sys.sleep(0.05)
+              Sys.sleep(0.1)
              
             NULL 
         }
@@ -121,36 +111,63 @@ map.interact<-function(map.data,startyear,endyear,type,colour){
 
 }
 
-#####################################
-#####################################
- yhscale <- 1.5    # Horizontal scaling
- Myvscale <- 1.5    # Vertical scaling
 
- CopyToClip <- function(){
+
+
+##################################
+# Map.interact
+##################################
+map.interact<-function(map.data,startyear,endyear,type,colour){
+
+ map.itc.data<<-array(NA,dim=dim(map.data))#Global data for interact map only
+ map.itc.data<<-map.data
+ 
+ startyear<-startyear-simstartyear+1
+ endyear<-endyear-simstartyear+1
+
+ switch.year<<-startyear
+ switch.month<<-1
+
+ yhscale <- 5.5    # Horizontal scaling
+ Myvscale <- 5.5    # Vertical scaling
+#######################
+#widget functions
+#######################
+CopyToClip <- function(){
    png(file=paste(as.character(switch.year+simstartyear-1),"-",as.character(switch.month)), bg="white")
-   map.show(map.data,switch.year,switch.month)
+   map.show(map.itc.data,switch.year,switch.month)
    dev.off()
 }
 
- NewWin<- function(){
+NewWin<- function(){
    X11(type = "Xlib")#X11, remove this line if the system is not X11
-   map.show(map.data,switch.year,switch.month)
- }
+   map.show(map.itc.data,switch.year,switch.month)
+}
 
-
-#####################################
-#####################################
+NewSwitchWin<-function(){
+  X11(type = "Xlib")#X11, remove this line if the system is not X11
+  map.switch(map.itc.data,startyear,endyear)
+  getGraphicsEvent()
+}
      tt <- tktoplevel()
-     tkwm.title(tt,date)
+     tkwm.title(tt,"LPJmL Data")
      copy.but <- tkbutton(tt,text="Copy to Clipboard",command=CopyToClip)
-     newwin.but <- tkbutton(tt,text="Show in a new window",command=NewWin)
-     tkgrid(copy.but)
-     tkgrid(newwin.but)
+     newwins.but <- tkbutton(tt,text="New Window(Static)",command=NewWin)
+     newwind.but<-tkbutton(tt, text="New Window(Dynamic)",command=NewSwitchWin)
+     l.general<- tklabel(tt,text="You may choose the functions here")
+     l.ym <- tklabel(tt, text="Year/Month")
+     e.year<-tkentry(tt, width=5)
+     e.month<-tkentry(tt, width=3)
+     tkgrid(l.general)
+     tkgrid(copy.but,sticky="w")
+     tkgrid(newwins.but,sticky="w")
+     tkgrid(newwind.but,sticky="w")
+     tkgrid(l.ym,e.year,e.month)
+   
+     
 
-
-
-     X11(type = "Xlib")#X11, remove this line if the system is not X11
-     map.switch(startyear,endyear)
+     #X11(type = "Xlib")#X11, remove this line if the system is not X11
+     #map.switch(map.data,startyear,endyear)
      # This currently only works on the Windows
      # and X11(type = "Xlib") screen devices...
      getGraphicsEvent()

@@ -15,6 +15,11 @@ month <- 12
 NCOLS <- 70/res
 NROWS <- 25/res
 
+east<-  49.75
+south<- 25.25
+west<- -19.75
+north<- 49.75
+
 # output run
 path.out <- "~/Desktop/WorkSpace/LPJmL_outputs/output_OTMed_VegNat_130322/"
 run.descrip="Permafrost run"
