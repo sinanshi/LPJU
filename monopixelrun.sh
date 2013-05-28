@@ -1,12 +1,21 @@
-
 #!/bin/bash
 
-sed -e "281c $1" /home/sinan/Desktop/R/LPJmL_OTMed/lpjml.OTMed_LAM.conf > /home/sinan/Desktop/R/LPJmL_OTMed/temp 
-sed -e "282c $1" /home/sinan/Desktop/R/LPJmL_OTMed/temp > /home/sinan/Desktop/R/LPJmL_OTMed/lpjml.OTMed_LAM.conf
-rm /home/sinan/Desktop/R/LPJmL_OTMed/temp
+export LPJROOT=/home/sinan/workspace/R/LPJmL2013
+cd $LPJROOT
 
+#Change simulation grid
+sed -e "222c $1" $LPJROOT/lpjml.conf > $LPJROOT/tempconf
+cp tempconf lpjml.conf
+sed -e "223c $1" $LPJROOT/lpjml.conf > $LPJROOT/tempconf
+cp tempconf lpjml.conf
 
-echo $1
-export LPJROOT=/home/sinan/Desktop/R/LPJmL_OTMed/
-#./../LPJmL_OTMed/bin/lpjml  ./../LPJmL_OTMed/lpjml.OTMed_LAM.conf
-./../LPJmL_OTMed/bin/lpjml -DFROM_RESTART ./../LPJmL_OTMed/lpjml.OTMed_LAM.conf
+#Change spinup year
+sed -e "228c $2" $LPJROOT/lpjml.conf > $LPJROOT/tempconf
+cp tempconf lpjml.conf
+sed -e "240c $2" $LPJROOT/lpjml.conf > $LPJROOT/tempconf
+cp tempconf lpjml.conf
+
+rm tempconf
+
+./bin/lpjml  lpjml.conf
+./bin/lpjml -DFROM_RESTART lpjml.conf
