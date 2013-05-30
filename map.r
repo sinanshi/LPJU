@@ -12,8 +12,9 @@
 ####################################
 require(tcltk)
 #library(tkrplot)
-map.create<-function(data.raw,startyear,endyear,type){
-
+map.create<-function(data.raw,startyear,endyear){
+ 
+ npixel.out<-output.info(path.out)[1] 
  startyear<-startyear-simstartyear+1
  endyear<-endyear-simstartyear+1
 
@@ -23,7 +24,7 @@ map.create<-function(data.raw,startyear,endyear,type){
  }
 
 
- if(type=="y"){# if yearly data
+ if(length(dim(data.raw))==2){# if yearly data
  map.data<-array(NA,dim=c(NCOLS,NROWS,simyears))   #correct carlibration
   for(y in startyear:endyear){
     for(i in 1:npixel.out)
@@ -33,7 +34,7 @@ map.create<-function(data.raw,startyear,endyear,type){
  }
 
 
- if(type=="m"){# if monthly data
+ if(length(dim(data.raw))==3){# if monthly data
  map.data<-array(NA,dim=c(NCOLS,NROWS,12,simyears))   #correct carlibration
   for(y in startyear:endyear){
    for(m in 1:12)  {
@@ -51,12 +52,17 @@ map.show<-function(map.data,y,m){
  yg.palette <- colorRampPalette(c("yellow3","yellow","greenyellow","green","green3","darkgreen"))
  colo=yg.palette(101)
  colo.cm = cm.colors(32)
- if(length(dim(map.data)==4))
+ if(length(dim(map.data))==4){
   image(x=seq(-19.75,49.75,len=140),y=seq(25.25,49.75,len=50),map.data[,,m,y],col=colo,xlab="",ylab="",axes=T)
- if(length(dim(map.data)==3))
+ map(add=T,boundary=T)
+ title(main=paste(as.character(switch.year+simstartyear-1),"-",as.character(switch.month)))  
+}
+
+ if(length(dim(map.data))==3){
   image(x=seq(-19.75,49.75,len=140),y=seq(25.25,49.75,len=50),map.data[,,y],col=colo,xlab="",ylab="",axes=T)
   map(add=T,boundary=T)
- title(main=paste(as.character(switch.year+simstartyear-1),"-",as.character(switch.month)))
+  title(main=as.character(switch.year+simstartyear-1))
+ }
 }
 
 
@@ -68,39 +74,57 @@ map.switch<-function(map.data,startyear,endyear,xlim=NULL, ylim=NULL, xaxs="r", 
    devset <- function()
       if (dev.cur() != eventEnv$which) dev.set(eventEnv$which)
 
-
+      
       keydown <- function(key) {
              if (key == "q") return(invisible(1))
                  eventEnv$onMouseMove <- NULL
              if(key=="6"){
-                if(switch.year==endyear&&switch.month==12){
-                   switch.year<<-startyear
-                   switch.month<<-1
-                }
-                else{
-                   if(switch.month==12){
-                      switch.year<<-switch.year+1
-                      switch.month<<-1
-                   }
-                   else
-                      switch.month<<-switch.month+1
-                }
+               #monthly output
+               if(length(dim(map.data))==4){
+                  if(switch.year==endyear&&switch.month==12){
+                     switch.year<<-startyear
+                     switch.month<<-1
+                  }
+                  else{
+                     if(switch.month==12){
+                        switch.year<<-switch.year+1
+                        switch.month<<-1
+                     }
+                     else
+                        switch.month<<-switch.month+1
+                  }
+               }
+               #yearly output
+               if(length(dim(map.data))==3){
+                 if(switch.year==endyear) 
+                    switch.year<<-startyear
+                 else 
+                    switch.year<<-switch.year+1      
+               }
                 map.show(map.data,switch.year,switch.month)
                 Sys.sleep(0.1) 
              } 
              if(key=="4"){
-               if(switch.year==startyear&&switch.month==1){
-                  switch.year<<-endyear
-                  switch.month<<-12
+               if(length(dim(map.data))==4){
+                 if(switch.year==startyear&&switch.month==1){
+                    switch.year<<-endyear
+                    switch.month<<-12
+                 }
+                 else{
+                    if(switch.month==1){
+                       switch.year<<-switch.year-1
+                       switch.month<<-12
+                    }
+                    else
+                     switch.month<<-switch.month-1 
+                }
                }
-               else{
-                  if(switch.month==1){
-                     switch.year<<-switch.year-1
-                     switch.month<<-12
-                  }
-                  else
-                   switch.month<<-switch.month-1 
-              }
+               if(length(dim(map.data))==3){
+                 if(switch.year==startyear)
+                  switch.year<<-endyear
+                 else
+                  switch.year<<-switch.year-1
+               }
               map.show(map.data,switch.year,switch.month)
               Sys.sleep(0.1)
              
@@ -120,7 +144,7 @@ map.switch<-function(map.data,startyear,endyear,xlim=NULL, ylim=NULL, xaxs="r", 
 ##################################
 # Map.interact
 ##################################
-map.interact<-function(map.data,startyear,endyear,type,colour){
+map.interact<-function(map.data,startyear,endyear,colour){
 
  map.itc.data<<-array(NA,dim=dim(map.data))#Global data for interact map only
  map.itc.data<<-map.data
@@ -133,9 +157,9 @@ map.interact<-function(map.data,startyear,endyear,type,colour){
 
  yhscale <- 5.5    # Horizontal scaling
  Myvscale <- 5.5    # Vertical scaling
-#######################
+
 #widget functions
-#######################
+
 CopyToClip <- function(){
    png(file=paste(as.character(switch.year+simstartyear-1),"-",as.character(switch.month)), bg="white")
    map.show(map.itc.data,switch.year,switch.month)
@@ -166,6 +190,7 @@ NewSwitchWin<-function(){
      tkgrid(newwins.but,sticky="w")
      tkgrid(newwind.but,sticky="w")
      tkgrid(l.ym,e.year,e.month)
+     cat("for dynamic windows, press 'q' to quit")
    
      
 
