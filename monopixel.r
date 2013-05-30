@@ -1,11 +1,12 @@
 #############################################
-#
+#Monopixel
 #
 #####################################
 
 
-
+####################################
 #Find an proper (lat,lon) from values returned by selecting on the map 
+####################################
 round.grid<-function(num,res){
  compar<-seq(floor(num)-0.25,(ceiling(num)+1.25),res)
  min=1000#arbitrary
@@ -18,26 +19,23 @@ round.grid<-function(num,res){
  round.value
 }
 
-
-
-monopixel<-function(){
- read.grid()
- plot(lon,lat)
-
+####################################
+#run monopixel LPJmL with lontitude latitude and spinup year
+###################################
+monop.lrun<-function(lon.mono,lat.mono,spinup.mono){
  
- temp<-locator(1)
- coor<-array(NA,dim=2)
- coor[1]=round.grid(temp$x,res)
- coor[2]=round.grid(temp$y,res)
-
-
+ if(exists("lon.mono")==FALSE||exists("lat.mono")==FALSE||exists("spinup.mono")==FALSE){
+   cat("ERROR:To run mono-pixel LPJmL, Both position and spinup year have to be configured!")
+   stop()
+ }
  pos_lat_count<-0
  pos_lon=NA
  Have_lon<-FALSE
  Have_lat<-FALSE
 
+ 
  for(i in 1:(length(grid.data)/2)){
-   if(grid.data[2*i-1]==coor[1]){
+   if(grid.data[2*i-1]==lon.mono){
      pos_lat_count<-(pos_lat_count+1)
      pos_lon<-2*i-1
      Have_lon<-TRUE
@@ -45,7 +43,7 @@ monopixel<-function(){
  }
 
  for(i in 1:pos_lat_count){
-   if(grid.data[pos_lon+2*i-1]==coor[2]){
+   if(grid.data[pos_lon+2*i-1]==lat.mono){
      pos=pos_lon+2*i-1
      Have_lat<-TRUE
    }
@@ -57,9 +55,32 @@ monopixel<-function(){
    stop()  
  }
 
- pos=pos/2-1
- system2('./monopixelrun.sh',args=pos,wait=TRUE)
- }
+ pos<-pos/2-1
+ arg<-paste(pos,spinup.mono)
+ system2('./monopixelrun.sh',args=arg,wait=TRUE)
+}
+
+#####################################
+#run monopixel LPJmL with pixel number
+#####################################
+monop.prun<-function(pos.mono,spinup.mono){
+ arg<-paste(pos.mono,spinup.mono)
+ system2('./monopixelrun.sh',args=arg,wait=TRUE)
+}
+
+#####################################
+#run monopixel LPJmL by clicking on map
+#####################################
+monop.graph<-function(spinup.mono){
+ read.grid()
+ plot(lon,lat)
+ temp<-locator(1)
+ coor<-array(NA,dim=2)
+ coor[1]=round.grid(temp$x,res)
+ coor[2]=round.grid(temp$y,res)
+
+ monop.lrun(coor[1],coor[2],spinup.mono)
+}
 
 
 

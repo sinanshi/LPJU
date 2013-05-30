@@ -3,6 +3,8 @@
 source("benchmark_functions.r")
 source("read.output.r")
 source("FAO.r")
+source("monopixel.r")
+source("data.man.r")
 #load settings
 source("benchmark.settings")
 source("read.input.r")

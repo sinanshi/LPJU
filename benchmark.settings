@@ -1,11 +1,15 @@
 # settings for lpj_benchmark.r
 
-# settings
+
 res <- 0.5               # resolution in deg
+
+
 simstartyear <- 1901        # startyear of data
-simendyear<- 2006
+simendyear<- 2009
 refyears <- c(1991,2000) # reference years for map comparison
 simyears<- 106
+
+
 pdfname <- "test.pdf"    # pdf output file
 isnatural <- 1           # natural vegetation only?
 isdischarge  <- 1        # compare river discharge
@@ -21,18 +25,11 @@ west<- -19.75
 north<- 49.75
 
 # output run
-path.out <- "~/Desktop/WorkSpace/LPJmL_outputs/output_OTMed_VegNat_130322/"
-run.descrip="Permafrost run"
-grid.fn.out <- paste(path.out,"grid.bin",sep="")
+path.out <- "~/workspace/R/outputs/output_OTMed_VegNat_130322/"
+path.mono<-"~/workspace/R/LPJmL2013/output/"
 endian.out <- "little"
 
 sizeof.data <- 4         # 4 for LPJ output, 2 for climate data
-
-npixel.out <- file.info(grid.fn.out)$size/4
-nyear.out <-  file.info(paste(path.out,"vegc.bin",sep=""))$size/sizeof.data/npixel.out
-
-
-
 
 #================================
 # benchmark run

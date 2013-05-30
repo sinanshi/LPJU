@@ -11,7 +11,7 @@
 #Notice: Extracting map for a single year, set both startyear and endyear the same value 
 ####################################
 require(tcltk)
-library(tkrplot)
+#library(tkrplot)
 map.create<-function(data.raw,startyear,endyear,type){
 
  startyear<-startyear-simstartyear+1
@@ -51,7 +51,10 @@ map.show<-function(map.data,y,m){
  yg.palette <- colorRampPalette(c("yellow3","yellow","greenyellow","green","green3","darkgreen"))
  colo=yg.palette(101)
  colo.cm = cm.colors(32)
- image(x=seq(-19.75,49.75,len=140),y=seq(25.25,49.75,len=50),map.data[,,m,y],col=colo,xlab="",ylab="",axes=T)
+ if(length(dim(map.data)==4))
+  image(x=seq(-19.75,49.75,len=140),y=seq(25.25,49.75,len=50),map.data[,,m,y],col=colo,xlab="",ylab="",axes=T)
+ if(length(dim(map.data)==3))
+  image(x=seq(-19.75,49.75,len=140),y=seq(25.25,49.75,len=50),map.data[,,y],col=colo,xlab="",ylab="",axes=T)
   map(add=T,boundary=T)
  title(main=paste(as.character(switch.year+simstartyear-1),"-",as.character(switch.month)))
 }
