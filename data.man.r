@@ -27,9 +27,8 @@
 #Monthly global data plot
     if(p.m=="p"){
      cat("List of Methods\n")
-     cat("[1]:Compare global grid average outputs(yearly)\n")
-     #cat("[2]:Compare monthly average of one pixel(p)\n")
-     cat("[3]:Compare maps\n")
+     cat("[1]:Compare global grid average outputs\n")
+     cat("[2]:UNDER DEVELOPMENT\n")
      cat("Method of comparasion=?")
      method<-readline()
      cat("Number of data to be compared=?")
@@ -74,9 +73,7 @@
   if(method==1){
     plot.data.seperate(dim_init,data.num,syear,eyear,datalist) 
   }
-  if(method==2){    
-    
-  }
+     
  
  }
   
@@ -98,7 +95,7 @@
 }
 
   if(g.o=="o"){
-    cat("List of Comparing Methods\n")
+    cat("List of Comparing Methods(UNDER DEVELOPMENT)\n")
     cat("[1]:Compare daily of one pixel(p)\n")
     cat("[2]:Compare monthly of one pixel data\n")
     cat("Method of comparasion=?")
