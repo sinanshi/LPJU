@@ -73,7 +73,7 @@ daily.frame.out<-lpjml.dailyrun(coor.array,point)#spinup year was set as 50
   
     for(j in 1:length(plot.list)){
     for(i in 1:point){
-      plot(time,daily.frame.out[c(pos.begin:pos.end),plot.list[j],i],main=paste("(",coor.array[i,1],coor.array[i,2],")",begin,"-",end),ylab=plot.list[i],"l")
+      plot(time,daily.frame.out[c(pos.begin:pos.end),plot.list[j],i],main=paste("(",coor.array[i,1],coor.array[i,2],")",begin,"-",end),ylab=plot.list[j],"l")
      }
    }  
    
