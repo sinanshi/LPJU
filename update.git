@@ -1,3 +1,4 @@
 #!/bin/bash
 
 git pull https://github.com/SinanShi/R.git 
+cp standard.conf LPJmL2013/lpjml.conf
