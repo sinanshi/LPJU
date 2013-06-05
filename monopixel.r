@@ -56,6 +56,7 @@ monop.lrun<-function(lon.mono,lat.mono,spinup.mono){
  }
 
  pos<-pos/2-1
+ cat("grid number=",pos,"\n")
  arg<-paste(pos,spinup.mono)
  system2('./monopixelrun.sh',args=arg,wait=TRUE)
 }

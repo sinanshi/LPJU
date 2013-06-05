@@ -8,14 +8,20 @@
 #-------------------------------
 output.info<-function(path){
   grid.fn.out <- paste(path,"grid.bin",sep="")
-  npixel.out <- file.info(grid.fn.out)$size/4
+  npixel.out <- file.info(grid.fn.out)$size/sizeof.data
   nyear.out <-  file.info(paste(path,"vegc.bin",sep=""))$size/sizeof.data/npixel.out
   p_y<-c(npixel.out,nyear.out)
 
   p_y
 }
 
-
+#-------------------------------------
+#return simulation year for daily output
+#-------------------------------------
+output.daily.info<-function(daily.fn){
+ nyear.out<-file.info(daily.fn)$size/sizeof.data/365 
+ return(nyear.out) 
+}
 #-------------------------------------
 #Global.area.mean:return value of all pixels on a global map
 #-------------------------------------
@@ -135,3 +141,27 @@ if(dim_init==2){
       } 
     }
 }
+
+#-----------------------------
+#bind multiple data frames
+#-----------------------------
+lpjml.dailyrun<-function(coor.array,test.num){
+ for(i in 1:test.num){ 
+  monop.lrun(coor.array[i,1],coor.array[i,2],spinup.mono=50)
+  daily.temp<-read.daily.output(path.mono)
+  daily.temp$ID<-rep(i,length(daily.temp[,1]))
+ if(i==1){
+   daily.frame<-daily.temp
+ }
+ else{
+ daily.frame<-rbind(daily.frame,daily.temp)
+ }
+}
+ daily.frame$row <- with(daily.frame, ave(ID==ID, ID, FUN = cumsum))
+ m <- melt(daily.frame, id.vars = c("row", "ID"))
+ daily.frame.out <- acast(m, row ~ variable ~ ID)
+ return(daily.frame.out)
+}
+
+
+

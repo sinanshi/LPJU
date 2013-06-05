@@ -5,7 +5,12 @@
 ################################################################
 
 
-files.out <- c("vegc","soilc","litc","firec","flux_estab","mnpp","mrh","mevap","mtransp","mrunoff","fpc")
+files.out <<- c("vegc","soilc","litc","firec","flux_estab","mnpp","mrh","mevap","mtransp","mrunoff","fpc")
+daily.files.list<<-c("d_cleaf","d_cpool","d_croot","d_cso","d_daylength","d_evap","d_fhiopt","d_fphu","d_froot","d_gpp","d_gresp","d_growingday","d_hi",
+"d_himind","d_husum","d_irrig","d_lai","d_laimax_adjusted","d_laimaxnppdeficit","d_npp","d_par","d_perc","d_pet","d_phen","d_phu","d_prec","d_pvd","d_rd",
+"d_rpool","d_rroot","d_rso","d_sun","d_temp","d_trans","d_vdsum","d_w0","d_w1","d_wdf","d_wevap","d_wscal")
+
+#d_fphu? d_phu? d_so? d_leaf?
 
 #notice that it includes monthly output and yearly output.
 
@@ -93,4 +98,29 @@ read.grid<-function(){
   ind_lat<<- as.integer((grid.data[c(1:npixel.out)*2]-25)/res + 1.01)
   close(grid.fn.out)
 }
+
+
+read.daily.output<-function(path){
+  nyear<-output.daily.info(paste(path,daily.files.list[1],".bin",sep=""))
+  temp<-array(NA,dim=nyear*365)
+  daily.data.frame<<-data.frame(d_cleaf=temp,d_cpool="",d_croot="",d_cso="",d_daylength="",d_evap="",d_fhiopt="",d_fphu="",d_froot="",d_gpp="",d_gresp="",d_growingday="",d_hi="",
+d_himind="",d_husum="",d_irrig="",d_lai="",d_laimax_adjusted="",d_laimaxnppdeficit="",d_npp="",d_par="",d_perc="",d_pet="",d_phen="",d_phu="",d_prec="",d_pvd="",d_rd="",
+d_rpool="",d_rroot="",d_rso="",d_sun="",d_temp="",d_trans="",d_vdsum="",d_w0="",d_w1="",d_wdf="",d_wevap="",d_wscal="")
+  
+  for(i in 1:length(daily.files.list)){
+    
+    daily.fn<-file(paste(path,daily.files.list[i],".bin",sep=""),"rb")
+    nyear<-output.daily.info(paste(path,daily.files.list[i],".bin",sep=""))
+    cat("Reading",daily.files.list[i],"...")
+    temp<-readBin(daily.fn,double(),365*nyear,size=sizeof.data)
+    daily.data.frame[,daily.files.list[i]]<-temp
+    cat("done\n")
+    closeAllConnections()
+  }
+  
+  return(daily.data.frame)
+  
+}  
+    
+    
 
