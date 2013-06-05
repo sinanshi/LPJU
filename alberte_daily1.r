@@ -8,9 +8,10 @@ rm (list=ls(all=TRUE))
 #load required libraries
   require(fields)
   require(maps)
+  library(reshape2)
 #load header
   source("header")
-
+  
 
   
 
