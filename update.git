@@ -1,4 +1,9 @@
 #!/bin/bash
 
+<<<<<<< HEAD
 git pull https://github.com/SinanShi/R.git
  
+=======
+git pull https://github.com/SinanShi/R.git 
+cp standard.conf LPJmL2013/lpjml.conf
+>>>>>>> 377a7d344092eb60cfbee5c675f4fd3fa4915d84
