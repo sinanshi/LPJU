@@ -117,9 +117,9 @@ find.nearest.pixel <- function(grid,lon,lat,res=0.5){
 
 
 
-########################
+#-------------------------------
 #plot multiple data seperately
-########################
+#-------------------------------
 
 plot.data.seperate<-function(dim_init,data.num,syear,eyear,datalist){
 if(dim_init==2){
@@ -127,7 +127,7 @@ if(dim_init==2){
       par(mfrow=c(data.num,1))
       for(i in 1:data.num){
          plot.data<-global.area.mean(eval(parse(text=datalist[i])))
-         plot(time,plot.data[(syear-simstartyear+1):(eyear-simstartyear+1)],"l",main=datalist[i],xlab="year")
+         plot(time,plot.data[(syear-simstartyear+1):(eyear-simstartyear+1)],"l",main=datalist[i],xlab="year",ylab=datalist[i])
         }
     }
     if(dim_init==3){
@@ -136,7 +136,7 @@ if(dim_init==2){
       par(mfrow=c(data.num,1))
       for(i in 1:data.num){
          plot.data<-as.vector(global.area.mean(eval(parse(text=datalist[i]))))
-         plot(c(1:length(time)),plot.data[c(((syear-simstartyear)*12+1):((eyear-simstartyear+1)*12))],main=datalist[i],xlabl="year","l")
+         plot(c(1:length(time)),plot.data[c(((syear-simstartyear)*12+1):((eyear-simstartyear+1)*12))],main=datalist[i],xlab=paste("Month-[",syear,",",eyear,"]",sep=""),"l",ylab="")
         # axis(1,at=1:length(time),lab=time)
       } 
     }
