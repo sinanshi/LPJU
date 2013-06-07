@@ -14,7 +14,7 @@ require(tcltk)
 #library(tkrplot)
 map.create<-function(data.raw,startyear,endyear){
  
- npixel.out<-output.info(path.out)[1] 
+ npixel.out<-get.output.info(path.out)[1] 
  startyear<-startyear-simstartyear+1
  endyear<-endyear-simstartyear+1
 

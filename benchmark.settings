@@ -31,34 +31,5 @@ endian.out <- "little"
 
 sizeof.data <- 4         # 4 for LPJ output, 2 for climate data
 
-#================================
-# benchmark run
+vars.info<<-read.vars.info()
 
-path.b <- "~/Desktop/WorkSpace/LPJmL_outputs/output_OTMed_VegNat_LU_130322/"
-grid.fn.b <- paste(path.b,"grid.bin",sep="")
-endian.b <- "little"
-
-# eddy flux data (comma separated)
-# NEP
-nep.fn <- "/data/biosx/valid/nee/nep.csv"
-nep.description <- "Euroflux/Ameriflux Data"
-# water fluxes
-wf.fn <- "/data/biosx/valid/evapotr/tpi.csv"
-wf.description <- "Euroflux/Ameriflux Data"
-if(isdischarge==1){
-   dis.fn <- "/data/biosx/valid/runoff/runoff.csv"
-   dis.description <- "GRDC Data"
-}
-if(isnatural==0){
-  # input data
-  path.in <- "/data/biosx/LPJ/input_new/"
-  grid.fn.in <- paste(path.in,"grid_oh.bin",sep="")
-  endian.in <- "big"
-  cow.fn <- paste(path.in,"cow_mg_2006.bin",sep="")
-  # FAO Yield data
-  fao.years <- c(1990:2003)
-  fao.path <- "/data/biosx/fao_data/download_090203/"
-  fao.countryfile <- "/data/biosx/fao_data/countries_fao2lpjml.txt"
-  NOIRRIG <- FALSE #unirrigated yields only
-} # end (isnatural==0)
-#benchmark.settings (END)

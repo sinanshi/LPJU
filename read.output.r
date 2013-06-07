@@ -6,6 +6,8 @@
 
 
 files.out <<- c("vegc","soilc","litc","firec","flux_estab","mnpp","mrh","mevap","mtransp","mrunoff","fpc")
+#daily output file list
+#notice:once it has been changed daily.data.frame should also be changed correspondingly
 daily.files.list<<-c("d_cleaf","d_cpool","d_croot","d_cso","d_daylength","d_evap","d_fhiopt","d_fphu","d_froot","d_gpp","d_gresp","d_growingday","d_hi",
 "d_himind","d_husum","d_irrig","d_lai","d_laimax_adjusted","d_laimaxnppdeficit","d_npp","d_par","d_perc","d_pet","d_phen","d_phu","d_prec","d_pvd","d_rd",
 "d_rpool","d_rroot","d_rso","d_sun","d_temp","d_trans","d_vdsum","d_w0","d_w1","d_wdf","d_wevap","d_wscal")
@@ -73,7 +75,7 @@ read.output.flux<-function(path,npixel.out,nyear.out){
 
 
 read.output.all<-function(path){
-  pixel_year<-output.info(path)
+  pixel_year<-get.output.info(path)
   cat("=======================================================\n")
   cat("Path=",path,"\n")
   cat("pixel number=",pixel_year[1],"simulation years=",pixel_year[2],"\n")
@@ -87,7 +89,7 @@ read.output.all<-function(path){
 
 
 read.grid<-function(){
-  pixel_year<-output.info(path.out)
+  pixel_year<-get.output.info(path.out)
   npixel.out<-pixel_year[1]
   res=0.5
   grid.fn.out<- file(paste(path.out,"grid.bin",sep=""),"rb")
@@ -101,8 +103,9 @@ read.grid<-function(){
 
 
 read.daily.output<-function(path){
-  nyear<-output.daily.info(paste(path,daily.files.list[1],".bin",sep=""))
+  nyear<-get.output.daily.info(paste(path,daily.files.list[1],".bin",sep=""))
   temp<-array(NA,dim=nyear*365)
+#this should be the same list as daily.files.list
   daily.data.frame<<-data.frame(d_cleaf=temp,d_cpool="",d_croot="",d_cso="",d_daylength="",d_evap="",d_fhiopt="",d_fphu="",d_froot="",d_gpp="",d_gresp="",d_growingday="",d_hi="",
 d_himind="",d_husum="",d_irrig="",d_lai="",d_laimax_adjusted="",d_laimaxnppdeficit="",d_npp="",d_par="",d_perc="",d_pet="",d_phen="",d_phu="",d_prec="",d_pvd="",d_rd="",
 d_rpool="",d_rroot="",d_rso="",d_sun="",d_temp="",d_trans="",d_vdsum="",d_w0="",d_w1="",d_wdf="",d_wevap="",d_wscal="")

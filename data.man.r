@@ -12,7 +12,7 @@
 #
 #============================
  query<-function(path){
-   py<-output.info(path)
+   py<-get.output.info(path)
    npixel<-py[1]
    year<-py[2]
    label.month<<-c("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC")

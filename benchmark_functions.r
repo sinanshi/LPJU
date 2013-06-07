@@ -6,7 +6,7 @@
 #-------------------------------
 #return [gridsize,simulation years]
 #-------------------------------
-output.info<-function(path){
+get.output.info<-function(path){
   grid.fn.out <- paste(path,"grid.bin",sep="")
   npixel.out <- file.info(grid.fn.out)$size/sizeof.data
   nyear.out <-  file.info(paste(path,"vegc.bin",sep=""))$size/sizeof.data/npixel.out
@@ -18,7 +18,7 @@ output.info<-function(path){
 #-------------------------------------
 #return simulation year for daily output
 #-------------------------------------
-output.daily.info<-function(daily.fn){
+get.output.daily.info<-function(daily.fn){
  nyear.out<-file.info(daily.fn)$size/sizeof.data/365 
  return(nyear.out) 
 }
@@ -162,6 +162,46 @@ lpjml.dailyrun<-function(coor.array,test.num){
  daily.frame.out <- acast(m, row ~ variable ~ ID)
  return(daily.frame.out)
 }
+
+
+#----------------------------------
+#read output parameter information
+#: id, description, unit 
+#----------------------------------
+read.vars.info<-function(){
+  var.raw<-read.csv("outputvars.par",sep=" ",header=TRUE)
+  id<-array(var.raw$id)
+  name<-array(var.raw$name)  
+  des<-array(var.raw$description) 
+  unit<-array(var.raw$unit)         
+  var.frame<-data.frame(id,name,des,unit)
+return(var.frame)
+}
+
+
+#----------------------------------
+#vars.check
+#---------------------------------
+vars.check<-function(output.name){
+ for(i in 1:dim(vars.info)[1]){#number of vars list
+  if(output.name==vars.info$name[i]||output.name==vars.info$id[i]){
+    output.info<-data.frame(id=vars.info$id[i],
+                            name=vars.info$name[i],
+                            des=vars.info$des[i],
+                            unit=vars.info$unit[i]) 
+    
+    break
+  }
+ }
+  if(exists("output.info")==FALSE){
+   stop("output name not found in the 'outputvars.par' table.")
+ }
+
+ return(output.info)
+
+}
+
+
 
 
 
