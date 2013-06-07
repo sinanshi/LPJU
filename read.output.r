@@ -113,7 +113,7 @@ d_rpool="",d_rroot="",d_rso="",d_sun="",d_temp="",d_trans="",d_vdsum="",d_w0="",
   for(i in 1:length(daily.files.list)){
     
     daily.fn<-file(paste(path,daily.files.list[i],".bin",sep=""),"rb")
-    nyear<-output.daily.info(paste(path,daily.files.list[i],".bin",sep=""))
+    nyear<-get.output.daily.info(paste(path,daily.files.list[i],".bin",sep=""))
     cat("Reading",daily.files.list[i],"...")
     temp<-readBin(daily.fn,double(),365*nyear,size=sizeof.data)
     daily.data.frame[,daily.files.list[i]]<-temp

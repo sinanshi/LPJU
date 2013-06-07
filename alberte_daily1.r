@@ -70,10 +70,15 @@ daily.frame.out<-lpjml.dailyrun(coor.array,point)#spinup year was set as 50
   time<-c(1:(pos.end-pos.begin+1))
   
   par(mfrow=c(length(plot.list),point))
-  
+    
     for(j in 1:length(plot.list)){
-    for(i in 1:point){
-      plot(time,daily.frame.out[c(pos.begin:pos.end),plot.list[j],i],main=paste("(",coor.array[i,1],coor.array[i,2],")",begin,"-",end),ylab=plot.list[j],"l")
+      for(i in 1:point){
+        info.o<-vars.check(plot.list[j])#get the information of output e.g. description, unit
+        title<-paste(info.o$id,"---",info.o$des," at ","(",coor.array[i,1],"E,",coor.array[i,2],"N)",sep="")
+        yl<-info.o$unit#ylabl=unit
+        xl<-paste("Year","(",begin,"-",end,")",sep="")#xlablel
+        dataplot<-daily.frame.out[c(pos.begin:pos.end),plot.list[j],i]
+      plot(time,dataplot,main=title,xlab=xl,ylab=yl,"l")
      }
    }  
    

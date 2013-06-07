@@ -22,6 +22,44 @@ get.output.daily.info<-function(daily.fn){
  nyear.out<-file.info(daily.fn)$size/sizeof.data/365 
  return(nyear.out) 
 }
+
+
+#----------------------------------
+#read output parameter information
+#: id, description, unit 
+#----------------------------------
+read.vars.info<-function(){
+  var.raw<-read.csv("outputvars.par",sep=" ",header=TRUE)
+  id<-array(var.raw$id)
+  name<-array(var.raw$name)  
+  des<-array(var.raw$description) 
+  unit<-array(var.raw$unit)         
+  var.frame<-data.frame(id,name,des,unit)
+return(var.frame)
+}
+
+
+#----------------------------------
+#vars.check
+#---------------------------------
+vars.check<-function(output.name){
+ for(i in 1:dim(vars.info)[1]){#number of vars list
+  if(output.name==vars.info$name[i]||output.name==vars.info$id[i]){
+    output.info<-data.frame(id=vars.info$id[i],
+                            name=vars.info$name[i],
+                            des=vars.info$des[i],
+                            unit=vars.info$unit[i]) 
+    
+    break
+  }
+ }
+  if(exists("output.info")==FALSE){
+   stop("output name not found in the 'outputvars.par' table.")
+ }
+
+ return(output.info)
+
+}
 #-------------------------------------
 #Global.area.mean:return value of all pixels on a global map
 #-------------------------------------
@@ -126,18 +164,30 @@ if(dim_init==2){
       time<-c(syear:eyear)
       par(mfrow=c(data.num,1))
       for(i in 1:data.num){
-         plot.data<-global.area.mean(eval(parse(text=datalist[i])))
-         plot(time,plot.data[(syear-simstartyear+1):(eyear-simstartyear+1)],"l",main=datalist[i],xlab="year",ylab=datalist[i])
+         data<-global.area.mean(eval(parse(text=datalist[i])))
+         plotdata<-data[(syear-simstartyear+1):(eyear-simstartyear+1)]
+         name<-gsub(".data.out","",datalist[i])
+         info.o<-vars.check(name)
+         title<-paste(info.o$des,sep="")
+         unit<-paste(info.o$id,info.o$unit)
+         xl<-paste("Year","(",syear,"-",eyear,")",sep="")
+         plot(time,plotdata,"l",main=title,xlab=xl,ylab=unit)
         }
     }
     if(dim_init==3){
-      time<-as.vector(t(replicate(12,syear:eyear)))
-      time<-paste(as.character(time),label.month)
+      #time<-as.vector(t(replicate(12,syear:eyear)))
+      #time<-paste(as.character(time),label.month)
       par(mfrow=c(data.num,1))
       for(i in 1:data.num){
-         plot.data<-as.vector(global.area.mean(eval(parse(text=datalist[i]))))
-         plot(c(1:length(time)),plot.data[c(((syear-simstartyear)*12+1):((eyear-simstartyear+1)*12))],main=datalist[i],xlab=paste("Month-[",syear,",",eyear,"]",sep=""),"l",ylab="")
-        # axis(1,at=1:length(time),lab=time)
+         data<-as.vector(global.area.mean(eval(parse(text=datalist[i]))))
+         plotdata<-data[c(((syear-simstartyear)*12+1):((eyear-simstartyear+1)*12))]
+         name<-gsub(".data.out","",datalist[i])
+         info.o<-vars.check(name)
+         title<-paste(,info.o$des,sep="")
+         unit<-paste(info.o$id,info.o$unit)
+         xl<-paste("Month","(",syear,"-",eyear,")",sep="")
+         plot(c(1:length(plotdata)),plotdata,"l",main=title,xlab=xl,ylab=unit)
+        
       } 
     }
 }
@@ -164,42 +214,7 @@ lpjml.dailyrun<-function(coor.array,test.num){
 }
 
 
-#----------------------------------
-#read output parameter information
-#: id, description, unit 
-#----------------------------------
-read.vars.info<-function(){
-  var.raw<-read.csv("outputvars.par",sep=" ",header=TRUE)
-  id<-array(var.raw$id)
-  name<-array(var.raw$name)  
-  des<-array(var.raw$description) 
-  unit<-array(var.raw$unit)         
-  var.frame<-data.frame(id,name,des,unit)
-return(var.frame)
-}
 
-
-#----------------------------------
-#vars.check
-#---------------------------------
-vars.check<-function(output.name){
- for(i in 1:dim(vars.info)[1]){#number of vars list
-  if(output.name==vars.info$name[i]||output.name==vars.info$id[i]){
-    output.info<-data.frame(id=vars.info$id[i],
-                            name=vars.info$name[i],
-                            des=vars.info$des[i],
-                            unit=vars.info$unit[i]) 
-    
-    break
-  }
- }
-  if(exists("output.info")==FALSE){
-   stop("output name not found in the 'outputvars.par' table.")
- }
-
- return(output.info)
-
-}
 
 
 
