@@ -144,7 +144,7 @@ map.switch<-function(map.data,startyear,endyear,xlim=NULL, ylim=NULL, xaxs="r", 
 ##################################
 # Map.interact
 ##################################
-map.interact<-function(map.data,startyear,endyear,colour){
+map.interact<-function(map.data,startyear,endyear,colour){#colour not in use
 
  map.itc.data<<-array(NA,dim=dim(map.data))#Global data for interact map only
  map.itc.data<<-map.data
@@ -181,6 +181,7 @@ NewSwitchWin<-function(){
      copy.but <- tkbutton(tt,text="Copy to Clipboard",command=CopyToClip)
      newwins.but <- tkbutton(tt,text="New Window(Static)",command=NewWin)
      newwind.but<-tkbutton(tt, text="New Window(Dynamic)",command=NewSwitchWin)
+     monorun.but<-tkbutton(tt,text="Mono Pixel run",command=monop.graph)
      l.general<- tklabel(tt,text="You may choose the functions here")
      l.ym <- tklabel(tt, text="Year/Month")
      e.year<-tkentry(tt, width=5)
@@ -189,6 +190,7 @@ NewSwitchWin<-function(){
      tkgrid(copy.but,sticky="w")
      tkgrid(newwins.but,sticky="w")
      tkgrid(newwind.but,sticky="w")
+     tkgrid(monorun.but,sticky="w")
      tkgrid(l.ym,e.year,e.month)
      cat("for dynamic windows, press 'q' to quit")
    

@@ -83,8 +83,3 @@ daily.frame.out<-lpjml.dailyrun(coor.array,point)#spinup year was set as 50
    }  
    
 
-
-
-
-
-

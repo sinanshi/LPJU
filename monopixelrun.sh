@@ -10,10 +10,10 @@ sed -e "274c $1" $LPJROOT/lpjml.conf > $LPJROOT/tempconf
 cp tempconf lpjml.conf
 
 #Change spinup year
-sed -e "279c $2" $LPJROOT/lpjml.conf > $LPJROOT/tempconf
-cp tempconf lpjml.conf
-sed -e "291c $2" $LPJROOT/lpjml.conf > $LPJROOT/tempconf
-cp tempconf lpjml.conf
+#sed -e "279c $2" $LPJROOT/lpjml.conf > $LPJROOT/tempconf
+#cp tempconf lpjml.conf
+#sed -e "291c $2" $LPJROOT/lpjml.conf > $LPJROOT/tempconf
+#cp tempconf lpjml.conf
 
 rm tempconf
 
