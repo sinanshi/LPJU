@@ -1,6 +1,7 @@
 #!/bin/bash
 
-export LPJROOT=/home/sinan/workspace/R/LPJmL2013
+export RDIR=$(pwd)
+export LPJROOT=$RDIR/LPJmL2013
 cd $LPJROOT
 
 #Change simulation grid
