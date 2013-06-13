@@ -47,21 +47,40 @@ map.create<-function(data.raw,startyear,endyear){
 map.data
 }
 
-map.show<-function(map.data,y,m){
+map.show<-function(map.data,y,m,data.info){#data.info is created by vars.check()
   
  yg.palette <- colorRampPalette(c("yellow3","yellow","greenyellow","green","green3","darkgreen"))
  colo=yg.palette(101)
  colo.cm = cm.colors(32)
+
+ #image configuration
+ tit<-paste(data.info$des,"(",data.info$name,")")  
  if(length(dim(map.data))==4){
-  image(x=seq(-19.75,49.75,len=140),y=seq(25.25,49.75,len=50),map.data[,,m,y],col=colo,xlab="",ylab="",axes=T)
- map(add=T,boundary=T)
- title(main=paste(as.character(switch.year+simstartyear-1),"-",as.character(switch.month)))  
+  ylab<-paste(paste(as.character(switch.year+simstartyear-1),"-",as.character(switch.month)))
+  
+  image(x=seq(-19.75,49.75,len=140),y=seq(25.25,49.75,len=50),
+             map.data[,,m,y],
+             col=colo,
+             xlab="",
+             ylab=ylab,
+             axes=T)
+  map(add=T,boundary=T)
+ title(main=tit)
+   image.plot(x=seq(-19.75,49.75,len=140),y=seq(25.25,49.75,len=50),
+             map.data[,,m,y],
+             col=colo,
+             legend.only=T,
+             horizontal=T,
+             legend.args=list( text=data.info$unit,col="black", cex=1, side=1, line=0),
+             legend.width=0.3)
+ 
 }
 
  if(length(dim(map.data))==3){
-  image(x=seq(-19.75,49.75,len=140),y=seq(25.25,49.75,len=50),map.data[,,y],col=colo,xlab="",ylab="",axes=T)
+  xlab<-as.character(switch.year+simstartyear-1)
+  image(x=seq(-19.75,49.75,len=140),y=seq(25.25,49.75,len=50),map.data[,,y],col=colo,xlab=xlab,ylab="",axes=T)
   map(add=T,boundary=T)
-  title(main=as.character(switch.year+simstartyear-1))
+  title(main=tit)
  }
 }
 
@@ -69,11 +88,12 @@ map.show<-function(map.data,y,m){
  
 ############################################################
 ############################################################
-map.switch<-function(map.data,startyear,endyear,xlim=NULL, ylim=NULL, xaxs="r", yaxs="r"){
-   map.show(map.data,switch.year,switch.month)   
+map.switch<-function(map.data,startyear,endyear,xlim=NULL, ylim=NULL, xaxs="r", yaxs="r",data.info){
+   
+   map.show(map.data,switch.year,switch.month,data.info)   
    devset <- function()
       if (dev.cur() != eventEnv$which) dev.set(eventEnv$which)
-
+   
       
       keydown <- function(key) {
              if (key == "q") return(invisible(1))
@@ -101,7 +121,7 @@ map.switch<-function(map.data,startyear,endyear,xlim=NULL, ylim=NULL, xaxs="r", 
                  else 
                     switch.year<<-switch.year+1      
                }
-                map.show(map.data,switch.year,switch.month)
+                map.show(map.data,switch.year,switch.month,data.info)
                 Sys.sleep(0.1) 
              } 
              if(key=="4"){
@@ -125,7 +145,7 @@ map.switch<-function(map.data,startyear,endyear,xlim=NULL, ylim=NULL, xaxs="r", 
                  else
                   switch.year<<-switch.year-1
                }
-              map.show(map.data,switch.year,switch.month)
+              map.show(map.data,switch.year,switch.month,data.info)
               Sys.sleep(0.1)
              
             NULL 
@@ -144,7 +164,7 @@ map.switch<-function(map.data,startyear,endyear,xlim=NULL, ylim=NULL, xaxs="r", 
 ##################################
 # Map.interact
 ##################################
-map.interact<-function(map.data,startyear,endyear,colour){#colour not in use
+map.interact<-function(map.data,startyear,endyear,colour,data.info){#colour not in use
 
  map.itc.data<<-array(NA,dim=dim(map.data))#Global data for interact map only
  map.itc.data<<-map.data
@@ -162,18 +182,18 @@ map.interact<-function(map.data,startyear,endyear,colour){#colour not in use
 
 CopyToClip <- function(){
    png(file=paste(as.character(switch.year+simstartyear-1),"-",as.character(switch.month)), bg="white")
-   map.show(map.itc.data,switch.year,switch.month)
+   map.show(map.itc.data,switch.year,switch.month,data.info)
    dev.off()
 }
 
 NewWin<- function(){
    X11(type = "Xlib")#X11, remove this line if the system is not X11
-   map.show(map.itc.data,switch.year,switch.month)
+   map.show(map.itc.data,switch.year,switch.month,data.info)
 }
 
 NewSwitchWin<-function(){
   X11(type = "Xlib")#X11, remove this line if the system is not X11
-  map.switch(map.itc.data,startyear,endyear)
+  map.switch(map.itc.data,startyear,endyear,data.info=data.info)
   getGraphicsEvent()
 }
      tt <- tktoplevel()

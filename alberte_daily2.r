@@ -57,7 +57,8 @@ read.output.all(path.out)
 #read grid to get latitude lontitude information
  read.grid()
  map.temp<-map.create(eval(parse(text=global.maps.data)),global.year[1],global.year[2])
- map.interact(map.temp,global.year[1],global.year[2],colour)
+ map.info<-vars.check(global.maps.data)
+ map.interact(map.data=map.temp,startyear=global.year[1],endyear=global.year[2],data.info=map.info)
 
 
 

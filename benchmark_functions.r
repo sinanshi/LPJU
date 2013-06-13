@@ -43,6 +43,7 @@ return(var.frame)
 #vars.check
 #---------------------------------
 vars.check<-function(output.name){
+  output.name<-gsub(".data.out",replacement="",x=output.name)
  for(i in 1:dim(vars.info)[1]){#number of vars list
   if(output.name==vars.info$name[i]||output.name==vars.info$id[i]){
     output.info<-data.frame(id=vars.info$id[i],
@@ -193,9 +194,10 @@ if(dim_init==2){
 }
 
 #-----------------------------
-#bind multiple data frames
+#daily run and bind multiple data in data frames
 #-----------------------------
 lpjml.dailyrun<-function(coor.array,test.num){
+ cat("Aligning daily output data...")
  for(i in 1:test.num){ 
   monop.lrun(coor.array[i,1],coor.array[i,2],spinup.mono=50)
   daily.temp<-read.daily.output(path.mono)
@@ -210,6 +212,7 @@ lpjml.dailyrun<-function(coor.array,test.num){
  daily.frame$row <- with(daily.frame, ave(ID==ID, ID, FUN = cumsum))
  m <- melt(daily.frame, id.vars = c("row", "ID"))
  daily.frame.out <- acast(m, row ~ variable ~ ID)
+ cat("done!\n")
  return(daily.frame.out)
 }
 

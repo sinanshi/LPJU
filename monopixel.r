@@ -28,26 +28,9 @@ monop.lrun<-function(lon.mono,lat.mono,spinup.mono){
    cat("ERROR:To run mono-pixel LPJmL, Both position and spinup year have to be configured!")
    stop()
  }
- pos_lat_count<-0
- pos_lon=NA
- Have_lon<-FALSE
- Have_lat<-FALSE
-
+ pos<-which(lon==lon.mono&lat==lat.mono)
  
- for(i in 1:(length(grid.data)/2)){
-   if(lon[i]==lon.mono){
-     pos_lon<-i
-     Have_lon<-TRUE
-     if(lat[i]==lat.mono){
-       pos<-i
-       Have_lat<-TRUE
-       break
-     }
-   } 
- }
- 
- 
- if(Have_lat==FALSE|Have_lon==FALSE){
+ if(length(pos)!=1){
    print("Error:LPJ do not provide any data on the sea!")
    print("      Please choose a land pixel and try again.")
    stop()  
