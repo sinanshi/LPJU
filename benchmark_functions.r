@@ -184,7 +184,7 @@ if(dim_init==2){
          plotdata<-data[c(((syear-simstartyear)*12+1):((eyear-simstartyear+1)*12))]
          name<-gsub(".data.out","",datalist[i])
          info.o<-vars.check(name)
-         title<-paste(,info.o$des,sep="")
+         title<-paste(info.o$des,sep="")
          unit<-paste(info.o$id,info.o$unit)
          xl<-paste("Month","(",syear,"-",eyear,")",sep="")
          plot(c(1:length(plotdata)),plotdata,"l",main=title,xlab=xl,ylab=unit)

@@ -16,23 +16,19 @@
    npixel<-py[1]
    year<-py[2]
    label.month<<-c("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC")
-   cat("Global data (g) or One pixel data(o)?")
-   g.o<-readline()
+   g.o<-readline("Global data (g) or One pixel data(o)?")
 
 #Global data manipulation
  if(g.o=="g"){
-   cat("plot(p) or map(m)=?")
-   p.m<-readline()
+   p.m<-readline("plot(p) or map(m)=?")
 
 #Monthly global data plot
     if(p.m=="p"){
      cat("List of Methods\n")
      cat("[1]:Compare global grid average outputs\n")
      cat("[2]:UNDER DEVELOPMENT\n")
-     cat("Method of comparasion=?")
-     method<-readline()
-     cat("Number of data to be compared=?")
-     data.num<-as.numeric(readline())
+     method<-readline("Method of comparasion=?")
+     data.num<-as.numeric(readline("Number of data to be compared=?"))
      cat("List of output files:")
      print(list.files(path))
      cat("\n")
@@ -41,16 +37,14 @@
    
      #set data variables and find the lowest dimension
      for(i in 1:data.num){
-       cat(i,".","Name of output data=")
-       datalist[i]<-readline()
+       datalist[i]<-readline(paste(i,".","Name of output data=",sep=""))
        if(length(dim(eval(parse(text=datalist[i]))))<dim_init)
          dim_init<-length(dim(eval(parse(text=datalist[i]))))
     }  
    
-     cat("start year=?")
-     syear<-as.numeric(readline())
-     cat("end year=?")
-     eyear<-as.numeric(readline())
+     
+     syear<-as.numeric(readline("start year=?"))
+     eyear<-as.numeric(readline("end year=?"))
 
  
     #set all data as same dimension
@@ -79,12 +73,9 @@
   
   #Global data map
   if(p.m=="m"){
-  cat("Data you need=?")
-  map.data.name<-readline()
-  cat("start year=?")
-  syear<-as.numeric(readline())
-  cat("end year=?")
-  eyear<-as.numeric(readline())
+  map.data.name<-readline("Data you need=?")
+  syear<-as.numeric(readline("start year=?"))
+  eyear<-as.numeric(readline("end year=?"))
   
   map.data<-map.create(eval(parse(text=map.data.name)),syear,eyear)
   map.interact(map.data,syear,eyear)
@@ -98,10 +89,8 @@
     cat("List of Comparing Methods(UNDER DEVELOPMENT)\n")
     cat("[1]:Compare daily of one pixel(p)\n")
     cat("[2]:Compare monthly of one pixel data\n")
-    cat("Method of comparasion=?")
-    method<-readline()
-    cat("Number of data to be compared=?")
-    data.num<-as.numeric(readline())
+    method<-readline("Method of comparasion=?")
+    data.num<-as.numeric(readline("Number of data to be compared=?"))
     cat("List of output files:")
     print(list.files(path))
     cat("\n")
