@@ -1,5 +1,6 @@
 #!/bin/bash
 
+git checkout -f master
 git pull https://github.com/SinanShi/R.git
 cp standard.conf LPJmL2013/lpjml.conf
 
