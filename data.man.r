@@ -78,7 +78,7 @@
   eyear<-as.numeric(readline("end year=?"))
   
   map.data<-map.create(eval(parse(text=map.data.name)),syear,eyear)
-  map.interact(map.data,syear,eyear)
+  map.interact(map.data,syear,eyear,data.info=vars.check(map.data.name))
 
  
   

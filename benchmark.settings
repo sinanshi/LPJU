@@ -28,6 +28,10 @@ west<- -19.75
 south<- 22.25
 north<- 51.75
 
+bound_east<-  50
+bound_west<- -20
+bound_south<- 22
+bound_north<- 52
 # output run
 path.out<-paste(getwd(),"/outputs/output_2013_test/",sep="")
 #path.out <- paste(getwd(),"/outputs/output_OTMed_VegNat_130322/",sep="")
