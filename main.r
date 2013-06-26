@@ -24,7 +24,7 @@
   date <- date()           # timestamp
   
   #read grid
-  read.grid()
+  read.grid(path.out)
   
   #read output data
   if(dataread==1)

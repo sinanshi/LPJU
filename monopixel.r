@@ -86,6 +86,8 @@ while(TRUE){
  coor.array[point,1]<<-coor[1]
  coor.array[point,2]<<-coor[2] 
  
+ lines(coor[1],coor[2],"o")
+ text(coor[1],(coor[2]+1),labels=point,cex=5)
  cat("lontitude=",coor[1],"latitude=",coor[2],"\n")
  chose<-readline("Press 'enter' to continue and 'q' to rechoose and type 'ok' for finishing:")
  if(chose=="q"){

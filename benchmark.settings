@@ -6,26 +6,31 @@ res <- 0.5               # resolution in deg
 
 simstartyear <- 1901        # startyear of data
 simendyear<- 2009
-refyears <- c(1991,2000) # reference years for map comparison
-simyears<- 106
 
 
-pdfname <- "test.pdf"    # pdf output file
 isnatural <- 1           # natural vegetation only?
 isdischarge  <- 1        # compare river discharge
 plot.abs <- 0            # plot absolute values of benchmark run?
 compress.pdf <- 0        # compress pdf output? under linux/unix, requires ghostscript 
 month <- 12
 NCOLS <- 70/res
-NROWS <- 25/res
+NROWS <- 30/res
 
+#old map configuration
+#east<-  49.75
+#south<- 25.25
+#west<- -19.75
+#north<- 49.75
+
+#new otmed map configuration
 east<-  49.75
-south<- 25.25
 west<- -19.75
-north<- 49.75
+south<- 22.25
+north<- 51.75
 
 # output run
-path.out <- paste(getwd(),"/outputs/output_OTMed_VegNat_130322/",sep="")
+path.out<-paste(getwd(),"/outputs/output_2013_test/",sep="")
+#path.out <- paste(getwd(),"/outputs/output_OTMed_VegNat_130322/",sep="")
 path.mono<- paste(getwd(),"/LPJmL2013/output/",sep="")
 endian.out <- "little"
 

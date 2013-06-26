@@ -32,7 +32,7 @@ rm (list=ls(all=TRUE))
   pos.begin<-(begin-simstartyear)*365+1
   pos.end<-(end-simstartyear)*365
   time<-c(1:(pos.end-pos.begin+1))
-  
+  X11()
   par(mfrow=c(length(plot.list),point))
     
     for(j in 1:length(plot.list)){
@@ -49,13 +49,14 @@ rm (list=ls(all=TRUE))
 }
   
   
-  
+#path.out<<-"outputs/130516_VegNat_LU_residue0.1/"
+ 
 read.output.all(path.out)
 #------------------------------------------------
 #run lpjml and get data
 #------------------------------------------------
 #read grid to get latitude lontitude information
- read.grid()
+ read.grid(path.out)
  map.temp<-map.create(eval(parse(text=global.maps.data)),global.year[1],global.year[2])
  map.info<-vars.check(global.maps.data)
  map.interact(map.data=map.temp,startyear=global.year[1],endyear=global.year[2],data.info=map.info)

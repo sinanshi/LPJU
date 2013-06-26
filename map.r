@@ -15,9 +15,10 @@ require(tcltk)
 map.create<-function(data.raw,startyear,endyear){
  
  npixel.out<-get.output.info(path.out)[1] 
+ simyears<-get.output.info(path.out)[2]
  startyear<-startyear-simstartyear+1
  endyear<-endyear-simstartyear+1
-
+ 
  if(startyear<0){
   print("map.create: the chosen start year should be later than simulation start year.")
   stop()
@@ -52,13 +53,12 @@ map.show<-function(map.data,y,m,data.info){#data.info is created by vars.check()
  yg.palette <- colorRampPalette(c("yellow3","yellow","greenyellow","green","green3","darkgreen"))
  colo=yg.palette(101)
  colo.cm = cm.colors(32)
-
  #image configuration
  tit<-paste(data.info$des,"(",data.info$name,")")  
  if(length(dim(map.data))==4){
-  ylab<-paste(paste(as.character(switch.year+simstartyear-1),"-",as.character(switch.month)))
+  ylab<-paste(paste(as.character(y+simstartyear-1),"-",as.character(m)))
   
-  image(x=seq(-19.75,49.75,len=140),y=seq(25.25,49.75,len=50),
+  image(x=seq(west,east,len=((east-west+0.5)*2)),y=seq(south,north,len=((north-south+0.5)*2)),
              map.data[,,m,y],
              col=colo,
              xlab="",
@@ -66,7 +66,7 @@ map.show<-function(map.data,y,m,data.info){#data.info is created by vars.check()
              axes=T)
   map(add=T,boundary=T)
  title(main=tit)
-   image.plot(x=seq(-19.75,49.75,len=140),y=seq(25.25,49.75,len=50),
+   image.plot(x=seq(west,east,len=((east-west+0.5)*2)),y=seq(south,north,len=((north-south+0.5)*2)),
              map.data[,,m,y],
              col=colo,
              legend.only=T,
@@ -77,8 +77,8 @@ map.show<-function(map.data,y,m,data.info){#data.info is created by vars.check()
 }
 
  if(length(dim(map.data))==3){
-  xlab<-as.character(switch.year+simstartyear-1)
-  image(x=seq(-19.75,49.75,len=140),y=seq(25.25,49.75,len=50),map.data[,,y],col=colo,xlab=xlab,ylab="",axes=T)
+  xlab<-as.character(y+simstartyear-1)
+  image(x=seq(west,east,len=((east-west+0.5)*2)),y=seq(south,north,len=((north-south+0.5)*2)),map.data[,,y],col=colo,xlab=xlab,ylab="",axes=T)
   map(add=T,boundary=T)
   title(main=tit)
  }
@@ -90,7 +90,7 @@ map.show<-function(map.data,y,m,data.info){#data.info is created by vars.check()
 ############################################################
 map.switch<-function(map.data,startyear,endyear,xlim=NULL, ylim=NULL, xaxs="r", yaxs="r",data.info){
    
-   map.show(map.data,switch.year,switch.month,data.info)   
+   map.show(map.data,switch.year,switch.month,data.info=data.info)   
    devset <- function()
       if (dev.cur() != eventEnv$which) dev.set(eventEnv$which)
    
@@ -182,13 +182,13 @@ map.interact<-function(map.data,startyear,endyear,colour,data.info){#colour not 
 
 CopyToClip <- function(){
    png(file=paste(as.character(switch.year+simstartyear-1),"-",as.character(switch.month)), bg="white")
-   map.show(map.itc.data,switch.year,switch.month,data.info)
+   map.show(map.itc.data,switch.year,switch.month,data.info=data.info)
    dev.off()
 }
 
 NewWin<- function(){
    X11(type = "Xlib")#X11, remove this line if the system is not X11
-   map.show(map.itc.data,switch.year,switch.month,data.info)
+   map.show(map.itc.data,switch.year,switch.month,data.info=data.info)
 }
 
 NewSwitchWin<-function(){
