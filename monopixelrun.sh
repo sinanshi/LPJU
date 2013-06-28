@@ -5,18 +5,7 @@ export LPJROOT=$RDIR/LPJmL2013
 cd $LPJROOT
 
 #Change simulation grid
-sed -e "273c $1" $LPJROOT/lpjml.conf > $LPJROOT/tempconf
-cp tempconf lpjml.conf
-sed -e "274c $1" $LPJROOT/lpjml.conf > $LPJROOT/tempconf
-cp tempconf lpjml.conf
-
-#Change spinup year
-#sed -e "279c $2" $LPJROOT/lpjml.conf > $LPJROOT/tempconf
-#cp tempconf lpjml.conf
-#sed -e "291c $2" $LPJROOT/lpjml.conf > $LPJROOT/tempconf
-#cp tempconf lpjml.conf
-
-rm tempconf
+sed -i "s/.*mono grid cell.*/${1}\/\*mono grid cell\*\//g" lpjml.conf
 
 ./bin/lpjml  lpjml.conf
 ./bin/lpjml -DFROM_RESTART lpjml.conf

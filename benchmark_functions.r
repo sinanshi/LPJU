@@ -217,6 +217,13 @@ lpjml.dailyrun<-function(coor.array,test.num){
 }
 
 
+#----------------------------------
+#which country:
+#----------------------------------
+which.country<-function(country.name){
+ 
+
+}
 
 
 

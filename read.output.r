@@ -74,20 +74,9 @@ read.output.flux<-function(path,npixel.out,nyear.out){
 }
 
 
-read.output.all<-function(path){
-  pixel_year<-get.output.info(path)
-  cat("=======================================================\n")
-  cat("Path=",path,"\n")
-  cat("pixel number=",pixel_year[1],"simulation years=",pixel_year[2],"\n")
-  cat("Reading the output data...\n")
-  read.output.carbon(path,pixel_year[1],pixel_year[2])
-  read.output.flux(path,pixel_year[1],pixel_year[2])
-  cat("read: <sucessful>\n")
-  cat("=======================================================\n")
-}
- 
-
-
+#==========================
+#read the grid and give the lat,lon and other information 
+#==========================
 read.grid<-function(path){
   pixel_year<-get.output.info(path)
   npixel.out<-pixel_year[1]
@@ -101,6 +90,35 @@ read.grid<-function(path){
   close(grid.fn.out)
 }
 
+
+
+#=========================
+#read country files
+#=========================
+read.cow<-function(path){
+ npixel.out<-get.output.info(path)[1]
+ country.fn.out<-file(paste(path,"country.bin",sep=""),"rb")
+ country.data<<-readBin(country.fn.out,integer(),n=npixel.out,size=2)
+ close(country.fn.out)
+}
+
+
+read.harvest.data<-function(path,yeild.name){
+ cat("reading harvest output...") 
+ npixel.out<-get.output.info(path)[1]
+ nyear.out<-get.output.info(path)[2]
+ harvest.data<<-array(NA,c(npixel.out,12,nyear.out,nft))
+ harvest.fn.out<-file(paste(path,"pft_harvest.pft.bin",sep=""),"rb")
+ harvest.data[,,,]<<-readBin(harvest.fn.out,double(),npixel.out*nyear.out*12*nft,size=4)
+ 
+ close(harvest.fn.out)
+ cat("done.\n")
+}
+
+#=======================
+#daily output reading and put all daily output data into 
+# a data frame
+#=======================
 
 read.daily.output<-function(path){
   nyear<-get.output.daily.info(paste(path,daily.files.list[1],".bin",sep=""))
@@ -126,4 +144,19 @@ d_rpool="",d_rroot="",d_rso="",d_sun="",d_temp="",d_trans="",d_vdsum="",d_w0="",
 }  
     
     
+read.output.all<-function(path){
+  pixel_year<-get.output.info(path)
+  cat("=======================================================\n")
+  cat("Path=",path,"\n")
+  cat("pixel number=",pixel_year[1],"simulation years=",pixel_year[2],"\n")
+  cat("Reading the output data...\n")
+  
+  read.grid(path)
+  read.cow(path)
+  read.output.carbon(path,pixel_year[1],pixel_year[2])
+  read.output.flux(path,pixel_year[1],pixel_year[2])
+  
+  cat("read: <sucessful>\n")
+  cat("=======================================================\n")
+}
 
