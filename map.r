@@ -78,9 +78,21 @@ map.show<-function(map.data,y,m,data.info){#data.info is created by vars.check()
 
  if(length(dim(map.data))==3){
   xlab<-as.character(y+simstartyear-1)
-  image(x=seq(west,east,len=((east-west+0.5)*2)),y=seq(south,north,len=((north-south+0.5)*2)),map.data[,,y],col=colo,xlab=xlab,ylab="",axes=T)
+  image(x=seq(west,east,len=((east-west+0.5)*2)),y=seq(south,north,len=((north-south+0.5)*2)),
+        map.data[,,y],
+        col=colo,
+        xlab=xlab,
+        ylab="",
+        axes=T)
   map(add=T,boundary=T)
   title(main=tit)
+  image.plot(x=seq(west,east,len=((east-west+0.5)*2)),y=seq(south,north,len=((north-south+0.5)*2)),
+             map.data[,,y],
+             col=colo,
+             legend.only=T,
+             horizontal=T,
+             legend.args=list(text=data.info$unit,col="black", cex=1, side=1, line=0),
+             legend.width=0.3)
  }
 }
 

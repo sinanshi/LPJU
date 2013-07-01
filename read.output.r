@@ -102,17 +102,27 @@ read.cow<-function(path){
  close(country.fn.out)
 }
 
+#==========================
+#read harvest data from pft_harvest
+#==========================
+read.harvest.data<-function(path,harvest.name.seclect){
 
-read.harvest.data<-function(path,yeild.name){
  cat("reading harvest output...") 
  npixel.out<-get.output.info(path)[1]
  nyear.out<-get.output.info(path)[2]
- harvest.data<<-array(NA,c(npixel.out,12,nyear.out,nft))
- harvest.fn.out<-file(paste(path,"pft_harvest.pft.bin",sep=""),"rb")
- harvest.data[,,,]<<-readBin(harvest.fn.out,double(),npixel.out*nyear.out*12*nft,size=4)
  
+ harvest.fn.out<-file(paste(path,"pft_harvest.pft.bin",sep=""),"rb")
+ harvest.temp<-array(NA,c(npixel.out,nft,nyear.out))#the harvest file data were aligned as [pixels,plant funtional type,years]
+ harvest.temp[,,]<-readBin(harvest.fn.out,double(),npixel.out*nyear.out*32,size=4)
+ 
+ harvest.data<-array(NA,c(npixel.out,nyear.out,32))
+ #change data alignment 
+ for(i in 1:length(harvest.name)) harvest.data[,,i]<-harvest.temp[,i,]
+ 
+
  close(harvest.fn.out)
- cat("done.\n")
+ cat("done\n")
+ return(harvest.data)
 }
 
 #=======================

@@ -33,9 +33,17 @@ bound_west<- -20
 bound_south<- 22
 bound_north<- 52
 
+harvest.name <<- c("rainfed wheat","rainfed rice","rainfed maize","rainfed millet",
+                   "rainfed lentils","rainfed sugarbeet","rainfed yam","rainfed sunflower",
+                   "rainfed soybean","rainfed groundnuts","rainfed rapeseed","rainfed sugarcane",
+                   "rainfed others","rainfed mangrass","rainfed energytree","rainfed energygrass",
+                   "irri wheat","irri rice","irri maize","irri millet",
+                   "irri lentils","irri sugarbeet","irri yam","irri sunflower",
+                   "irri soybean","irri groundnuts","irri rapeseed","irri sugarcane",
+                   "irri others","irri mangrass","irri energytree","irri energygrass")
 
 #Harvest 
-nft<-32 #number of pft+bft+cft
+npft<-32 #number of pft+bft+cft
 
 
 # output run
