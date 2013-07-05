@@ -43,7 +43,7 @@ harvest.name <<- c("rainfed wheat","rainfed rice","rainfed maize","rainfed mille
                    "irri others","irri mangrass","irri energytree","irri energygrass")
 
 #Harvest 
-npft<-32 #number of pft+bft+cft
+nft<-32 #number of pft+bft+cft
 
 
 # output run
