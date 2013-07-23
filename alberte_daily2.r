@@ -18,6 +18,9 @@ rm (list=ls(all=TRUE))
   #global data scale (years)
   global.year<-c(1901,1905)
   
+  #location input type setting
+  #input.type<-0  #The locations input by clicking on the map
+  input.type<-1  #The locations input by exact lontitude latitude
   
   #------------------------------------------
 #plot data:can be personalised
@@ -57,10 +60,17 @@ read.output.all(path.out)
 #------------------------------------------------
 #read grid to get latitude lontitude information
  read.grid(path.out)
+
+
  map.temp<-map.create(eval(parse(text=global.maps.data)),global.year[1],global.year[2])
  map.info<-vars.check(global.maps.data)
- map.interact(map.data=map.temp,startyear=global.year[1],endyear=global.year[2],data.info=map.info)
-
+ if(input.type==0){ #by clicking on map 
+   map.interact(map.data=map.temp,startyear=global.year[1],endyear=global.year[2],data.info=map.info)
+  }
+ if(input.type==1){ #by input latitude lontitude
+  monop.lonlat()
+  }
+daily.plot()# plot daily outputs
 
 
 

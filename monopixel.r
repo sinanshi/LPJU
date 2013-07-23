@@ -83,11 +83,11 @@ while(TRUE){
  #To get the closest (lon,lat) where clicked
  coor[1]=round.grid(temp$x,res)
  coor[2]=round.grid(temp$y,res)
- coor.array[point,1]<<-coor[1]
+ coor.array[point,1]<<-coor[1]  #coor.array is a global varaible of indicating which location will be run on LPJmL
  coor.array[point,2]<<-coor[2] 
  
- lines(coor[1],coor[2],"o")
- text(coor[1],(coor[2]+1),labels=point,cex=5)
+ lines(coor[1],coor[2],"o")#mark on the map
+ text(coor[1],(coor[2]+1),labels=point,cex=5)#test on the map
  cat("lontitude=",coor[1],"latitude=",coor[2],"\n")
  chose<-readline("Press 'enter' to continue and 'q' to rechoose and type 'ok' for finishing:")
  if(chose=="q"){
@@ -106,6 +106,23 @@ while(TRUE){
 daily.frame.out<<-lpjml.dailyrun(coor.array,point)#spinup year was set as 50
 
 }
+
+
+
+#--------------------------------------
+#Run mono pixel by input lontitude and latitude
+#-------------------------------------
+monop.lonlat<-function(){
+  coor.array<<-array(NA,dim=c(30,2))
+  location.num<-readline("How many locations you want to compare?")#number of location
+  for(i in 1:location.num){
+    coor.array[i,1]<<-readline(paste("Lontitude of location",i,":"))
+    coor.array[i,2]<<-readline(paste("Latitude of location",i,":"))
+ }
+
+daily.frame.out<<-lpjml.dailyrun(coor.array=coor.array,test.num=location.num)#spinup ear was set as 50
+}
+
 
 
 
