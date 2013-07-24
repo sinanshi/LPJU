@@ -1,0 +1,159 @@
+	name	variable(NetCDF)	description	unit	scale
+GRID	grid	soil	coordinates	degree	1
+FPC	fpc	FPC	foliage projected cover		1
+MNPP	mnpp	NPP	monthly NPP	gC/m2/month	1
+MGPP	mgpp	GPP	monthly GPP	gC/m2/month	1
+MRH	mrh	RH	monthly heterotrophic respiration	gC/m2/month	1
+MTRANSP	mtransp	transp	monthly transpiration	mm/month	1
+MRUNOFF	mrunoff	runoff	monthly runoff	mm/month	1
+MDISCHARGE	mdischarge	discharge	monthly discharge	hm3/month	1
+MEVAP	mevap	evap	monthly evaporation	mm/month	1
+MINTERC	minterc	interc	monthly interception	mm/month	1
+MSWC1	mswc1	SWC1	soil water content in layer 1	mm	1
+MSWC2	mswc2	SWC2	soil water content in layer 2	mm	1
+FIREC	firec	FireC	fire carbon emission	gC/m2/yr	1
+FIREF	firef	Firef	fire frequency	1/yr	1
+VEGC	vegc	VegC	vegetation carbon	gC/m2	1
+SOILC	soilc	SoilC	total soil carbon density	gC/m2	1
+LITC	litc	LitC	litter carbon	gC/m2	1
+FLUX_ESTAB	flux_estab	estab	establishment flux	gC/m2/yr	1
+PFT_NPP	pft_npp	NPP	PFT-specific NPP	gC/m2/yr	1
+PFT_GCGP	pft_gcgp	GCGP	PFT-specific water stress		1
+HARVEST	harvest	harvest	harvested carbon	gC/m2/yr	1
+MIRRIG	mirrig	irrig	irrigation	mm/month	1
+SDATE	sdate	sdate	sowing date		1
+PFT_HARVEST	pft_harvest	harvest	harvested carbon	gC/m2/yr	1
+PFT_RHARVEST	pft_rharvest	rharvest	harvested residual carbon	gC/m2/yr	1
+COUNTRY	country	country	country code		1
+REGION	region	region	region code		1
+MG_VEGC	mg_vegc	mVegC	managed vegetation carbon	gC/m2	1
+MG_SOILC	mg_soilc	mSoilC	managed soil carbon	gC/m2	1
+MG_LITC	mg_litc	mLitC	managed litter carbon	gC/m2	1
+APREC	aprec	prec	annual precipitation	mm/yr	1
+INPUT_LAKE	input_lake	input_lake	precipitation input to lakes	hm3/yr	1
+MRETURN_FLOW_B	mreturn_flow_b	return_flow_b	blue water return flow of runoff	mm/month	1
+MEVAP_LAKE	mevap_lake	evap_lake	lake evaporation	mm/month	1
+ADISCHARGE	adischarge	discharge	annual discharge	hm3/yr	1
+CFTFRAC	cftfrac	CFTfrac	CFT fraction		1
+CFT_CONSUMP_WATER_G	cft_consump_water_g	consump_water_g	CFT specific green water consumption	mm/yr	1
+CFT_CONSUMP_WATER_B	cft_consump_water_b	consump_water_b	CFT specific blue water consumption	mm/yr	1
+PROD_TURNOVER	prod_turnover	prod_turnover	emissions from product turnover	gC/m2/yr	1
+DEFOREST_EMIS	deforest_emis	deforest_emis	deforestation emission	gC/m2/yr	1
+AIRRIG	airrig	irrig	annual irrigation	mm/yr	1
+PFT_AIRRIG	pft_airrig	irrig	CFT-specific irrigation	mm/yr	1
+HDATE	hdate	hdate	harvesting date		1
+GROWING_PERIOD	growing_period	growing_period		day	1
+CFT_PET	cft_pet	pet	CFT-specific potential evapotranspiration	mm/yr	1
+CFT_TRANSP	cft_transp	transp	CFT-specific transpiration	mm/yr	1
+CFT_EVAP	cft_evap	evap	CFT-specific evaporation	mm/yr	1
+CFT_INTERC	cft_interc	interc	CFT-specific interception	mm/yr	1
+CFT_NIR	cft_nir	nir	CFT-specific net irrigation requirement	mm/yr	1
+CFT_TEMP	cft_temp	temp	CFT-specific temperature	deg C	1
+CFT_PREC	cft_prec	prec	CFT-specific precipitation	mm/yr	1
+D_LAI	d_lai	LAI	leaf area index		1
+D_PHEN	d_phen	Phen	Phenology		1
+D_CLEAF	d_cleaf	LeafC	Leaf carbon	gC/m2	1
+D_CROOT	d_croot	RootC	Root carbon	gC/m2	1
+D_CSO	d_cso	csoC	carbon in storage organs	gC/m2	1
+D_CPOOL	d_cpool	PoolC	carbon in additional pool stem	gC/m2	1
+D_WDF	d_wdf	WDF	water deficit fraction		1
+D_GROWINGDAY	d_growingday	growingday	growing days	d	1
+D_PVD	d_pvd	PVD	number of vernalization days required	d	1
+D_PHU	d_phu	PHU			1
+D_FPHU	d_fphu	FPHU			1
+D_LAIMAXAD	d_laimaxad	LAImaxad			1
+D_LAINPPDEF	d_lainppdeficit	LAINPPdeficit	LAI reduction due to insufficient NPP		1
+D_HUSUM	d_husum	husum	sum of heat units		1
+D_VDSUM	d_vdsum	vdsum	sum of vernalization days	d	1
+D_WSCAL	d_wscal	wscal			1
+D_NPP	d_npp	NPP	Net primary production	gC/m2/day	1
+D_GPP	d_gpp	GPP	Gross primary production	gC/m2/day	1
+D_RD	d_rd	RD			1
+D_RROOT	d_rroot	rroot			1
+D_RSO	d_rso	RSO			1
+D_RPOOL	d_rpool	RPool			1
+D_GRESP	d_gresp	Gresp			1
+D_TRANS	d_trans	Trans	transpiration	mm/day	1
+D_EVAP	d_evap	evap	evaporation	mm/day	1
+D_PREC	d_prec	prec	precipitation	mm/day	1
+D_PERC	d_perc	perc		mm/day	1
+D_IRRIG	d_irrig	irrig	irrigation	mm/day	1
+D_W0	d_w0	w0			1
+D_W1	d_w1	w1			1
+D_WEVAP	d_wevap	wevap		mm/day	1
+D_HI	d_hi	Hi			1
+D_FHIOPT	d_fhiopt	Hiopt	optimum harvest index HI reached at harvest		1
+D_HIMIND	d_himind	Himind	minimum harvest index HI reached at harvest		1
+D_FROOT	d_froot	froot			1
+D_TEMP	d_temp	temp	temperature	deg C	1
+D_SUN	d_sun	cloud	cloudiness	%	1
+D_PAR	d_par	PAR	Photosythetic Active Radiation	W/m2	1
+D_DAYLENGTH	d_daylength	daylength	day length	h	1
+D_SWE	d_swe	SWE	snow water equivalent	mm	1
+D_DISCHARGE	d_discharge	discharge	discharge		1
+D_RUNOFF	d_runoff	runoff	runoff	mm/day	1
+D_PET	d_pet	PET	potential evapotranspiration	mm/day	1
+MEVAP_RES	mevap_res	evap_res	evaporation from reservoirs	mm/month	1
+MPREC_RES	mprec_res	prec_res	reservoir precipitation	mm/month	1
+MFIREC	mfirec	FireC	fire carbon emission	gC/m2/month	1
+MNFIRE	mnfire	nfire	number of fires		1
+MFIREDI	mfiredi	firedi	fire danger index		1
+MFIREEMISSION	mfireemission	fireemission			1
+MFPAR	mfpar	FPAR	Fraction of absorbed Photosythetic Active Radiation		1
+FLUX_FIREWOOD	flux_firewood	flux_firewood	wood fire emissions	gC/m2/yr	1
+RHARVEST_BURNT	rharvest_burnt	rharvest_burnt	residual burnt carbon	gC/m2/yr	1
+RHARVEST_BURNT_IN_FIELD	rharvest_burntinfield	rharvest_burntinfield		gC/m2/yr	1
+MTEMP_IMAGE	mtemp_image	temp	temperature received from IMAGE	Celsius	1
+MPREC_IMAGE	mprec_image	prec	precipitation received from IMAGE	mm/month	1
+MSUN_IMAGE	msun_image	sun	sunshine received from IMAGE	%	1
+MWET_IMAGE	mwet_image	wet	wet days received from IMAGE	day	1
+FBURN	fburn	fburn	fraction of deforested wood burnt		1
+FTIMBER	ftimber	ftimber	fraction of deforested wood harvested as timber		1
+TIMBER_HARVEST	timber_harvest	timber_harvest	carbon harvested as timber	gC/m2/yr	1
+PRODUCT_POOL_FAST	product_pool_fast	product_pool_fast	carbon in the fast product pool	gC/m2	1
+PRODUCT_POOL_SLOW	product_pool_slow	product_pool_slow	carbon in the slow product pool	gC/m2	1
+LUC_IMAGE	luc_image	luc_image			1
+MAXTHAW_DEPTH	maxthaw_depth	maxthaw_depth	maximum thawing depth	mm	1
+MSOILTEMP1	msoiltemp1	soiltemp1	soil temperature in layer 1	Celsius	1
+MSOILTEMP2	msoiltemp2	soiltemp2	soil temperature in layer 2	Celsius	1
+MSOILTEMP3	msoiltemp3	soiltemp3	soil temperature in layer 3	Celsius	1
+MSOILTEMP4	msoiltemp4	soiltemp4	soil temperature in layer 4	Celsius	1
+MSOILTEMP5	msoiltemp5	soiltemp5	soil temperature in layer 5	Celsius	1
+MSOILTEMP6	msoiltemp6	soiltemp6	soil temperature in layer 6	Celsius	1
+MRES_STORAGE	mres_storage	res_storage	mean reservoir storage	hm3	1
+MRES_DEMAND	mres_demand	res_demand	reservoir demand	hm3/month	1
+MTARGET_RELEASE	mtarget_release	target_release	target release	hm3/month	1
+MRES_CAP	mres_cap	res_cap	output of reservoir capacity	hm3/month	1
+SEASONALITY	seasonality	seasonality	seasonality		1
+MPET	mpet	PET	potential evapotranspiration	mm/month	1
+TRAD_BIOFUEL	trad_biofuel	trad_biofuels	carbon emissions from traditional biofuel burnt	gC/m2/yr	1
+AFRAC_WD_UNSUST	afrac_wd_unsust	frac_wd_unsust			1
+MWD_UNSUST	mwd_unsust	wd_unsust			1
+ACONV_LOSS	aconv_loss	conv_loss	conveyance loss	mm/yr	1
+MWD_LOCAL	mwd_local	wd_local	local withdrawal	mm/month	1
+MWD_NEIGHB	mwd_neighb	wd_neighb	neighbour withdrawal	mm/month	1
+MWD_RES	mwd_res	wd_res	reservoir withdrawal	mm/month	1
+MWD_RETURN	mwd_return	wd_return	withdrawals returned to river	mm/month	1
+MCONV_LOSS	mconv_loss	conv_loss	conveyance loss	mm/month	1
+MPREC	mprec	prec	monthly precipitation	mm/month	1
+MRAIN	mrain	rain	precipitation fallen as rain	mm/month	1
+MSNOWF	msnowf	snowfall	monthly snowfall	mm/month	1
+MMELT	mmelt	melt	monthly snowmelt	mm/month	1
+MSNOWRUNOFF	msnowrunoff	snowrunoff		mm/month	1
+MSWE	mswe	SWE	snow water equivalent	mm	1
+SOILC_LAYER	soilc_layer	SoilC	Soil carbon in layer	gC/m2	1
+MRUNOFF_SURF	mrunoff_surf	runoff_surf	surface runoff	mm/month	1
+MRUNOFF_LAT	mrunoff_lat	runoff_lat	lateral runoff	mm/month	1
+MSEEPAGE	mseepage	seepage	seepage water	mm/month	1
+MBURNTAREA	mburntarea	burntarea	area burnt	hectare	1
+SOILC_SLOW	soilc_slow	soilc_slow	slow soil carbon	gC/m2	1
+MSWC3	mswc3	SWC3	soil water content in layer 3	mm	1
+MSWC4	mswc4	SWC4	soil water content in layer 4	mm	1
+MSWC5	mswc5	SWC5	soil water content in layer 5	mm	1
+MROOTMOIST	mrootmoist	rootmoist	root moisture		1
+CFT_SRAD	cft_srad	srad	CFT-specific shortwave downward radiation	W/m2	1
+CFT_ABOVEGBM	cft_aboveground_biomass	aboveground_biomass	CFT aboveground biomass	gC/m2	1
+MGCONS_RF	mgcons_rf	gcons_rf			1
+MGCONS_IRR	mgcons_irr	gcons_irr			1
+MBCONS_IRR	mbcons_irr	bcons_irr			1
+AWATERUSE_HIL	awateruse_hil	wateruse_hil		mm	1
