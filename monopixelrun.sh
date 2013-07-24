@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export RDIR=$(pwd)
-export LPJROOT=$RDIR/LPJmL2013
+export LPJROOT=$RDIR/../LPJmL2013
 cd $LPJROOT
 
 #Change simulation grid

@@ -196,28 +196,7 @@ if(dim_init==2){
     }
 }
 
-#-----------------------------
-#daily run and bind multiple data in data frames
-#-----------------------------
-lpjml.dailyrun<-function(coor.array,test.num){
- cat("Aligning daily output data...")
- for(i in 1:test.num){ 
-  monop.lrun(coor.array[i,1],coor.array[i,2],spinup.mono=50)
-  daily.temp<-read.daily.output(path.mono)
-  daily.temp$ID<-rep(i,length(daily.temp[,1]))
- if(i==1){
-   daily.frame<-daily.temp
- }
- else{
- daily.frame<-rbind(daily.frame,daily.temp)
- }
-}
- daily.frame$row <- with(daily.frame, ave(ID==ID, ID, FUN = cumsum))
- m <- melt(daily.frame, id.vars = c("row", "ID"))
- daily.frame.out <- acast(m, row ~ variable ~ ID)
- cat("done!\n")
- return(daily.frame.out)
-}
+
 
 
 #----------------------------------
