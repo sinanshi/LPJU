@@ -37,7 +37,10 @@ lonlat.array<-array(NA,dim=c(runs,2))
    }    
 
      #run LPJmL!!
-     system2("./../LPJmL2013/bin/LPJmL ../lpj.conf")
+     system("./runonepixel.sh")
+     # system("./../LPJmL2013/bin/lpjml ../LPJmL2013/lpjml.conf")
+     # system("./../LPJmL2013/bin/lpjml -DFROM_RESTART ../LPJmL2013/lpjml.conf")
+
      #The following piece of code is exactely the same as lpjml.dailyrun in benchmark_functions
      #read one pixel run data
      daily.temp<-read.daily.output(path.mono)
@@ -70,18 +73,16 @@ soilpar.config<-function(){
     #such as soil.par.temp[i] for each run
     system2("cp",args=sys.args)
     system2("kwrite",args=soil.par.tempname)
-    different<-system2("diff",args=soil.par.tempname)
+    different<-system2("diff",args=sys.args)
     if(different==0){
-      decision<-readlines("The soil par you configured is identical to the original configuration file.\nAre you sure you have saved the new configuration file properly?[y/n]")
-      if(decision=="n"){
-        i<-i-1
-      }
-    }
-      
-      
-    
+      decision<-readline("The soil par you configured is identical to the original configuration file.\nAre you sure you have saved the new configuration file properly?[y/n]")
+     
+    if(decision=="n")
+       system2("kwrite",args=soil.par.tempname)
   }
+ }
 }
+
 
 
   #make the directory according the current time, all the results will be
