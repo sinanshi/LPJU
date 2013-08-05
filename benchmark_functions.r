@@ -157,7 +157,24 @@ find.nearest.pixel <- function(grid,lon,lat,res=0.5){
 
 
 
-
+#-------------------------------
+#
+#-------------------------------
+lonlat2grid<-function(longitude,latitude){
+  if(exists("longitude")==FALSE||exists("latitude")==FALSE){
+   cat("ERROR:To run mono-pixel LPJmL, longitude latitude have not been configured!")
+   stop()
+ }
+ pos<-which(lon==longitude&lat==latitude)
+ 
+ if(length(pos)!=1){
+   print("Error:LPJ do not provide any data on the sea!")
+   print("      Please choose a land pixel and try again.")
+   stop()  
+ }
+ else   return(pos)
+ 
+}
 
 #-------------------------------
 #plot multiple data seperately

@@ -5,6 +5,7 @@ source("read.output.r")
 source("FAO.r")
 source("monopixel.r")
 source("data.man.r")
+source("MultiRun_GUI.r")
 #load settings
 source("benchmark.settings")
 source("read.input.r")
