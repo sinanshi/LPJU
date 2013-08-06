@@ -16,13 +16,13 @@ configure.windows<-function(){
 #---------------------------------------------------
 config.done<-function(){
 #define configuration variables
-lonlat.array<-array(NA,dim=c(runs,2))
-  
+lonlat.array<<-array(NA,dim=c(runs,2))
+
  for(i in 1:runs){
    #case 1: if the location has been modified
    if(any(theParameter.array=="Location")){
-      lonlat.array[i,1]<-tclvalue(get(paste("tcl.lon",i,sep="")))
-      lonlat.array[i,2]<-tclvalue(get(paste("tcl.lat",i,sep="")))
+      lonlat.array[i,1]<<-tclvalue(get(paste("tcl.lon",i,sep=""))) #coor.array is a global array for storing lon,lat with configurations
+      lonlat.array[i,2]<<-tclvalue(get(paste("tcl.lat",i,sep="")))
       grid<-lonlat2grid(lonlat.array[i,1],lonlat.array[i,2])
       system2("./monorunconf.sh",args=grid)  
   
@@ -97,16 +97,17 @@ soilpar.config<-function(){
 
   #case: if the location has been modified
   if(any(theParameter.array=="Location")){
-    cat("Location Modifing...\n")
+    tkgrid(tklabel(tt.cw,text="====Configure Location===="))
     for(i in 1:runs){
-    assign(paste("tcl.lon",i,sep=""),tclVar(2.25),envir = .GlobalEnv)#the temporory variable for tcltk text entry
-    assign(paste("tcl.lat",i,sep=""),tclVar(48.25),envir = .GlobalEnv)
-    lon.entry<-tkentry(tt.cw,textvariable=get(paste("tcl.lon",i,sep="")))
-    lat.entry<-tkentry(tt.cw,textvariable=get(paste("tcl.lat",i,sep="")))
-    tkgrid(tklabel(tt.cw,text="Longitude"),tklabel(tt.cw,text="Latitude"))
-    tkgrid(lon.entry,lat.entry)
-    tkfocus(tt.cw)
-  }
+        assign(paste("tcl.lon",i,sep=""),tclVar(2.25),envir = .GlobalEnv)#the temporory variable for tcltk text entry
+        assign(paste("tcl.lat",i,sep=""),tclVar(48.25),envir = .GlobalEnv)
+        lon.entry<-tkentry(tt.cw,textvariable=get(paste("tcl.lon",i,sep="")))
+        lat.entry<-tkentry(tt.cw,textvariable=get(paste("tcl.lat",i,sep="")))
+        tkgrid(tklabel(tt.cw,text=""))
+        tkgrid(tklabel(tt.cw,text="Longitude"),tklabel(tt.cw,text="Latitude"))
+        tkgrid(lon.entry,lat.entry)
+        tkfocus(tt.cw)
+    }
  }
 
   #case: if the soil par has been modified
@@ -115,15 +116,10 @@ soilpar.config<-function(){
     soil.conf.but<-tkbutton(tt.cw,text="Open Soil.par file",command=soilpar.config)
     tkgrid(soil.conf.but)  
   }
-#  for(i in 1:runs){
-#   if(i==1)  but.text<-paste("Look",i,"st soil_par",sep="")
-#   else if(i==2)  but.text<-paste("Look",i,"nd soil_par",sep="")
-#   else if(i==3)  but.text<-paste("Look",i,"rd soil_par",sep="")
-#   else           but.text<-paste("Look",i,"th soil_par",sep="")
-   
+
    run.but<-tkbutton(tt.cw,text="RUN LPJmL",command=config.done)
    tkgrid(run.but)
-#}   
+   
 
 tkfocus(tt.cw)
 
@@ -158,9 +154,9 @@ configure.but<-tkbutton(tt,text="Configure",command=configure.runs)
 
 #arrange widget
 tkgrid(tklabel(tt,text="Parameters for LPJ RUN (one pixel)"))
+tkgrid(runs.entry,tklabel(tt,text="Runs"),sticky='we')
 tkgrid(tl)
-tkgrid(runs.entry,tklabel(tt,text="Runs"))
-tkgrid(configure.but)
+tkgrid(configure.but,sticky='we')
 tkfocus(tt)
 }
 
