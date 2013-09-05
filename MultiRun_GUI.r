@@ -3,8 +3,6 @@
 require(tcltk)
 parameter<- c("Location","Soil.Par","parameter a","parameter b")
 
-
-
 #-----------------------------------
 #Pop out configuration windows
 #-----------------------------------
@@ -14,9 +12,9 @@ configure.windows<-function(){
 #parameters and write it into a configuration file
 #for each configuration and run LPJmL. 
 #---------------------------------------------------
-config.done<-function(){
-#define configuration variables
-lonlat.array<<-array(NA,dim=c(runs,2))
+ config.done<-function(){
+ #define configuration variables
+ lonlat.array<<-array(NA,dim=c(runs,2))
 
  for(i in 1:runs){
    #case 1: if the location has been modified
@@ -89,7 +87,7 @@ soilpar.config<-function(){
   #stored in VisualResults/
   current.day<-format(Sys.time(), "%Y-%b-%d")
   current.time<-format(Sys.time(), "%H:%M:%S")
-  current.name<-paste("../VisualResults/",current.day,"[",current.time,"]","/",sep="")
+  current.name<<-paste("../VisualResults/",current.day,"[",current.time,"]","/",sep="")
   system2("mkdir",args=current.name)
   tt.cw <- tktoplevel()
 
@@ -117,11 +115,32 @@ soilpar.config<-function(){
     tkgrid(soil.conf.but)  
   }
 
+  
    run.but<-tkbutton(tt.cw,text="RUN LPJmL",command=config.done)
-   tkgrid(run.but)
-   
+   plot.but<-tkbutton(tt.cw,text="Plot Daily Data",
+                      command=function(){
+                        x11()
+                        daily.plot()
+                     })
 
-tkfocus(tt.cw)
+   store.image<-function(){ #for store button
+     png(paste(current.name,"/results",sep=""))
+     daily.plot()
+     dev.off()
+     cat("Result Graph Storation: Done!")
+   }
+
+   store.but<-tkbutton(tt.cw,text="Store Image",
+                       command=function(){
+                         png(paste(current.name,"/results",sep=""))
+                         daily.plot()
+                         dev.off()
+                         cat("Result Graph Storation: Done!")
+                       })
+   tkgrid(run.but)
+   tkgrid(plot.but)   
+   tkgrid(store.but)
+   tkfocus(tt.cw)
 
 }
 

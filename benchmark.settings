@@ -6,7 +6,7 @@ res <- 0.5               # resolution in deg
 
 simstartyear <- 1901        # startyear of data
 simendyear<- 2009
-
+input_header<-43
 
 isnatural <- 1           # natural vegetation only?
 isdischarge  <- 1        # compare river discharge

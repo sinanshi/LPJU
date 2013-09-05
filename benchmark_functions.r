@@ -172,7 +172,7 @@ lonlat2grid<-function(longitude,latitude){
    print("      Please choose a land pixel and try again.")
    stop()  
  }
- else   return(pos)
+ else   return(pos-1)
  
 }
 
