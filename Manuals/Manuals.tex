@@ -1,0 +1,92 @@
+ 
+\documentclass{article}
+
+%\usepackage{mhchem} % Package for chemical equation typesetting
+%\usepackage{siunitx} % Provides the \SI{}{} command for typesetting SI units
+
+\usepackage{graphicx} % Required for the inclusion of images
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+\renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter rather than number (e.g. section 6)
+
+\usepackage{times} % Uncomment to use the Times New Roman font
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{The Manual\\of\\LPJmL Utilities Scripts in R} % Title
+\author{Sinan \textsc{Shi}} % Author name
+\date{\today} % Date for the report
+
+\begin{document}
+
+\maketitle % Insert the title, author and date
+\tableofcontents
+\pagebreak
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+\section{Description}
+LPJmL Utilities R codes is made for enabling LPJ users easy of using LPJmL and visualise its results.
+The code is still underdevelopment. The design and deveopment will be made during the daily use of LPJ. The objective of utilites are to create some possibilities of providing 
+some refined various widely used functions.
+
+\pagebreak
+%----------------------------------------------------------------------------------------
+%	SECTION 2
+%----------------------------------------------------------------------------------------
+\section{Initialization and Updating}
+\subsection{Initialization}
+\begin{enumerate}
+\item Download the updated source code from Git.
+\item Directory alignment:
+   \begin{itemize}
+   \item src/: Source code downloaded from GitHub.
+   \item LPJmL2013/: LPJmL model.
+   \item outputs/: Gobal output data, with data from each run in seperated directories. 
+   \item inputs/: Global input data. (NOT IN USED CURRENTLY)
+   \item FAO/: FAO data (NOT IN USED CURRENTLY)
+   \end{itemize}
+\item Replace old LPJmL2013/LPJ.conf with standard.conf in src/
+\item Modify LPJmL2013/input.conf 
+\end{enumerate}
+\subsection{Fetching The Code}
+
+\pagebreak
+%----------------------------------------------------------------------------------------
+%	SECTION 4
+%----------------------------------------------------------------------------------------
+
+\section{Read Inputs and Outputs}
+\subsection{Data Structure of Maps}
+\pagebreak
+
+
+%----------------------------------------------------------------------------------------
+%	SECTION 4
+%----------------------------------------------------------------------------------------
+
+\section{To Display Maps}
+\subsection{Data Structure of Maps}
+\textbf{Yearly Data} 
+
+\subsection{Display Maps}
+
+\pagebreak
+%----------------------------------------------------------------------------------------
+%	SECTION 5
+%----------------------------------------------------------------------------------------
+\section{To Interact with LPJmL}
+\subsection{Structure}
+
+\pagebreak
+
+%----------------------------------------------------------------------------------------
+%	SECTION 5
+%----------------------------------------------------------------------------------------
+\section{Function List}
+\pagebreak
+\end{document}
