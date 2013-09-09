@@ -137,9 +137,9 @@ soilpar.config<-function(){
                          dev.off()
                          cat("Result Graph Storation: Done!")
                        })
-   tkgrid(run.but)
-   tkgrid(plot.but)   
-   tkgrid(store.but)
+   tkgrid(run.but,row=4,column=3)
+   tkgrid(plot.but,row=5,column=3)   
+   tkgrid(store.but,row=6,column=3)
    tkfocus(tt.cw)
 
 }
