@@ -19,8 +19,8 @@ rm (list=ls(all=TRUE))
   global.year<-c(1901,1905)
   
   #location input type setting
-  #input.type<-0  #The locations input by clicking on the map
-  input.type<-1  #The locations input by exact lontitude latitude
+  input.type<-0  #The locations input by clicking on the map
+  #input.type<-1  #The locations input by exact lontitude latitude
   
   #------------------------------------------
 #plot data:can be personalised

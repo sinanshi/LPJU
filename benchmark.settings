@@ -4,6 +4,10 @@
 res <- 0.5               # resolution in deg
 
 
+cftstartyear<-1700 #set cft start year when neccessary
+cftendyear<-2005
+
+
 simstartyear <- 1901        # startyear of data
 simendyear<- 2009
 input_header<-43
