@@ -19,7 +19,7 @@ get.output.info<-function(path){
 }
 
 #-------------------------------------
-#return simulation year for daily output
+#return simulation year for daily output (NOT USEFUL!!!)
 #-------------------------------------
 get.output.daily.info<-function(daily.fn){
  nyear.out<-file.info(daily.fn)$size/sizeof.data/365 

@@ -6,13 +6,16 @@
 
 
 files.out <<- c("vegc","soilc","litc","firec","flux_estab","mnpp","mrh","mevap","mtransp","mrunoff","fpc")
+
+  
+
 #daily output file list
 #notice:once it has been changed daily.data.frame should also be changed correspondingly
 daily.files.list<<-c("d_cleaf","d_cpool","d_croot","d_cso","d_daylength","d_evap","d_fhiopt","d_fphu","d_froot","d_gpp","d_gresp","d_growingday","d_hi",
 "d_himind","d_husum","d_irrig","d_lai","d_laimax_adjusted","d_laimaxnppdeficit","d_npp","d_par","d_perc","d_pet","d_phen","d_phu","d_prec","d_pvd","d_rd",
 "d_rpool","d_rroot","d_rso","d_sun","d_temp","d_trans","d_vdsum","d_w0","d_w1","d_wdf","d_wevap","d_wscal")
-
-#d_fphu? d_phu? d_so? d_leaf?
+monthly.files.list<<-c("mevap","mfpar","mgpp","minterc","mnpp","mrh","mrunoff","mswc1","mswc2","mtransp")
+yearly.files.list<<-c("firec","firef","flux_estab","flux_harvest","litc","soilc","vegc")
 
 #notice that it includes monthly output and yearly output.
 
@@ -139,7 +142,6 @@ d_himind="",d_husum="",d_irrig="",d_lai="",d_laimax_adjusted="",d_laimaxnppdefic
 d_rpool="",d_rroot="",d_rso="",d_sun="",d_temp="",d_trans="",d_vdsum="",d_w0="",d_w1="",d_wdf="",d_wevap="",d_wscal="")
   
   for(i in 1:length(daily.files.list)){
-    
     daily.fn<-file(paste(path,daily.files.list[i],".bin",sep=""),"rb")
     nyear<-get.output.daily.info(paste(path,daily.files.list[i],".bin",sep=""))
     cat("Reading",daily.files.list[i],"...")
@@ -153,6 +155,59 @@ d_rpool="",d_rroot="",d_rso="",d_sun="",d_temp="",d_trans="",d_vdsum="",d_w0="",
   
 }  
     
+
+#=======================
+#daily output reading and put all daily output data into 
+# a data frame
+#=======================
+
+read.yearly.output<-function(path){
+  ncell<-get.output.info(path)[1]
+  nyear<-get.output.info(path)[2]
+  temp<-array(NA,dim=nyear)
+#this should be the same list as daily.files.list
+ yearly.data.frame<-data.frame(firec=temp,firef="",flux_estab="",flux_harvest="",litc="",soilc="",vegc="")
+  
+  for(i in 1:length(yearly.files.list)){
+     yearly.fn<-file(paste(path,yearly.files.list[i],".bin",sep=""),"rb")
+     cat("Reading",yearly.files.list[i],"...")
+     temp<-readBin(yearly.fn,double(),nyear,size=sizeof.data)
+     yearly.data.frame[,yearly.files.list[i]]<-temp
+     cat("done\n")
+     closeAllConnections()
+  }
+  
+  return(yearly.data.frame)
+ 
+}  
+   
+
+   
+#=======================
+#daily output reading and put all daily output data into 
+# a data frame
+#=======================
+
+read.monthly.output<-function(path){
+  ncell<-get.output.info(path)[1]
+  nyear<-get.output.info(path)[2]
+  temp<-array(NA,dim=nyear*12)
+#this should be the same list as daily.files.list
+ monthly.data.frame<-data.frame(mevap=temp,mfpar="",mgpp="",minterc="",mnpp="",mrh="",mrunoff="",mswc1="",mswc2="",mtransp="") 
+  for(i in 1:length(monthly.files.list)){
+     monthly.fn<-file(paste(path,monthly.files.list[i],".bin",sep=""),"rb")
+     cat("Reading",monthly.files.list[i],"...")
+     temp<-readBin(monthly.fn,double(),nyear*12,size=sizeof.data)
+     monthly.data.frame[,monthly.files.list[i]]<-temp
+     cat("done\n")
+     closeAllConnections()
+  }
+  
+  return(monthly.data.frame)
+ 
+}  
+   
+
     
 read.output.all<-function(path){
   pixel_year<-get.output.info(path)
@@ -162,7 +217,7 @@ read.output.all<-function(path){
   cat("Reading the output data...\n")
   
   read.grid(path)
-  read.cow(path)
+#  read.cow(path)
   read.output.carbon(path,pixel_year[1],pixel_year[2])
   read.output.flux(path,pixel_year[1],pixel_year[2])
   

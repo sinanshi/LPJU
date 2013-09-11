@@ -23,8 +23,6 @@ configure.windows<-function(){
       lonlat.array[i,2]<<-tclvalue(get(paste("tcl.lat",i,sep="")))
       grid<-lonlat2grid(lonlat.array[i,1],lonlat.array[i,2])
       system2("./monorunconf.sh",args=grid)  
-  
-
    }
    #case 2: if the soil.par has been modified
    if(any(theParameter.array=="Soil.Par")){
@@ -35,25 +33,52 @@ configure.windows<-function(){
    }    
 
      #run LPJmL!!
-     system("./runonepixel.sh")
-     # system("./../LPJmL2013/bin/lpjml ../LPJmL2013/lpjml.conf")
-     # system("./../LPJmL2013/bin/lpjml -DFROM_RESTART ../LPJmL2013/lpjml.conf")
+   system("./runonepixel.sh")
+   #--------------------------------
+   #The following piece of code is exactely the same as lpjml.dailyrun in benchmark_functions
+   #read one pixel run data
+   #--------------------------------
+   daily.temp<-read.daily.output(path.mono)
+   daily.temp$ID<-rep(i,length(daily.temp[,1]))
+   
+   monthly.temp<-read.monthly.output(path.mono)
+   monthly.temp$ID<-rep(i,length(monthly.temp[,1]))
+   
+   yearly.temp<-read.yearly.output(path.mono)
+   yearly.temp$ID<-rep(i,length(yearly.temp[,1])) #give ID label to identify the data of runs
+ 
+   
+   if(i==1){
+      daily.frame<-daily.temp
+      yearly.frame<-yearly.temp
+      monthly.frame<-monthly.temp
+   }
+   else{
+     daily.frame<-rbind(daily.frame,daily.temp)
+     yearly.frame<-rbind(yearly.frame,yearly.temp)
+     monthly.frame<-rbind(monthly.frame,monthly.temp)
+   }
+  } 
+   
+   #realign data into a good form    
+   daily.frame$row <- with(daily.frame, ave(ID==ID, ID, FUN = cumsum))
+   m <- melt(daily.frame, id.vars = c("row", "ID"))
+   daily.frame.out <<- acast(m, row ~ variable ~ ID)
+   
+   
+   #realign data in a good form    
+   monthly.frame$row <- with(monthly.frame, ave(ID==ID, ID, FUN = cumsum))
+   m <- melt(monthly.frame, id.vars = c("row", "ID"))
+   monthly.frame.out <<- acast(m, row ~ variable ~ ID)
+     
 
-     #The following piece of code is exactely the same as lpjml.dailyrun in benchmark_functions
-     #read one pixel run data
-     daily.temp<-read.daily.output(path.mono)
-     daily.temp$ID<-rep(i,length(daily.temp[,1]))
-     if(i==1){
-        daily.frame<-daily.temp
-     }
-     else{
-       daily.frame<-rbind(daily.frame,daily.temp)
-     }
-    }
-    #realign data into a good form    
-    daily.frame$row <- with(daily.frame, ave(ID==ID, ID, FUN = cumsum))
-    m <- melt(daily.frame, id.vars = c("row", "ID"))
-    daily.frame.out <<- acast(m, row ~ variable ~ ID)
+   #realign data in a good form    
+   yearly.frame$row <- with(yearly.frame, ave(ID==ID, ID, FUN = cumsum))
+   m <- melt(yearly.frame, id.vars = c("row", "ID"))
+   yearly.frame.out <<- acast(m, row ~ variable ~ ID)
+     
+ 
+    
     cat("done!\n")
  
 }
