@@ -1,6 +1,6 @@
  source("header")
 
- read<-0 #read data (1) or not (0)
+ read<-1 #read data (1) or not (0)
 
 
  path.in<-"../inputs/OTMed_window_6089p_2013/"
@@ -9,22 +9,29 @@
  
  
  
- cft.name <- c("rainfed wheat","irri wheat",
- "rainfed rice","irri rice",
- "rainfed maize","irri maize",
- "rainfed millet","irri millet",
- "rainfed lentils","irri lentils",
- "rainfed sugarbeet", "irri sugarbeet",
- "rainfed yam", "irri yam",
- "rainfed sunflower", "irri sunflower",
- "rainfed soybean", "irri soybean",
- "rainfed groundnuts","irri groundnuts",
- "rainfed rapeseed", "irri rapeseed",
- "rainfed sugarcane","irri sugarcane",
- "rainfed others", "irri others",
- "rainfed mangrass",  "irri mangrass",
- "rainfed energytree","irri energytree",
- "rainfed energygrass","irri energygrass")
+ cft.name <- c("rainfed wheat", "rainfed rice", "rainfed maize", "rainfed millet", "rainfed lentils", "rainfed sugarbeet", "rainfed yam", "rainfed sunflower", "rainfed soybean", "rainfed groundnuts",
+ "rainfed rapeseed",
+ "rainfed sugarcane",
+ "rainfed others", 
+ "rainfed mangrass",
+ "rainfed energytree",
+ "rainfed energygrass",
+ "irri wheat",
+ "irri rice",
+ "irri maize",
+ "irri millet",
+ "irri lentils",
+ "irri sugarbeet",
+ "irri yam",
+ "irri sunflower",
+ "irri soybean",
+ "irri groundnuts",
+ "irri rapeseed",
+ "irri sugarcane",
+ "irri others",
+ "irri mangrass",
+ "irri energytree",
+ "irri energygrass")
  
  
  
@@ -53,7 +60,7 @@
    cat("=======================\n")
    cat("CFT\n")
    for(i in 1:32){
-     cat(cft.name[i],":",cft1[i,grid_,year-cftstartyear],"      ")
+     cat(cft.name[i],":",cft1[year-cftstartyear,grid_,i],"      ")
      if(i%%2==0)  cat("\n")
   }
  }

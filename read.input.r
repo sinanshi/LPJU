@@ -43,10 +43,10 @@ read.input.cft<-function(path.in){
   filecft <- file(sprintf(file.name),"rb")
   seek(filecft,where=input_header,origin="start")
  
-  cft.in<-array(NA,dim=c(32,6089,nyear))
-  for(i in 1:32){
+  cft.in<-array(NA,dim=c(nyear,6089,32))
+  for(i in 1:nyear){
     for(j in 1:6089){
-     cft.in[i,j,]<-readBin(filecft,integer(),n=nyear,size=2)    
+     cft.in[i,j,]<-readBin(filecft,integer(),n=32,size=2)    
     }
  }
  close(filecft)

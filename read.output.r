@@ -217,7 +217,7 @@ read.output.all<-function(path){
   cat("Reading the output data...\n")
   
   read.grid(path)
-#  read.cow(path)
+  read.cow(path)
   read.output.carbon(path,pixel_year[1],pixel_year[2])
   read.output.flux(path,pixel_year[1],pixel_year[2])
   
