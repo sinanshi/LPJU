@@ -21,7 +21,7 @@ configure.windows<-function(){
    if(any(theParameter.array=="Location")){
       lonlat.array[i,1]<<-tclvalue(get(paste("tcl.lon",i,sep=""))) #coor.array is a global array for storing lon,lat with configurations
       lonlat.array[i,2]<<-tclvalue(get(paste("tcl.lat",i,sep="")))
-      grid<-lonlat2grid(lonlat.array[i,1],lonlat.array[i,2])
+      grid<-lonlat2grid(lonlat.array[i,1],lonlat.array[i,2])-1
       system2("./monorunconf.sh",args=grid)  
    }
    #case 2: if the soil.par has been modified

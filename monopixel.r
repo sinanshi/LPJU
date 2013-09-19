@@ -23,22 +23,8 @@ round.grid<-function(num,res){
 #run monopixel LPJmL with lontitude latitude and spinup year
 ###################################
 monop.lrun<-function(lon.mono,lat.mono,spinup.mono){
- 
-# if(exists("lon.mono")==FALSE||exists("lat.mono")==FALSE||exists("spinup.mono")==FALSE){
-#   cat("ERROR:To run mono-pixel LPJmL, Both position and spinup year have to be configured!")
-#   stop()
-# }
-# pos<-which(lon==lon.mono&lat==lat.mono)
-# 
-# if(length(pos)!=1){
-#   print("Error:LPJ do not provide any data on the sea!")
-#   print("      Please choose a land pixel and try again.")
-#   stop()  
-# }
-
-  pos<-lonlat2grid(lon.mono,lat.mono)
+  pos<-lonlat2grid(lon.mono,lat.mono)-1#NOTICE: in C grid number starts from 0
   cat("grid number=",pos,"\n")
-  cat("(lontitude,latitude)=",lon[pos],lat[pos],"\n")
  arg<-paste(pos,spinup.mono)
  system2('./monopixelrun.sh',args=arg,wait=TRUE)
 }

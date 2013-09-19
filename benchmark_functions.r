@@ -168,11 +168,10 @@ lonlat2grid<-function(longitude,latitude){
  pos<-which(lon==longitude&lat==latitude)
  
  if(length(pos)!=1){
-   print("Error:LPJ do not provide any data on the sea!")
-   print("      Please choose a land pixel and try again.")
+   cat("Error:The pixel you chosen is not available on LPJmL grid\n")
    stop()  
  }
- else   return(pos-1)
+ else   return(pos)
  
 }
 
