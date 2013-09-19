@@ -1,7 +1,8 @@
 #!/bin/bash
 
 export RDIR=$(pwd)
-export LPJROOT=$RDIR/../LPJmL2013
+export LPJDIR=$(find ../  -name '--LPJ*')
+export LPJROOT=$RDIR/$LPJDIR
 cd $LPJROOT
 
 ./bin/lpjml  lpjml.conf

@@ -53,7 +53,13 @@ nft<-32 #number of pft+bft+cft
 # output run
 path.out<-paste(getwd(),"/../outputs/output_2013_test/",sep="")#always put outputs directory parallel with source code
 #path.out <- paste(getwd(),"/outputs/output_OTMed_VegNat_130322/",sep="")
-path.mono<- paste(getwd(),"/../LPJmL2013/output/",sep="")
+
+path.lpj<-paste(getwd(),"/../",dir("../")[grep("--LPJmL",dir("../"))],sep="")
+if(length(path.lpj)!=1){
+  cat("ERROR:There can only be one directory named as --LPJmL[version]\n")
+  stop()
+}
+path.mono<- paste(path.lpj,"/output/",sep="")
 path.fao<-paste(getwd(),"/FAO/",sep="")
 endian.out <- "little"
 
