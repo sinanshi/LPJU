@@ -171,7 +171,8 @@ lonlat2grid<-function(longitude,latitude){
    cat("Error:The pixel you chosen is not available on LPJmL grid\n")
    stop()  
  }
- else   return(pos)
+ else   
+   return(pos)
  
 }
 

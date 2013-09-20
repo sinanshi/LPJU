@@ -60,7 +60,7 @@
    cat("=======================\n")
    cat("CFT\n")
    for(i in 1:32){
-     cat(cft.name[i],":",cft1[year-cftstartyear,grid_,i],"      ")
+     cat(cft.name[i],":",cft1[year-cftstartyear+1,grid_,i],"      ")
      if(i%%2==0)  cat("\n")
   }
  }

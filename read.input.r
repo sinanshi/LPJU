@@ -46,8 +46,8 @@ read.input.cft<-function(path.in){
   cft.in<-array(NA,dim=c(nyear,6089,32))
   for(i in 1:nyear){
     for(j in 1:6089){
-     cft.in[i,j,]<-readBin(filecft,integer(),n=32,size=2)    
-    }
+     cft.in[i,j,]<-readBin(filecft,integer(),n=32,size=2)
+   }
  }
  close(filecft)
  cft.in
