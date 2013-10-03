@@ -13,52 +13,49 @@ configure.windows<-function(){
 #for each configuration and run LPJmL. 
 #---------------------------------------------------
  config.done<-function(){
- #define configuration variables
- lonlat.array<<-array(NA,dim=c(runs,2))
-
- for(i in 1:runs){
-   #case 1: if the location has been modified
-   if(any(theParameter.array=="Location")){
-      lonlat.array[i,1]<<-tclvalue(get(paste("tcl.lon",i,sep=""))) #coor.array is a global array for storing lon,lat with configurations
-      lonlat.array[i,2]<<-tclvalue(get(paste("tcl.lat",i,sep="")))
-      grid<-lonlat2grid(lonlat.array[i,1],lonlat.array[i,2])-1
-      system2("./monorunconf.sh",args=grid)  
-   }
-   #case 2: if the soil.par has been modified
-   if(any(theParameter.array=="Soil.Par")){
-      arg<-array(NA,dim=2)
-      arg[1]<-paste(current.name,"soilpar",i,sep="")#name of temp soil par
-      arg[2]<-"../LPJmL2013/par/soil.par"
-      system2("cp",args=arg)
-   }    
-
-     #run LPJmL!!
-   system("./runonepixel.sh")
-   #--------------------------------
-   #The following piece of code is exactely the same as lpjml.dailyrun in benchmark_functions
-   #read one pixel run data
-   #--------------------------------
-   daily.temp<-read.daily.output(path.mono)
-   daily.temp$ID<-rep(i,length(daily.temp[,1]))
-   
-   monthly.temp<-read.monthly.output(path.mono)
-   monthly.temp$ID<-rep(i,length(monthly.temp[,1]))
-   
-   yearly.temp<-read.yearly.output(path.mono)
-   yearly.temp$ID<-rep(i,length(yearly.temp[,1])) #give ID label to identify the data of runs
- 
-   
-   if(i==1){
-      daily.frame<-daily.temp
-      yearly.frame<-yearly.temp
-      monthly.frame<-monthly.temp
-   }
-   else{
-     daily.frame<-rbind(daily.frame,daily.temp)
-     yearly.frame<-rbind(yearly.frame,yearly.temp)
-     monthly.frame<-rbind(monthly.frame,monthly.temp)
-   }
-  } 
+     #define configuration variables
+     lonlat.array<<-array(NA,dim=c(runs,2))
+     for(i in 1:runs){
+         #case 1: if the location has been modified
+         if(any(theParameter.array=="Location")){
+             lonlat.array[i,1]<<-tclvalue(get(paste("tcl.lon",i,sep=""))) #coor.array is a global array for storing lon,lat with configurations
+             lonlat.array[i,2]<<-tclvalue(get(paste("tcl.lat",i,sep="")))
+             grid<-lonlat2grid(lonlat.array[i,1],lonlat.array[i,2])-1
+             system2("./monorunconf.sh",args=grid)  
+        }
+        #case 2: if the soil.par has been modified
+        if(any(theParameter.array=="Soil.Par")){
+            arg<-array(NA,dim=2)
+            arg[1]<-paste(current.name,"soilpar",i,sep="")#name of temp soil par
+            arg[2]<-"../LPJmL2013/par/soil.par"
+            system2("cp",args=arg)
+       }    
+       #run LPJmL!!
+       system("./runonepixel.sh 001")
+#--------------------------------
+#The following piece of code is exactely the same as lpjml.dailyrun in benchmark_functions
+#read one pixel run data
+#--------------------------------
+       daily.temp<-read.daily.output(path.mono)
+       daily.temp$ID<-rep(i,length(daily.temp[,1]))
+       
+       monthly.temp<-read.monthly.output(path.mono)
+       monthly.temp$ID<-rep(i,length(monthly.temp[,1]))
+      
+     
+       yearly.temp<-read.yearly.output(path.mono)
+       yearly.temp$ID<-rep(i,length(yearly.temp[,1])) #give ID label to identify the data of runs
+       if(i==1){
+           daily.frame<-daily.temp
+           yearly.frame<-yearly.temp
+           monthly.frame<-monthly.temp
+       }
+       else{
+           daily.frame<-rbind(daily.frame,daily.temp)
+           yearly.frame<-rbind(yearly.frame,yearly.temp)
+           monthly.frame<-rbind(monthly.frame,monthly.temp)
+      }
+    } 
    
    #realign data into a good form    
    daily.frame$row <- with(daily.frame, ave(ID==ID, ID, FUN = cumsum))
@@ -105,8 +102,34 @@ soilpar.config<-function(){
   }
  }
 }
-
-
+#--------------------------------------------------
+#This function for making restart file
+#--------------------------------------------------
+make.restart<-function(){
+         #define configuration variables
+     lonlat.array<<-array(NA,dim=c(runs,2))
+     for(i in 1:runs){
+         #case 1: if the location has been modified
+         if(any(theParameter.array=="Location")){
+             lonlat.array[i,1]<<-tclvalue(get(paste("tcl.lon",i,sep=""))) #coor.array is a global array for storing lon,lat with configurations
+             lonlat.array[i,2]<<-tclvalue(get(paste("tcl.lat",i,sep="")))
+             grid<-lonlat2grid(lonlat.array[i,1],lonlat.array[i,2])-1
+             system2("./monorunconf.sh",args=grid)  
+        }
+        #case 2: if the soil.par has been modified
+        if(any(theParameter.array=="Soil.Par")){
+            arg<-array(NA,dim=2)
+            arg[1]<-paste(current.name,"soilpar",i,sep="")#name of temp soil par
+            arg[2]<-"../LPJmL2013/par/soil.par"
+            system2("cp",args=arg)
+       }    
+       #run LPJmL!!
+       system("./runonepixel.sh 110")
+       cat("Restart files have been created.\n")
+       cat("Please be very careful that the configurations of restart files are the same as the running configurations.")
+         
+    }
+}
 
   #make the directory according the current time, all the results will be
   #stored in VisualResults/
@@ -142,6 +165,7 @@ soilpar.config<-function(){
 
   
    run.but<-tkbutton(tt.cw,text="RUN LPJmL",command=config.done)
+   make.restart.but<-tkbutton(tt.cw,text="Make Restart Files",command=make.restart)
    plot.but<-tkbutton(tt.cw,text="Plot Daily Data",
                       command=function(){
                         x11()
@@ -162,6 +186,7 @@ soilpar.config<-function(){
                          dev.off()
                          cat("Result Graph Storation: Done!")
                        })
+   tkgrid(make.restart.but,row=3,column=3)
    tkgrid(run.but,row=4,column=3)
    tkgrid(plot.but,row=5,column=3)   
    tkgrid(store.but,row=6,column=3)

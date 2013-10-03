@@ -3,6 +3,7 @@
    npixel.out<-pixel_year[1]
    res=0.5
    grid.fn.out<- file(paste(path.input,"grid_OTMed_6089p_h43.bin",sep=""),"rb")
+   seek(grid.fn.out,43, origin = "start")
    grid.data<<-readBin(grid.fn.out,integer(),n=2*npixel.out,size=2)/100
    lon<<-grid.data[c(1:npixel.out)*2-1]
    lat<<-grid.data[c(1:npixel.out)*2]

@@ -20,21 +20,22 @@
   #location input type setting
   #input.type<-0  #The locations input by clicking on the map
   input.type<-1  #The locations input by exact lontitude latitude
-  
+ 
   #------------------------------------------
 #plot data:can be personalised
 #------------------------------------------
 daily.plot<-function(){ 
  #plot years
-  begin<-1988; end<-2004
-
+  begin<-1950; end<-2009
+  simstartyear<-1950 
+  simendyear<-2009 
   loc.d<-dim(daily.frame.out)[3]
   loc.m<-dim(monthly.frame.out)[3]
   loc.y<-dim(yearly.frame.out)[3]
   #data to plot
-  plot.list.d<-c("d_temp","d_gpp")
+  plot.list.d<-c("d_temp")
   plot.list.m<-c("mnpp")
-  plot.list.y<-c("soilc","vegc")
+  plot.list.y<-c("soilc")
   
 
   
