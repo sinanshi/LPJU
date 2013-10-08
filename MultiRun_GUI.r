@@ -27,7 +27,7 @@ configure.windows<-function(){
         if(any(theParameter.array=="Soil.Par")){
             arg<-array(NA,dim=2)
             arg[1]<-paste(current.name,"soilpar",i,sep="")#name of temp soil par
-            arg[2]<-"../LPJmL2013/par/soil.par"
+            arg[2]<-"../--LPJmL2013/par/soil_new.par"
             system2("cp",args=arg)
        }    
        #run LPJmL!!
@@ -85,7 +85,7 @@ configure.windows<-function(){
 #--------------------------------------------------
 soilpar.config<-function(){
   sys.args<-array(NA,dim=2) #the arguments for copying soil.par file used by system2
-  sys.args[1]<-"../LPJmL2013/par/soil.par"#directory of original soil.par
+  sys.args[1]<-"../--LPJmL2013/par/soil_new.par"#directory of original soil.par
   for(i in 1:runs){
     soil.par.tempname<-paste(current.name,"soilpar",i,sep="")#name of temp soil par
     sys.args[2]<-soil.par.tempname
@@ -120,7 +120,7 @@ make.restart<-function(){
         if(any(theParameter.array=="Soil.Par")){
             arg<-array(NA,dim=2)
             arg[1]<-paste(current.name,"soilpar",i,sep="")#name of temp soil par
-            arg[2]<-"../LPJmL2013/par/soil.par"
+            arg[2]<-"../--LPJmL2013/par/soil_new.par"
             system2("cp",args=arg)
        }    
        #run LPJmL!!
