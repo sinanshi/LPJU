@@ -42,23 +42,42 @@ read.input.grid<-function(path.in){
     close(gridfile)
 }
 
+Lindex<-function(NPIX,NBANDS,year,pix,band) {
+    temp<-(year-1)*NPIX*NBANDS+(pix-1)*NBANDS+band
+    return(temp)
+}
 #temporary read function for testing
-read.input.files<-function(filename,data.size){#short 2; long 8; int 4; char 1; on 64 bit OS
+read.input.files.one<-function(filename,data.size,year,nband){#short 2; long 8; int 4; char 1; on 64 bit OS
     fileHeader<-read.input.header(filename)
     file.in <- file(sprintf(filename),"rb")
-    data.in<-array(NA,dim=c(fileHeader$nyears,fileHeader$ncells,fileHeader$nbands))
-    temp<-readBin(file.in,integer(),n=fileHeader$nbands*fileHeader$nyears*fileHeader$ncells,size=data.size)*fileHeader$scalar
-    temp2<-array(NA,c(fileHeader$nyears*fileHeader$ncells , fileHeader$nbands))
+    data.in<-array(NA,dim=c(fileHeader$ncells))
+    year.check<-1+fileHeader$firstyear-year
+
     seek(file.in,where=HEADER_SIZE,origin="start")
-    for(i in 1:(fileHeader$nyears*fileHeader$ncells))  temp2[i,] <-temp[c(((fileHeader$nbands*(i-1))+1):(fileHeader$nbands*(i)))]
-    for(i in 1:(fileHeader$nyears))                              data.in[i,,]<-temp2[c(((fileHeader$ncells*(i-1))+1):(fileHeader$ncells*(i))),]
+          for(p in 1:fileHeader$ncells){
+                 seek(file.in,where=(HEADER_SIZE+Lindex(fileHeader$ncells,fileHeader$nbands,year.check,p,nband)),
+                              origin="start")
+               data.in[p]<-readBin(file.in, integer(), n=1, size=data.size)*fileHeader$scalar
+          }
     close(file.in)
     return(data.in)
 }
 
-
-
-
+read.input.files<-function(filename,data.size){
+    fileHeader<-read.input.header(filename)
+    file.in <- file(sprintf(filename),"rb")
+    data.in<-array(NA,dim=c(fileHeader$nbands,fileHeader$nyears,fileHeader$ncells))
+    seek(file.in,where=HEADER_SIZE,origin="start")
+   for(i in 1:fileHeader$nyears){
+        for(j in 1:fileHeader$ncells){
+               data.in[,i,j]<-readBin(file.in, integer(), n=fileHeader$nbands, size=data.size)*fileHeader$scalar
+        }
+     }
+    close(file.in)
+    return(data.in)
+    
+ 
+}
 # 
 # read.input.soil<-function(path.in){
 #   input.list<-dir(path.in)
