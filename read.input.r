@@ -1,66 +1,71 @@
- read.input.grid<-function(){
-   pixel_year<-get.output.info(path.out)
-   npixel.out<-pixel_year[1]
-   res=0.5
-   grid.fn.out<- file(paste(path.input,"grid_OTMed_6089p_h43.bin",sep=""),"rb")
-   seek(grid.fn.out,43, origin = "start")
-   grid.data<<-readBin(grid.fn.out,integer(),n=2*npixel.out,size=2)/100
-   lon<<-grid.data[c(1:npixel.out)*2-1]
-   lat<<-grid.data[c(1:npixel.out)*2]
-   ind_lon<<- as.integer((grid.data[c(1:npixel.out)*2-1]+20)/res + 1.01)
-   ind_lat<<- as.integer((grid.data[c(1:npixel.out)*2]-25)/res + 1.01)
-   close(grid.fn.out)
+################
+#read inputs
+#
+#
+################
+
+#setting path of input
+path.in<-"../../NelasInputs/OUTPUT/"
+HEADER_SIZE<-43
+
+read.input.header<-function(filename){
+    file.in<-file(filename,"rb")
+    
+    seek(file.in,7, origin = "start")
+    version<-readBin(file.in,integer(),n=1,size=4)
+    order<-readBin(file.in,integer(),n=1,size=4)
+    firstyear<-readBin(file.in,integer(),n=1,size=4)
+    nyears<-readBin(file.in,integer(),n=1,size=4)
+    firstcell<-readBin(file.in,integer(),n=1,size=4)   
+    ncells<-readBin(file.in,integer(),n=1,size=4)
+    nbands<-readBin(file.in,integer(),n=1,size=4)
+    cellsize<-readBin(file.in,numeric(),n=1,size=4)
+    scalar<-readBin(file.in,numeric(),n=1,size=4)
+    header<-data.frame(version,order,firstyear,nyears,firstcell,ncells,nbands,cellsize,scalar)
+    close(file.in)
+    return(header)
+     
+}
+ 
+read.input.grid<-function(path.in){
+     input.list<-dir(path.in)
+     grid.name<-paste(path.in,input.list[grep("grid.bin",input.list)],sep="")
+     grid.header<-read.input.header(grid.name)
+     
+     gridfile<- file(grid.name,"rb")
+     seek(gridfile,HEADER_SIZE, origin = "start")
+    grid.data<<-readBin(gridfile,integer(),n=2*grid.header$ncells,size=2)*grid.header$scalar
+    lon<<-grid.data[c(1:grid.header$ncells)*2-1]
+    lat<<-grid.data[c(1:grid.header$ncells)*2]
+    ind_lon<<- as.integer((grid.data[c(1:grid.header$ncells)*2-1]+20)/res + 1.01)
+    ind_lat<<- as.integer((grid.data[c(1:grid.header$ncells)*2]-25)/res + 1.01)
+    close(gridfile)
 }
 
 #temporary read function for testing
-read.input.tmp<-function(path.in){
-  input.list<-dir(path.in)
-  file.name<-paste(path.in,input.list[grep("tmp",input.list)],sep="")
-  nyear<-(file.info(file.name)$size-input_header)/6089/2/12
-  filetmp <- file(sprintf(file.name),"rb")
-  tmp.in<<-array(NA,dim=c(12,nyear,6089))
-  seek(filetmp,where=input_header,origin="start")
-  for(i in 1:nyear){
-    for(j in 1:6089){
-      tmp.in[,i,j]<<-readBin(filetmp, integer(), n=12, size=2)/10
-    }
-  }
-close(filetmp)
-}
-
-read.input.cft<-function(path.in){
-
-  input.list<-dir(path.in)
-  file.name<-paste(path.in,input.list[grep("cft",input.list)],sep="")
-  nyear<-(file.info(file.name)$size-input_header)/6089/32/2
-  
-  ##check if the file
-  if(nyear!=(cftendyear-cftstartyear+1))
-    cat("ERROR: File size is not correct. Please reset cftstartyear and cftendyear.")
-  else
-    cat(paste("Reading",":",file.name,"..."))
-
-  ##Read cft data
-  filecft <- file(sprintf(file.name),"rb")
-  seek(filecft,where=input_header,origin="start")
- 
-  cft.in<-array(NA,dim=c(nyear,6089,32))
-  for(i in 1:nyear){
-    for(j in 1:6089){
-     cft.in[i,j,]<-readBin(filecft,integer(),n=32,size=2)
-   }
- }
- close(filecft)
- cft.in
+read.input.files<-function(filename,data.size){#short 2; long 8; int 4; char 1; on 64 bit OS
+    fileHeader<-read.input.header(filename)
+    file.in <- file(sprintf(filename),"rb")
+    data.in<-array(NA,dim=c(fileHeader$nyears,fileHeader$ncells,fileHeader$nbands))
+    temp<-readBin(file.in,integer(),n=fileHeader$nbands*fileHeader$nyears*fileHeader$ncells,size=data.size)*fileHeader$scalar
+    temp2<-array(NA,c(fileHeader$nyears*fileHeader$ncells , fileHeader$nbands))
+    seek(file.in,where=HEADER_SIZE,origin="start")
+    for(i in 1:(fileHeader$nyears*fileHeader$ncells))  temp2[i,] <-temp[c(((fileHeader$nbands*(i-1))+1):(fileHeader$nbands*(i)))]
+    for(i in 1:(fileHeader$nyears))                              data.in[i,,]<-temp2[c(((fileHeader$ncells*(i-1))+1):(fileHeader$ncells*(i))),]
+    close(file.in)
+    return(data.in)
 }
 
 
-read.input.soil<-function(path.in){
-  input.list<-dir(path.in)
-  file.name<-paste(path.in,input.list[grep("soil",input.list)],sep="")
-  filesoil<-file(sprintf(file.name),"rb")
-  soilpar<-readBin(filesoil,integer(),n=6089,size=1)
-  
-  soilpar
-}
 
+
+# 
+# read.input.soil<-function(path.in){
+#   input.list<-dir(path.in)
+#   file.name<-paste(path.in,input.list[grep("soil",input.list)],sep="")
+#   filesoil<-file(sprintf(file.name),"rb")
+#   soilpar<-readBin(filesoil,integer(),n=npixel,size=1)
+#   
+#   soilpar
+#   
+#   }
