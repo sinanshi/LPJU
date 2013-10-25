@@ -34,11 +34,24 @@ read.input.grid<-function(path.in){
      
      gridfile<- file(grid.name,"rb")
      seek(gridfile,HEADER_SIZE, origin = "start")
-    grid.data<<-readBin(gridfile,integer(),n=2*grid.header$ncells,size=2)*grid.header$scalar
+    grid.temp<-readBin(gridfile,integer(),n=2*grid.header$ncells,size=2)*grid.header$scalar
+    grid.data<<-round(grid.temp,digits=2)
     lon<<-grid.data[c(1:grid.header$ncells)*2-1]
     lat<<-grid.data[c(1:grid.header$ncells)*2]
-    ind_lon<<- as.integer((grid.data[c(1:grid.header$ncells)*2-1]+20)/res + 1.01)
-    ind_lat<<- as.integer((grid.data[c(1:grid.header$ncells)*2]-25)/res + 1.01)
+    #ind_lon<<- as.integer((grid.data[c(1:grid.header$ncells)*2-1]+20)/res + 1.01)
+    #ind_lat<<- as.integer((grid.data[c(1:grid.header$ncells)*2]-25)/res + 1.01)
+    EAST<<-round(max(lon),2)
+    SOUTH<<-round(min(lat),2)
+    WEST<<-round(min(lon),2)
+    NORTH<<-round(max(lat),2)
+    RES<<-0.5
+    NC<<-(NORTH-SOUTH)/RES+1
+    NR<<-(EAST-WEST)/RES+1
+
+    
+    ind_lon<<-lon*2-min(lon)*2+1
+    ind_lat<<-lat*2-min(lat)*2+1
+    
     close(gridfile)
 }
 
