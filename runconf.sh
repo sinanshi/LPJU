@@ -2,7 +2,8 @@
 #1st argument: with 3 digits, 1st digits indicate create first restart file, 
 #                                                      2nd digits for creating second restart file with land
 #                                                      3rd  digits to run from restart file. 
-#2nd argument: address of LPJmL                                
+#2nd argument: address of LPJmL 
+#3rd argument: address to write LPJmL screen output
 
 #!/bin/bash
 
