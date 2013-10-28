@@ -39,14 +39,14 @@ export restartend3=2000
 
 if [ "${1:0:1}" == 1 ]; then
   withland=`grep -c //#define\ WITH_LANDUSE  lpjml.conf`
-  if [ "$withland" == 0 ]; then #set landuse on
-     sed -i "s/#define WITH_LANDUSE 1   \/\*NO_LANDUSE: land use disabled; WITH_LANDUSE: land use enabled \*\//\/\/#define WITH_LANDUSE 1   \/\*NO_LANDUSE: land use disabled; WITH_LANDUSE: land use enabled \*\//g" lpjml.conf
+  if [ "$withland" == 0 ]; then #remove landuse
+       sed -i "s/#define WITH_LANDUSE 1/\/\/#define WITH_LANDUSE 1/g" lpjml.conf
   fi
 
   #make the name of restart file
   sed -i 's/.*restartfile1.*/restart\/s5000nv_p'$gridnum'_'$restartend1'.lpj\/\*restartfile1\*\//g' lpjml.conf 
 
-  ./bin/lpjml  lpjml.conf
+ ./bin/lpjml  lpjml.conf >${3}.run_1.out
 fi
 
 
@@ -59,8 +59,8 @@ fi
 #----------------------
 if [ "${1:1:1}" == 1 ]; then
   withland=`grep -c //#define\ WITH_LANDUSE lpjml.conf`
-  if [ "$withland" == 1 ]; then
-     sed -i "s/\/\/#define WITH_LANDUSE/#define WITH_LANDUSE 1   \/\*NO_LANDUSE: land use disabled; WITH_LANDUSE: land use enabled \*\//g" lpjml.conf
+  if [ "$withland" == 1 ]; then #add landuse
+      sed -i "s/\/\/#define WITH_LANDUSE 1/#define WITH_LANDUSE 1/g" lpjml.conf
   fi
 
   sed -i 's/.*spinup2.*/'$spinup2'\/\*spinup2\*\//g' lpjml.conf
@@ -71,7 +71,7 @@ if [ "${1:1:1}" == 1 ]; then
   sed -i 's/.*restartfile3.*/restart\/s5000LU_p'$gridnum'_'$restartend2'.lpj\/\*restartfile3\*\//g' lpjml.conf
   sed -i 's/.*restartend2.*/'$restartend2'\/\*restartend2\*\//g' lpjml.conf
 
-  ./bin/lpjml -DFROM_RESTART lpjml.conf
+  ./bin/lpjml -DFROM_RESTART lpjml.conf >${3}.run_2.out
 fi
 #----------------------
 #3rd Run: Create Landuse restart file
@@ -83,7 +83,7 @@ fi
 if [ "${1:2:2}" == 1 ]; then
   withland=`grep -c //#define\ WITH_LANDUSE lpjml.conf`
   if [ "$withland" == 1 ]; then
-     sed -i "s/\/\/#define WITH_LANDUSE/#define WITH_LANDUSE 1   \/\*NO_LANDUSE: land use disabled; WITH_LANDUSE: land use enabled \*\//g" lpjml.conf
+     sed -i "s/\/\/#define WITH_LANDUSE 1/#define WITH_LANDUSE 1/g" lpjml.conf
   fi
 
   sed -i 's/.*spinup2.*/'$spinup3'\/\*spinup2\*\//g' lpjml.conf
@@ -94,5 +94,5 @@ if [ "${1:2:2}" == 1 ]; then
   sed -i 's/.*restartfile3.*/restart\/s5000LU_p'$gridnum'_'$restartend3'.lpj\/\*restartfile3\*\//g' lpjml.conf
   sed -i 's/.*restartend2.*/'$restartend3'\/\*restartend2\*\//g' lpjml.conf
 
-  ./bin/lpjml -DFROM_RESTART lpjml.conf
+  ./bin/lpjml -DFROM_RESTART lpjml.conf >${3}.run_3.out
 fi
