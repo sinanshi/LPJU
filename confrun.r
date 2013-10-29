@@ -203,38 +203,38 @@ read.runoutput<-function(outpath,filename){#filename without .bin
 # running examples
 # # ###################
 ##source("header") #not needed in running this scrpit but in seperate file is neccessary
-
-lpjdir<-c("/home/sinan/workspace/LPJ_Utilities/--LPJmL2013/",
-                     "/home/sinan/workspace/LPJ_Utilities/--LPJmL2013/",
-                     "/home/sinan/workspace/LPJ_Utilities/0_LPJmL.in.progress/")
-
-
-pixelnum<-c(2000,100,2100)
-
-conff1<-c("sinan/bla1","sinan/bla2")
-conff2<-c("sinan/par1","sinan/par2")
-conff3<-c("sinan/par1","sinan/par2")
-conffiles<-rbind(conff1,conff2,conff3)
-
-
-conffile.dir1<-c("/home/sinan/workspace/LPJ_Utilities/--LPJmL2013/bla1", "/home/sinan/workspace/LPJ_Utilities/--LPJmL2013/bla2")
-conffile.dir2<-c("/home/sinan/workspace/LPJ_Utilities/--LPJmL2013/bla1", "/home/sinan/workspace/LPJ_Utilities/--LPJmL2013/bla2")
-conffile.dir3<-c("/home/sinan/workspace/LPJ_Utilities/0_LPJmL.in.progress/bla1", "/home/sinan/workspace/LPJ_Utilities/0_LPJmL.in.progress/bla2")
-conffile.direction<-rbind(conffile.dir1,conffile.dir2,conffile.dir3)
-
-dir.out<-c("../VisualResults/a/","../VisualResults/b/","../VisualResults/c/")
-onepix.config.run(lpjdir=lpjdir,pixelnum=pixelnum,conffiles=conffiles,conffile.direction=conffile.direction,dir.out=dir.out)
-
-#Example read.runoutput
-filename=c("mnpp","d_temp","vegc")
-list1<-read.runoutput(dir.out[1],filename)
-list2<-read.runoutput(dir.out[2],filename)
-list3<-read.runoutput(dir.out[3],filename)
-
-
-plot(xlim=c(1,365),ylim=c(-15,40),c(1:365),list1$day$d_temp[1:365],"l",col=1)
-lines(c(1:365),list2$day$d_temp[1:365],"l",col=2)
-lines(c(1:365),list3$day$d_temp[1:365],"l",col=3)
+# 
+# lpjdir<-c("/home/sinan/workspace/LPJ_Utilities/--LPJmL2013/",
+#                      "/home/sinan/workspace/LPJ_Utilities/--LPJmL2013/",
+#                      "/home/sinan/workspace/LPJ_Utilities/0_LPJmL.in.progress/")
+# 
+# 
+# pixelnum<-c(2000,100,2100)
+# 
+# conff1<-c("sinan/bla1","sinan/bla2")
+# conff2<-c("sinan/par1","sinan/par2")
+# conff3<-c("sinan/par1","sinan/par2")
+# conffiles<-rbind(conff1,conff2,conff3)
+# 
+# 
+# conffile.dir1<-c("/home/sinan/workspace/LPJ_Utilities/--LPJmL2013/bla1", "/home/sinan/workspace/LPJ_Utilities/--LPJmL2013/bla2")
+# conffile.dir2<-c("/home/sinan/workspace/LPJ_Utilities/--LPJmL2013/bla1", "/home/sinan/workspace/LPJ_Utilities/--LPJmL2013/bla2")
+# conffile.dir3<-c("/home/sinan/workspace/LPJ_Utilities/0_LPJmL.in.progress/bla1", "/home/sinan/workspace/LPJ_Utilities/0_LPJmL.in.progress/bla2")
+# conffile.direction<-rbind(conffile.dir1,conffile.dir2,conffile.dir3)
+# 
+# dir.out<-c("../VisualResults/a/","../VisualResults/b/","../VisualResults/c/")
+# onepix.config.run(lpjdir=lpjdir,pixelnum=pixelnum,conffiles=conffiles,conffile.direction=conffile.direction,dir.out=dir.out)
+# 
+# #Example read.runoutput
+# filename=c("mnpp","d_temp","vegc")
+# list1<-read.runoutput(dir.out[1],filename)
+# list2<-read.runoutput(dir.out[2],filename)
+# list3<-read.runoutput(dir.out[3],filename)
+# 
+# 
+# plot(xlim=c(1,365),ylim=c(-15,40),c(1:365),list1$day$d_temp[1:365],"l",col=1)
+# lines(c(1:365),list2$day$d_temp[1:365],"l",col=2)
+# lines(c(1:365),list3$day$d_temp[1:365],"l",col=3)
 
 
 
