@@ -61,15 +61,42 @@ plot.clm<-function(name,bandnames,year,cols){
      }
 }
        
+plot.noheader<-function(name,cols){
+    cat(paste("visualising",name,"\n"))
+    filename<-paste(path.in,name,sep="")
+    size<-file.info(filename)$size
+    file.in <- file(sprintf(filename),"rb")
+    data.in<-array(NA,dim=c(size))
+    raw<-readBin(file.in, integer(), n=size, size=1)
+    map<-map.build(raw)
+    bitmap(paste(path.imout,name,".jpeg",sep=""),type="jpeg",onefile=FALSE,
+                      height=5,width=12,pointsize=24,res=300)  
+     
+     op <- par(mar=c(0,0,0,0),mgp=c(0,0,0))
+       image(x=Longitude,y=Latitude,map,xlim=c(-20,49.25),col=cols(100))
+       image.plot(x=Longitude, y=Latitude, map,xlim=c(-20.00,49.25), axes=FALSE, col=cols(100),
+               legend.only=FALSE, legend.shrink=0.5)
+       map(add=T)
+       par(op)
+       dev.off()
+  
+    
+   
+    close(file.in)
+}
+    
+    
+       
 COLS3 <- colorRampPalette(c("darkgreen","chartreuse","lemonchiffon","goldenrod1","goldenrod2","goldenrod3","goldenrod"))
 COLS2 <- colorRampPalette(c("grey93","lightcyan","skyblue","blue","navy"))
 COLS <- colorRampPalette(c("navy","blue","skyblue","grey","orange","red","red4"))
 #plot.clm("pre.clm",clmbands,2000,COLS2)
 #plot.clm("tmp.clm",clmbands,2000,COLS)
- plot.clm("gpcc_cru09_prec_monthly_1901_2009.clm",clmbands,2000,COLS2)
+# plot.clm("gpcc_cru09_prec_monthly_1901_2009.clm",clmbands,2000,COLS2)
 #plot.clm("tmx.clm",clmbands,2000,COLS)
 #plot.clm("elevation.bin",clmbands,1901,COLS3)
-
+plot.noheader("lakes.bin",COLS2)
+plot.noheader("lakeswithoutreservoirs.bin",COLS2)
 #plot.clm("elevation_6342p_h43.bin",clmbands,1901,COLS3)
 #plot.clm("cru_ts_3_10.1901.2009.tmp_6342p_h43.clm",clmbands,2000,COLS)#otmed/
  

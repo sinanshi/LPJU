@@ -29,22 +29,21 @@ read.input.header<-function(filename){
  
 read.input.grid<-function(path.in){
      input.list<-dir(path.in)
-     grid.name<-paste(path.in,input.list[grep("grid.bin",input.list)],sep="")
+     grid.name<-paste(path.in,input.list[grep("grid",input.list)],sep="")
      grid.header<-read.input.header(grid.name)
      
+     prec<-abs(log(header$scalar)/log(10))
      gridfile<- file(grid.name,"rb")
      seek(gridfile,HEADER_SIZE, origin = "start")
-    grid.temp<-readBin(gridfile,integer(),n=2*grid.header$ncells,size=2)*grid.header$scalar
-    grid.data<<-round(grid.temp,digits=2)
+    grid.temp<-readBin(gridfile,integer(),n=2*grid.header$ncells,size=2)
+    grid.data<<-round(grid.temp,digits=0)*grid.header$scalar
     lon<<-grid.data[c(1:grid.header$ncells)*2-1]
     lat<<-grid.data[c(1:grid.header$ncells)*2]
-    #ind_lon<<- as.integer((grid.data[c(1:grid.header$ncells)*2-1]+20)/res + 1.01)
-    #ind_lat<<- as.integer((grid.data[c(1:grid.header$ncells)*2]-25)/res + 1.01)
-    EAST<<-round(max(lon),2)
-    SOUTH<<-round(min(lat),2)
-    WEST<<-round(min(lon),2)
-    NORTH<<-round(max(lat),2)
-    RES<<-0.5
+    EAST<<-round(max(lon),prec)
+    SOUTH<<-round(min(lat),prec)
+    WEST<<-round(min(lon),prec)
+    NORTH<<-round(max(lat),prec)
+    RES<<-header$cellsize
     NC<<-(NORTH-SOUTH)/RES+1
     NR<<-(EAST-WEST)/RES+1
 

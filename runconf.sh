@@ -2,6 +2,8 @@
 #1st argument: with 3 digits, 1st digits indicate create first restart file, 
 #                                                      2nd digits for creating second restart file with land
 #                                                      3rd  digits to run from restart file. 
+#                                                      e.g. only run 1st: 100
+#                                                              run 1 and 2:   110
 #2nd argument: address of LPJmL 
 #3rd argument: address to write LPJmL screen output
 
@@ -9,6 +11,7 @@
 
 
 export LPJROOT=${2}
+echo $LPJROOT
 cd $LPJROOT
 
 
@@ -17,6 +20,10 @@ gridnum=`grep "mono\ grid\ cell\ start" lpjml.conf|grep -o [0-9]*`
 
 
 #setting for the first run
+export spinup1=50
+export cycle1=30
+export startyear1=1901
+export endyear1=1901
 export restartend1=1900
 
 #setting for the second run
@@ -37,17 +44,23 @@ export restartend3=2000
 #---------------------
 #1st Run: without Landuse
 #--------------------
-
 if [ "${1:0:1}" == 1 ]; then
+  echo "1st run..."
   withland=`grep -c //#define\ WITH_LANDUSE  lpjml.conf`
   if [ "$withland" == 0 ]; then #remove landuse
        sed -i "s/#define WITH_LANDUSE 1/\/\/#define WITH_LANDUSE 1/g" lpjml.conf
   fi
 
+  sed -i 's/.*spinup1.*/'$spinup1'\/\*spinup1\*\//g' lpjml.conf
+  sed -i 's/.*cycle1.*/'$cycle1'\/\*cycle1\*\//g' lpjml.conf
+  sed -i 's/.*startyear1.*/'$startyear1'\/\*startyear1\*\//g' lpjml.conf
+  sed -i 's/.*endyear1.*/'$endyear1'\/\*endyear1\*\//g' lpjml.conf
   #make the name of restart file
   sed -i 's/.*restartfile1.*/restart\/s5000nv_p'$gridnum'_'$restartend1'.lpj\/\*restartfile1\*\//g' lpjml.conf 
+  sed -i 's/.*restartend1.*/'$restartend1'\/\*restartend1\*\//g' lpjml.conf
 
- ./bin/lpjml  lpjml.conf >${3}.run_1.out
+  ./bin/lpjml  lpjml.conf >${3}.run_1.out
+ cp lpjml.conf ${3}.run_1.conf
 fi
 
 
@@ -59,6 +72,7 @@ fi
 #       
 #----------------------
 if [ "${1:1:1}" == 1 ]; then
+  echo "2nd run..."
   withland=`grep -c //#define\ WITH_LANDUSE lpjml.conf`
   if [ "$withland" == 1 ]; then #add landuse
       sed -i "s/\/\/#define WITH_LANDUSE 1/#define WITH_LANDUSE 1/g" lpjml.conf
@@ -73,6 +87,7 @@ if [ "${1:1:1}" == 1 ]; then
   sed -i 's/.*restartend2.*/'$restartend2'\/\*restartend2\*\//g' lpjml.conf
 
   ./bin/lpjml -DFROM_RESTART lpjml.conf >${3}.run_2.out
+  cp lpjml.conf ${3}.run_2.conf
 fi
 #----------------------
 #3rd Run: Create Landuse restart file
@@ -82,6 +97,7 @@ fi
 #----------------------
 
 if [ "${1:2:2}" == 1 ]; then
+  echo "3rd run..."
   withland=`grep -c //#define\ WITH_LANDUSE lpjml.conf`
   if [ "$withland" == 1 ]; then
      sed -i "s/\/\/#define WITH_LANDUSE 1/#define WITH_LANDUSE 1/g" lpjml.conf
@@ -96,4 +112,5 @@ if [ "${1:2:2}" == 1 ]; then
   sed -i 's/.*restartend2.*/'$restartend3'\/\*restartend2\*\//g' lpjml.conf
 
   ./bin/lpjml -DFROM_RESTART lpjml.conf >${3}.run_3.out
+  cp lpjml.conf ${3}.run_3.conf
 fi

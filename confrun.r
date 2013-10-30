@@ -79,9 +79,6 @@ onepix.config.run<-function(lpjdir, pixelnum, conffiles, conffile.direction, dir
         parg[2]<-lpjdir[i]          #lpj directory
         system2("./runconfpix.sh",args=parg)
         cat(paste("pixel number changed to",pixelnum[i],"\n"))
-        parg[1]<-paste(lpjdir[i],"lpjml.conf",sep="")
-        parg[2]<-paste(par_dir,"lpjml_",i,"_p",pixelnum[i],".conf",sep="")#make a copy of lpjml.conf to output folder
-        system2("cp", parg)
         #--------------------------
         #run LPJmL
         #--------------------------
@@ -190,7 +187,7 @@ read.runoutput<-function(outpath,filename){#filename without .bin
         colnames(temp.ydata)<-filename[y]
         yearly.data.frame<-temp.ydata
    }
-       datalist<-list("day"=daily.data.frame,"month"=monthly.data.frame,"year"="yearly.data.frame")
+       datalist<-list("day"=daily.data.frame,"month"=monthly.data.frame,"year"=yearly.data.frame)
        return(datalist)
 }
  
@@ -202,8 +199,8 @@ read.runoutput<-function(outpath,filename){#filename without .bin
  #####################
 # running examples
 # # ###################
-##source("header") #not needed in running this scrpit but in seperate file is neccessary
-# 
+# ##source("header") #not needed in running this scrpit but in seperate file is neccessary
+# # 
 # lpjdir<-c("/home/sinan/workspace/LPJ_Utilities/--LPJmL2013/",
 #                      "/home/sinan/workspace/LPJ_Utilities/--LPJmL2013/",
 #                      "/home/sinan/workspace/LPJ_Utilities/0_LPJmL.in.progress/")
@@ -232,10 +229,9 @@ read.runoutput<-function(outpath,filename){#filename without .bin
 # list3<-read.runoutput(dir.out[3],filename)
 # 
 # 
-# plot(xlim=c(1,365),ylim=c(-15,40),c(1:365),list1$day$d_temp[1:365],"l",col=1)
+# plot(xlim=c(1,365),ylim=c(-15,40),xlim=c(1:365),list1$day$d_temp[1:365],"l",col=1)
 # lines(c(1:365),list2$day$d_temp[1:365],"l",col=2)
 # lines(c(1:365),list3$day$d_temp[1:365],"l",col=3)
-
 
 
 
