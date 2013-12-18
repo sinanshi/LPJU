@@ -32,7 +32,7 @@ read.input.grid<-function(path.in){
      grid.name<-paste(path.in,input.list[grep("grid",input.list)],sep="")
      grid.header<-read.input.header(grid.name)
      
-     prec<-abs(log(header$scalar)/log(10))
+     prec<-abs(log(grid.header$scalar)/log(10))
      gridfile<- file(grid.name,"rb")
      seek(gridfile,HEADER_SIZE, origin = "start")
     grid.temp<-readBin(gridfile,integer(),n=2*grid.header$ncells,size=2)
@@ -43,13 +43,13 @@ read.input.grid<-function(path.in){
     SOUTH<<-round(min(lat),prec)
     WEST<<-round(min(lon),prec)
     NORTH<<-round(max(lat),prec)
-    RES<<-header$cellsize
+    RES<<-grid.header$cellsize
     NC<<-(NORTH-SOUTH)/RES+1
     NR<<-(EAST-WEST)/RES+1
 
     
-    ind_lon<<-lon*2-min(lon)*2+1
-    ind_lat<<-lat*2-min(lat)*2+1
+    ind_lon<<-ceiling(lon*2-min(lon)*2+1)
+    ind_lat<<-ceiling(lat*2-min(lat)*2+1)
     
     close(gridfile)
 }
