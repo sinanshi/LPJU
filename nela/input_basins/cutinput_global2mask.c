@@ -6,7 +6,8 @@
 * given, the index will have the length of global input pixel number, where
 * the chosen pixel will be marked as 1 while non-chosen 0. 
 * 
-* Header Data Type: struct headers:  
+* Header Data Type: 
+* struct headers:  
 *                                    [title;version;order;firstyear;nyears;firstcell;ncells;
 *                                     nbands;cellsize;scalar]
 *                                     real: 
@@ -35,7 +36,7 @@
 * 3. Set real data type and compile: gcc cutinput_global_mask.c -lm -o cut 
 * 4. Do process 3 for three time for each data type, INT, LONG and SHORT
 * 
-*                                                    2013-10-29  Sinan Shi
+*  Sinan Shi    2013-10-29 
 * ********************************************************************/
 
 #include<stdio.h>
