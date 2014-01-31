@@ -57,13 +57,15 @@ lat_new<-as.integer(lat_new)
 lonlat<-array(NA,dim=2*newpix)
 lonlat[seq(1,newpix*2,2)]<-lon_new[]
 lonlat[seq(2,newpix*2,2)]<-lat_new[]
-lonlat<-as.vector(as.integer(lonlat))
-zz <- file("grid_quater.bin", "wb")
+lonlat<-as.vector(lonlat)
+lonlat<-floor(lonlat/10)
+#lonlat<-c(lon_new,lat_new)
+zz <- file("/home/sinan/workspace/LPJ_Utilities/src/nela/half2quarter/out/grid_quater.bin", "wb")
 title<-"LPJGRID"
 
 ncell<-as.integer(newpix)
 cellsize<-0.25
-scalar<-0.001
+scalar<-as.numeric(0.01)
 writeChar(title,zz,eos=NULL) 
 writeBin(header$version,zz,size=4)
 writeBin(header$order,zz,size=4)
@@ -75,7 +77,7 @@ writeBin(header$nbands,zz,size=4)
 writeBin(cellsize,zz,size=4)
 writeBin(scalar,zz,size=4)
 seek(zz,43,origin="start")
-writeBin(lonlat,zz, size = NA_integer_, useBytes = TRUE)
+writeBin(as.integer(lonlat),zz,size=2)
 close(zz)
 
 

@@ -44,14 +44,14 @@
 #include<math.h>
 #include<string.h>
 
-typedef  int real;//int long short 
+typedef  short real;//int long short 
 #define NPIX 67420 //global pixel number
-#define NPIX_MASK 6969//mask pixel number
+#define NPIX_MASK 5794//6969//mask pixel number
 #define MASKNAME "grid_basin" 
 #define GRIDNAME "grid.bin"
 #define CHECK //print header information
-#define INPATH "/home/sinan/workspace/NelasInputs/"//path of global inputs and mask
-#define OUTPATH "/home/sinan/workspace/NelasInputs/OUTPUT/"//output of new input
+#define INPATH "/home/sinan/workspace/input_downscale/INPUTS/"//path of global inputs and mask
+#define OUTPATH "/home/sinan/workspace/input_downscale/"//output of new input
 #define HEADER 43 //header size
 #define HEADERTITLE 7   //bytes of the header title
 
@@ -63,7 +63,7 @@ typedef  int real;//int long short
 #define NVAR6 6         /* number of climatic variables/files for CRU 2006*/
 #define NVAR9 7
 #define NVARERA 4       /*2 era + 2 gpcc*/
-#define NCROPFILES 3    /*number of lu inputs to process*/
+#define NCROPFILES 1    /*number of lu inputs to process*/
 #define NSDATEFILES 2   
 #define NDRAINFILES 1
 #define NPOPFILES 3
@@ -85,7 +85,8 @@ const unsigned char fileclim9[][100]={"cru_ts_3_10.1901.2009.cld.clm","cru_ts_3_
                                                                                       "cru_ts_3_10.1901.2009.tmx.clm","cru_ts_3_10.1901.2009.wet.clm"};
 const unsigned char fileclimera[][100]={"lwnet_erainterim_1901-2010.clm","swdown_erainterim_1901-2010.clm",
                                                                                            "gpcc_cru09_prec_monthly_1901_2009.clm","gpcc_cru09_wet_monthly_1901_2009.clm"};
-const unsigned char filelu[][100]={"cft1700_2005_16cfts_SR.bin", "cft1700_2005_32bands.bin","cft1700_2005_bioenergy_sc.bin"};
+//const unsigned char filelu[][100]={"cft1700_2005_16cfts_SR.bin", "cft1700_2005_32bands.bin","cft1700_2005_bioenergy_sc.bin"};
+const  unsigned char filelu[][100]={"cft1700_2010_new.bin"};
 const unsigned char filesdate[][100]={"sdate_combined.clm", "sdate_combined_filled.clm"};
 const unsigned char filedrain[][100]={"drainage.bin"};
 const unsigned char filepopdens[][100]={"popdens_1901_2003.clm","popdens_HYDE3_1901_2007_bi.clm",

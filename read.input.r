@@ -48,8 +48,8 @@ read.input.grid<-function(path.in){
     NR<<-(EAST-WEST)/RES+1
 
     
-    ind_lon<<-ceiling(lon*2-min(lon)*2+1)
-    ind_lat<<-ceiling(lat*2-min(lat)*2+1)
+    ind_lon<<-ceiling(lon/RES-min(lon)/RES+1)
+    ind_lat<<-ceiling(lat/RES-min(lat)/RES+1)
     
     close(gridfile)
 }
@@ -89,6 +89,22 @@ read.input.files<-function(filename,data.size){
     return(data.in)
     
  
+}
+	
+	
+ read.input.yearband<-function(filename,data.size,year,band){#year,band, start from 1 
+	 fileHeader<-read.input.header(filename)
+	 data.year<-year-fileHeader$firstyear
+	 file.in <- file(sprintf(filename),"rb")
+	 data.in<-array(NA,dim=c(fileHeader$ncells))
+	 seek(file.in,where=HEADER_SIZE+data.size*(data.year*fileHeader$nband*fileHeader$ncells+(band-1)),origin="start")
+	 for(i in 1:fileHeader$ncells){
+		   data.in[i]<-readBin(file.in, integer(), n=1, size=2)*fileHeader$scalar
+		   seek(file.in,where=(fileHeader$nbands-1)*2,origin="current")
+         }
+	 close(file.in)
+	 return(data.in)
+	 
 }
 # 
 # read.input.soil<-function(path.in){

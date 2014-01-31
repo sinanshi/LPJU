@@ -14,8 +14,8 @@ typedef  long real;//int long short
 #define MASKNAME "basin_mask" 
 #define GRIDNAME "grid_quater.bin"
 #define CHECK //print header information
-#define INPATH "/home/sinan/workspace/NelasInputs/quarter_degree/"
-#define OUTPATH "/home/sinan/workspace/NelasInputs/quarter_degree/"
+#define INPATH "/home/sinan/workspace/LPJ_Utilities/src/nela/half2quarter/"
+#define OUTPATH  "/home/sinan/workspace/LPJ_Utilities/src/nela/half2quarter/out/"
 #define HEADER 43 //header size
 #define HEADERTITLE 7   //bytes of the header title
 
@@ -155,15 +155,17 @@ int main(int argc, char *argv[]){
         exit(0);
     }
     fseek(fgrid,HEADER,SEEK_SET);
-    fread(data_int,sizeof(short),gridHeader.ncells*2,fgrid);
+    fread(data_int,sizeof(int),gridHeader.ncells*2,fgrid);
     fclose(fgrid);
     
     for(i=0;i<gridHeader.ncells*2;i++){
         data_short[i]=(short)data_int[i];
+	//if(data_int[i]<32767)
+	//printf("%d=%d  ",data_int[i],data_short[i]);
     }
     
 
-    char filename[200]="short";
+    char filename[200]="grid_short";
      FILE *file;
      sprintf(intt,"%s%s",OUTPATH,filename);
      if((file=fopen(intt,"w"))==NULL){
@@ -171,6 +173,7 @@ int main(int argc, char *argv[]){
     exit(0);
   }
   int ncells=gridHeader.ncells;
+  gridHeader.scalar=0.01;
   fseek(file,0,SEEK_SET);
   fwrite(gridHeader.title,sizeof(char),HEADERTITLE,file);
   fwrite(&gridHeader.version,sizeof(int),1,file);
@@ -182,7 +185,7 @@ int main(int argc, char *argv[]){
   fwrite(&gridHeader.nbands,sizeof(int),1,file);
   fwrite(&gridHeader.cellsize,sizeof(float),1,file);
   fwrite(&gridHeader.scalar,sizeof(float),1,file);
-   fwrite(data_short,sizeof(short),gridHeader.ncells*2,file);
+  fwrite(&data_short[0],sizeof(short),gridHeader.ncells*2,file);
    close(file);
    
    thisHeader=readHeader(&intt[0]);

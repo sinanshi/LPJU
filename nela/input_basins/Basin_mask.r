@@ -164,7 +164,7 @@ window<-function(){
  x=seq(-179.75,179.75,0.5)
  y=seq(-55.75,83.75,0.5)
  mycol<-rep(rainbow(100),500)
-read.input.grid("/home/sinan/workspace/NelasInputs/")
+read.input.grid(loc.inputr)
 cow<-read.cow()
 data<-read.gbasin.asc()
 map<-map.build(data)
