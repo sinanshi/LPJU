@@ -1,5 +1,5 @@
 ################
-#read inputs
+#read inputs 
 #
 #
 ################
@@ -11,7 +11,8 @@ HEADER_SIZE<-43
 read.input.header<-function(filename){
     file.in<-file(filename,"rb")
     
-    seek(file.in,7, origin = "start")
+   # seek(file.in,7, origin = "start")
+    name<-readChar(file.in,nchar=7)
     version<-readBin(file.in,integer(),n=1,size=4)
     order<-readBin(file.in,integer(),n=1,size=4)
     firstyear<-readBin(file.in,integer(),n=1,size=4)
@@ -21,7 +22,7 @@ read.input.header<-function(filename){
     nbands<-readBin(file.in,integer(),n=1,size=4)
     cellsize<-readBin(file.in,numeric(),n=1,size=4)
     scalar<-readBin(file.in,numeric(),n=1,size=4)
-    header<-data.frame(version,order,firstyear,nyears,firstcell,ncells,nbands,cellsize,scalar)
+    header<-data.frame(name,version,order,firstyear,nyears,firstcell,ncells,nbands,cellsize,scalar)
     close(file.in)
     return(header)
      
@@ -35,8 +36,8 @@ read.input.grid<-function(path.in){
      prec<-abs(log(grid.header$scalar)/log(10))
      gridfile<- file(grid.name,"rb")
      seek(gridfile,HEADER_SIZE, origin = "start")
-    grid.temp<-readBin(gridfile,integer(),n=2*grid.header$ncells,size=2)
-    grid.data<<-round(grid.temp,digits=0)*grid.header$scalar
+    grid.temp<<-readBin(gridfile,integer(),n=2*grid.header$ncells,size=2)
+    grid.data<<-round(trunc(grid.temp,digits=0)*grid.header$scalar,digits=2)
     lon<<-grid.data[c(1:grid.header$ncells)*2-1]
     lat<<-grid.data[c(1:grid.header$ncells)*2]
     EAST<<-round(max(lon),prec)
@@ -87,26 +88,23 @@ read.input.files<-function(filename,data.size){
      }
     close(file.in)
     return(data.in)
-    
- 
 }
-	
-	
- read.input.yearband<-function(filename,data.size,year,band){#year,band, start from 1 
+
+
+read.input.yearband<-function(filename,data.size,year,band){#year,band, start from 1 
 	 fileHeader<-read.input.header(filename)
-	 data.year<-year-fileHeader$firstyear
+	 data.year<-year-fileHeader$firstyear+1
 	 file.in <- file(sprintf(filename),"rb")
 	 data.in<-array(NA,dim=c(fileHeader$ncells))
-	 seek(file.in,where=HEADER_SIZE+data.size*(data.year*fileHeader$nband*fileHeader$ncells+(band-1)),origin="start")
+	 seek(file.in,where=HEADER_SIZE+data.size*((data.year-1)*fileHeader$nband*fileHeader$ncells+(band-1)),origin="start")
 	 for(i in 1:fileHeader$ncells){
-		   data.in[i]<-readBin(file.in, integer(), n=1, size=2)*fileHeader$scalar
+		   data.in[i]<-readBin(file.in, integer(), n=1, size=data.size)*fileHeader$scalar
 		   seek(file.in,where=(fileHeader$nbands-1)*2,origin="current")
          }
 	 close(file.in)
 	 return(data.in)
-	 
 }
-# 
+
 # read.input.soil<-function(path.in){
 #   input.list<-dir(path.in)
 #   file.name<-paste(path.in,input.list[grep("soil",input.list)],sep="")
@@ -115,4 +113,4 @@ read.input.files<-function(filename,data.size){
 #   
 #   soilpar
 #   
-#   }
+#}
