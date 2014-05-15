@@ -2,18 +2,20 @@
 #
 ##############
 
-source("header")
+# source("header")
   require(fields)
   require(maps)
 
 
 #path.in<-"../../NelasInputs/OUTPUT/"
- path.in<-"/home/sinan/OT-Med/Hydrology/cut_output_5794/"
-# path.in<-"../../NelasInputs/"
-#path.in<-"~/Desktop/working/CFT/"
-path.imout<-"/home/sinan/Desktop/working/CFT/plots_lu2/"
+#path.in<-"/home/sinan/OT-Med/Hydrology/cut_output_5794/"
+# path.in<-"sinan/"
+path.imout<-""
+# path.in<-"/home/sinan/workspace/input_downscale/clm_half2quarter/input_clm/"
+path.in<-""
+#path.imout<-"/home/sinan/Desktop/working/CFT/plots_lu2/"
 clmbands<-c("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC")
-read.input.grid(path.in)
+# read.input.grid(path.in)
 
 
  cft.name <- c("rainfed_wheat", "rainfed_rice", "rainfed_maize", "rainfed_millet", "rainfed lentils", "rainfed sugarbeet", "rainfed yam", "rainfed sunflower", "rainfed soybean", "rainfed groundnuts",
@@ -37,17 +39,7 @@ Longitude<<-seq(WEST,EAST,RES)
 Latitude<<-seq(SOUTH,NORTH,RES)
 
 
-#############
-#convert 1 dimentional
-#raw data to a map. raw[NPIX]
-#############
-map.build<-function(raw_){
-map<-array(NA, dim=c(NR,NC))
-for(i in 1:length(raw_))
-    map[ind_lon[i],ind_lat[i]]<-raw_[i]
-    return(map)
-}
-   
+
 plot.cft<-function(name,year,cols,bandnames,data.size){
     cat(paste("visualising",name,"\n"))
     filename<-paste(path.in,name,sep="")
@@ -87,18 +79,18 @@ plot.clm<-function(name,bandnames,year,cols){
     }
     for(i in 1:header$nbands){
            map<-map.build(raw[i,check.year,])
-#        bitmap(paste(path.imout,name,"_",".jpeg",sep=""),type="jpeg",onefile=FALSE,
-#                       height=5,width=12,pointsize=24,res=300)  
-#      
-#       op <- par(mar=c(0,0,0,0),mgp=c(0,0,0))
-       image(x=Longitude,y=Latitude,map,xlim=c(-20,49.25),col=cols(100))
-       image.plot(x=Longitude, y=Latitude, map,xlim=c(-20.00,49.25), axes=TRUE, col=cols(100),
+        bitmap(paste(path.imout,name,"_",".jpeg",sep=""),type="jpeg",onefile=FALSE,
+                       height=5,width=12,pointsize=24,res=300)  
+      
+       op <- par(mar=c(0,0,0,0),mgp=c(0,0,0))
+       image(x=Longitude,y=Latitude,map,col=cols(100))
+       image.plot(x=Longitude, y=Latitude, map, axes=TRUE, col=cols(100),
                legend.only=FALSE, legend.shrink=0.5)
        map(add=T)
        text(-30,37,paste(name, bandnames[i]))
        text(-20,37,year)
-#        par(op)
-#        dev.off()
+        par(op)
+        dev.off()
      }
 }
        
@@ -189,11 +181,12 @@ COLS <- colorRampPalette(c("navy","blue","skyblue","grey","orange","red","red4")
 # plot.clm("pre.clm",clmbands,2000,COLS2)
 # plot.clm("tmp.clm",clmbands,2000,COLS)
 # plot.clm("gpcc_cru09_prec_monthly_1901_2009.clm",clmbands,2000,COLS2)
- #plot.clm("tmx.clm",clmbands,2000,COLS)
+#plot.clm("tmx.clm",clmbands,2000,COLS)
 #plot.clm("elevation.bin",clmbands,1901,COLS)
 # plot.noheader("lakes.bin",COLS2,1)
 # plot.noheader("lakeswithoutreservoirs.bin",COLS2)
- plot.clm("elevation.bin",clmbands,1901,COLS3)
+# plot.clm("elevation.bin",clmbands,1901,COLS3)
+#plot.clm("prec.clm",clmbands,1901,COLS3)
 # plot.clm("cru_ts_3_10.1901.2009.tmp_6342p_h43.clm",clmbands,2000,COLS)#otmed/
 #  mycol=rep(rainbow(100),6742)
  # plot.basin("global_basin.bin",mycol,4)
@@ -203,7 +196,7 @@ COLS <- colorRampPalette(c("navy","blue","skyblue","grey","orange","red","red4")
 #  plot.clm("cft1700_2005_bioenergy_sc.bin",cft.name,2005, COLS3)
 
 #plot.cft("cft1700_2010.bin",year=1700,col=COLS3,bandnames=cft.name52,data.size=2)
-# plot.cft("cft1700_2010.bin",year=1701,col=COLS3,bandnames=cft.name52,data.size=2)
+ plot.cft("cft1700_2010.bin",year=1701,col=COLS3,bandnames=cft.name52,data.size=2)
 # plot.cft("cft1700_2010.bin",year=2000,col=COLS3,bandnames=cft.name52,data.size=2)
 # plot.cft("cft1700_2010.bin",year=2001,col=COLS3,bandnames=cft.name52,data.size=2)
 # plot.cft("cft1700_2010.bin",year=2002,col=COLS3,bandnames=cft.name52,data.size=2)
