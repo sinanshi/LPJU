@@ -28,7 +28,7 @@ require(fields)
 #-------------
 #you may include either this file or copy the functions here. 
 #-------------
-source("/home/sinan/workspace/LPJ_Utilities/src/read.input.r")
+source("/home/sinan/workspace/LPJmL/LPJ_Utilities/src/read.input.r")
 #-------------
 #Locations
 #-------------
@@ -164,7 +164,7 @@ window<-function(){
  x=seq(-179.75,179.75,0.5)
  y=seq(-55.75,83.75,0.5)
  mycol<-rep(rainbow(100),500)
-read.input.grid(loc.inputr)
+read.input.grid("grid.bin")
 cow<-read.cow()
 data<-read.gbasin.asc()
 map<-map.build(data)
@@ -207,3 +207,14 @@ zz<-file("grid_basin","wb")
 writeBin(lonlat,zz,size=4)
 
 close(zz)
+
+#=====
+#To extract Rhône basin
+#=====
+p<-data[which(lon==4.75&lat==43.75)]
+bitmap("Rhône.jpeg",type="jpeg")
+plot(lon[which(data==p)],lat[which(data==p)],xlim=c(-10,20),ylim=c(20,50))
+map(add=T)
+dev.off()
+write.csv(file="LpjGrid_Rhône.csv", data.frame("lon"=lon[which(data==p)], "lat"=lat[which(data==p)]))
+

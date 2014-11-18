@@ -35,7 +35,7 @@
 #test results:
 #all zero <T>
 #olives: <T>
-#old c(1:6,): <T>
+#old c(1:6,8:13,23:26,27:32,34:39,49:52): <T>
 #old+potatos <T>
 #old+olives:F  
 #old+olives+potatos:X
@@ -72,11 +72,11 @@
 #c(1:32,34:39,49:52)
 
 
-index<-c(1:32,34:39,49:52)
+index<-c(1:6,8:13,23:26,27:32,34:39,49:52)
 
 #Potatos 7:33: <T>
-inputfilename<-"cft1700_2010_new.bin" 
-outfilename<-"cft1700_2010_new_nothing.bin"
+inputfilename<-"/home/sinan/workspace/LPJmL/inputs_basin_201402/cft1700_2010_new.bin" 
+outfilename<-"/home/sinan/workspace/LPJmL/inputs_basin_201402/cft1700_2010_oldonly.bin"
 
 read.input.header<-function(filename){
     file.in<-file(filename,"rb")
@@ -197,8 +197,8 @@ for(i in 1: (311*5794)){
    data<-readBin(filein,integer(),52,2) 
    #NOTICE: remove follwing lines if bioenergy dummy is not required.
    #this line just for creating bioenergy dummy.
-   data[51]<-data[40]
-   data[52]<-data[40]
+#    data[51]<-data[40]
+#    data[52]<-data[40]
    writeBin(as.integer(data*bp), fileout, size=2)
 }
 

@@ -104,6 +104,14 @@ read.input.yearband<-function(filename,data.size,year,band){#year,band, start fr
 	 close(file.in)
 	 return(data.in)
 }
+	 
+ deg2area<-function(lat,res=0.5){
+	 deg2rad <- function(deg){
+		 return (deg*pi*0.00555555555555)
+	 }
+	 area<-(111e3*res)*(111e3*res)*cos(deg2rad(lat))/10000#ha
+	 return(area)
+  }
 
 # read.input.soil<-function(path.in){
 #   input.list<-dir(path.in)

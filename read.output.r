@@ -207,7 +207,32 @@ read.monthly.output<-function(path){
  
 }  
    
+read.output.harvest<-function(filename, ncells, nbands, startyear, year,data.size=4, band="ALL", par=1){
+	nyears<-file.info(filename)$size/ncells/nbands/data.size
+	if(nyears/as.integer(nyears)!=1) stop("nyears:",nyears, " error\n")
+	if(band[1]=="ALL") band<-c(1:nbands)
+	harvest<-list()
+	data<-array(NA, c(ncells, length(band), length(year)))
 
+	fn<-file(filename,"rb")
+	for(y in 1:length(year)){
+		for(b in 1:length(band)){
+			seek(fn, where=(year[y]-startyear)*nbands*ncells*data.size+(band[b]-1)*ncells*data.size,origin="start")
+			data[,b,y] <- readBin(fn,double(),size=data.size,n=ncells)
+		}
+	}
+	harvest$data<-data
+	if(length(par)!=1){
+		for(i in 1:length(band)){
+			harvest$data[,i,]<-data[,i,]*par[i]
+		}
+	}else harvest$data<-harvest$data*par
+	
+	harvest$band<-band
+	harvest$year<-year
+	close(fn)
+	return(harvest)
+}
     
 read.output.all<-function(path){
   pixel_year<-get.output.info(path)
