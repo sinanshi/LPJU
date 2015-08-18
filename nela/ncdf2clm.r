@@ -34,7 +34,7 @@ cat("[done]\n")
 #-----------------
 #setup LPJ header
 #-----------------
-scalar<-0.01
+scalar<-1
 firstyear<-1900 #now we know it starts from 1900
 nyear<-as.integer(nmonth/12)
 npix<-length(which(!is.na(var[,,1])))
@@ -96,7 +96,7 @@ if(CHECK==TRUE){
     nc_check<-var[,,(test_year-firstyear)*12+test_month]
     nc_check<-as.vector(t(nc_check))
     nc_check<-nc_check[!is.na(nc_check)]
-    if(any(abs(nc_check-lpj_check)>1e-5)){
+    if(any(abs(nc_check-lpj_check)>scalar)){
         cat("[FAILED]\n")
         stop()
     }
