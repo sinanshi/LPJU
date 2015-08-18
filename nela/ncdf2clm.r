@@ -106,33 +106,3 @@ if(CHECK==TRUE){
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#-----------
-# How to know the vaiable name, e.g. cld?
-#-----------
-num_var <- ncfile$nvar
-# sure if you have multiple variable, i.e. num_var is larger than 1, 
-# you have to use a loop to access. 
-
-
-#----------------
-# about time
-#   time<-get.var.ncdf(ncfile, "time")
-# check this start year is here
-#   nc_start_year<-ncfile$var[[1]]$dim[[3]]$units 
-#-----------------
-
