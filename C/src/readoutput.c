@@ -1,7 +1,7 @@
 #include "lpjoutdata.h"
 #include <stdlib.h>
 #include <sys/stat.h>
-
+#include <math.h>
 
 FILE *open_output(
         const char *filename,
@@ -64,6 +64,7 @@ float **read_yearly_output(
         const int nyears,
         const int ncells)
 {
+    printf("reading yearly output->%s...",filename);
     int y;
     float **yearly_data;
     yearly_data =(float **) malloc(sizeof(float *)*nyears);
@@ -74,6 +75,7 @@ float **read_yearly_output(
         read_output_thisband(filename, &yearly_data[y][0],
                 nyears, 1, ncells, 0, y, 1);
     }
+    printf("[done]\n");
     return(yearly_data);
 }
 
@@ -94,6 +96,7 @@ float ***read_monthly_output(
         const nyears,
         const ncells)
 {
+    printf("reading monthly output:->%s...",filename);
     int nmonths = 12;
     int y, m;
     float ***monthly_data;
@@ -116,25 +119,25 @@ float ***read_monthly_output(
                 nyears, 12, ncells, 0, y, m);
         }
     }
+    printf("[done]\n");
     return(monthly_data);
 }
 
 
-
-
-
-
-
-int main(){
- //   data = (float*)malloc(sizeof(float)*67420);
- //   read_output_thisband("/home/sinan/workspace/otmed/lpj_c_util/data/input_test/firec.bin",data,40,1,67420,1,2,1);
-    float **data = read_yearly_output("/home/sinan/workspace/otmed/lpj_c_util/data/input_test/firec.bin", 40, 67420);
-int i,j;
-for(j=0;j<40;++j){
-    for(i=0;i<67420;++i){
-        printf("%.2f|",data[j][i]);
+void free_montly(float ***output, const int nyears, const int nmonths)
+{
+    int y, m;
+    for(y = 0; y < nyears; ++y)
+    {
+        for(m = 0; m < nmonths; ++m)
+        {
+            free(output[y][m]);
+        }
+        free(output[y]);
     }
+    free(output);
 }
-free_yearly(data,40);
 
-}
+
+
+
