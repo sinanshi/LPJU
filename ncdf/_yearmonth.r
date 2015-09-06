@@ -41,7 +41,7 @@ run_nc <- function(){
 
 
 
-
+inputs<-"/home/mfader/_AndereProjekte/Trendy4/submit/outputs/"
 output_csv<-read.csv("output_yearly.csv")
 time_interval <- "years"
 
@@ -52,23 +52,23 @@ time_start <- "1861"
 nyears <- 40
 nbands <- 1
 
-inpath <- "~/Desktop/NelaData/out_2a_tr_1861-1900/"
+inpath <- paste(inputs,"out_2a_tr_1861-1900/",sep="")
 outpath <- "2a_tr_1861-1900/"
 run_nc()
 #2b
-inpath <- "~/Desktop/NelaData/out_2b_tr_1861-1900/"
+inpath <- paste(inputs,"out_2b_tr_1861-1900/",sep="")
 outpath <- "2b_tr_1861-1900/"
 run_nc()
 #month 3
 start_year <- 1901
 time_start <- "1901"
 nyears <- 2013-1901+1
-inpath <- "~/Desktop/NelaData/out_3a_tr_1901-2013/"
+inpath <- paste(inputs,"out_3a_tr_1901-2013/",sep="")
 outpath <- "3a_tr_1901-2013/"
 run_nc()
 
 #monthly 3b
-inpath <- "~/Desktop/NelaData/out_3b_tr_1901-2013/"
+inpath <- paste(inputs,"out_3b_tr_1901-2013/",sep="")
 outpath <- "3b_tr_1901-2013/"
 run_nc()
 
@@ -87,23 +87,23 @@ time_start <- "1861-1-15"
 nyears <- 40
 nbands <- 12
 
-inpath <- "~/Desktop/NelaData/out_2a_tr_1861-1900/"
+inpath <- paste(inputs,"out_2a_tr_1861-1900/",sep="")
 outpath <- "2a_tr_1861-1900/"
 run_nc()
 #2b
-inpath <- "~/Desktop/NelaData/out_2b_tr_1861-1900/"
+inpath <- paste(inputs,"out_2b_tr_1861-1900/",sep="")
 outpath <- "2b_tr_1861-1900/"
 run_nc()
 #month 3
 start_year <- 1901
 time_start <- "1901-1-15"
 nyears <- 2013-1901+1
-inpath <- "~/Desktop/NelaData/out_3a_tr_1901-2013/"
+inpath <- paste(inputs,"out_3a_tr_1901-2013/",sep="")
 outpath <- "3a_tr_1901-2013/"
 run_nc()
 
 #monthly 3b
-inpath <- "~/Desktop/NelaData/out_3b_tr_1901-2013/"
+inpath <- paste(inputs,"out_3b_tr_1901-2013/", sep="")
 outpath <- "3b_tr_1901-2013/"
 run_nc()
 
