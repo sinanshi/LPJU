@@ -1,0 +1,8 @@
+File,Name of outfile,unit,nbands,var name
+soilc,LPJmL_cSoil.nc,gramC_Per_m2,1,cSoil
+vegc,LPJmL_cVeg.nc,gramC_Per_m2,1,cVeg
+flux_harvest,LPJmL_lat_lon.nc,gramC_Per_m2,1,lat_lon
+firec,LPJmL_fFire.nc,gramC_Per_m2,1,fFire
+fpc,LPJmL_mlai.nc,-,1,mlai
+firef,LPJmL_freqfire.nc,number,1,freqfire
+litc,LPJmL_cLitter.nc,gramC_Per_m2,1,cLitter

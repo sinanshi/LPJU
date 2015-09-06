@@ -1,0 +1,13 @@
+File,Name of outfile,unit,nbands,var name
+mrunoff,LPJmL_mrro.nc,mm,12,mrro
+mevap,LPJmL_evspsblsoi.nc,mm,12,evspsblsoi
+mtransp,LPJmL_tran.nc,mm,12,tran
+mfpar,LPJmL_mfpar.nc,w_Per_m2,12,mfpar
+mrh,LPJmL_rh.nc,gramC_Per_m2,12,rh
+mgpp,LPJmL_gpp.nc,gramC_Per_m2,12,gpp
+mwateramount,LPJmL_mwateramount.nc,mm,12,mwateramount
+mdischarge,LPJmL_mdischarge.nc,mm,12,mdischarge
+minterc,LPJmL_evspsblveg.nc,mm,12,evspsblveg
+mswc1,LPJmL_msl1.nc,mm,12,msl1
+mswc2,LPJmL_msl2.nc,mm,12,msl2
+mnpp,LPJmL_npp.nc,gramC_Per_m2,12,npp

@@ -3,7 +3,7 @@ source("../read.input.r")
 source("../map.r")
 
 new.var.ncdf<-function(ncfile, lpjgrid_path, var_name, units, 
-                              time_start, time_interval, 
+                              time_start, time_interval, time_dim,
                               longname = var_name, missval = 1e32){
     # create an empty ncdf file with single variable. 
     # Args:
@@ -12,6 +12,7 @@ new.var.ncdf<-function(ncfile, lpjgrid_path, var_name, units,
     #    time_start: start year for yearly output, start month for monthly output. 
     #                e.g. "1900" and "1900-01-01"
     #    time_interval: "years" or "months" or "days"
+    #    time_dim: length of time dimention, e.g. months * years 
     #    lonname: the description of the variable
     # TODO:
     #    change the nasty read.input.grid to a list()
@@ -25,10 +26,9 @@ new.var.ncdf<-function(ncfile, lpjgrid_path, var_name, units,
     # strings to for time
     tchar<-paste(time_interval, "since", time_start)
 
-
     londim <- dim.def.ncdf('Longitude',"deg_E",as.double(nclon)) 
     latdim <- dim.def.ncdf('Latitude',"deg_N",as.double(nclat))
-    timedim <- dim.def.ncdf('Time', tchar, 0, unlim=TRUE)
+    timedim <- dim.def.ncdf('Time', units=tchar, 1:time_dim, unlim=TRUE)
     # define variable
     vardef<-list()
     for(i in 1:length(var_name)){

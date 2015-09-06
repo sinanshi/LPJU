@@ -3,7 +3,7 @@ source("../read.output.r")
 
 lpjoutput2ncdf <- function(lpjoutput)
 {
-    stopifnot(length(lpjoutput[["var_name"]]) == lpjoutput[["nbands"]])
+    stopifnot(length(lpjoutput[["var_name"]]) == lpjoutput[["nbands"]]||lpjoutput[["nbands"]]==12)
     if(length(lpjoutput[["var_name"]]))
         IS_MULTI_VAR <- TRUE
     nc_single_var <- 
@@ -13,6 +13,7 @@ lpjoutput2ncdf <- function(lpjoutput)
                      lpjoutput[["units"]],
                      lpjoutput[["time_start"]],
                      lpjoutput[["time_interval"]],
+                     lpjoutput[["time_dim"]],
                      lpjoutput[["longname"]],
                      lpjoutput[["missval"]])
     read.input.grid(lpjoutput[["lpjgrid"]])
@@ -34,6 +35,7 @@ lpjoutput2ncdf <- function(lpjoutput)
             }
             if(IS_MULTI_VAR)
                 count_ncdf_band <- count_ncdf_band + 1
+            cat("\b\b\b\b\b\b\b\b\b\b\b\b\b",((this_year + 1 -lpjoutput[["start_year"]])/lpjoutput[["nyears"]])*100,"%",sep="")
         }
     }
     close.ncdf(nc_single_var[["nc"]])
@@ -42,6 +44,7 @@ lpjoutput2ncdf <- function(lpjoutput)
 #not usefule
 cft_lpjoutput2ncdf <- function(lpjoutput)
 {
+
     nc_single_var <- 
         new.var.ncdf(lpjoutput[["ncfile"]],
                      lpjoutput[["lpjgrid"]],
@@ -49,6 +52,7 @@ cft_lpjoutput2ncdf <- function(lpjoutput)
                      lpjoutput[["units"]],
                      lpjoutput[["time_start"]],
                      lpjoutput[["time_interval"]],
+                     lpjoutput[["time_dim"]],
                      lpjoutput[["longname"]],
                      lpjoutput[["missval"]])
     read.input.grid(lpjoutput[["lpjgrid"]])
@@ -70,25 +74,5 @@ cft_lpjoutput2ncdf <- function(lpjoutput)
     close.ncdf(nc_single_var[["nc"]])
 }
 
-
-lpjoutput<-list(
-                filename = "~/Desktop/NelaData/out_2a_tr_1861-1900/cftfrac.bin",
-                lpjgrid = "grid.bin",
-                ncfile = "tempd.nc",
-                var_name = c("wheat","rice"),
-                start_year = 1900,
-                nyears = 40, 
-                ncells = 67420,
-                nbands = 2, # yearly data set 1
-                units = c("degC","frac"),
-                time_start = 1901,
-                time_interval = "years",
-                longname = c("surface temperature","fuck"),
-                missval = 1e32)
-
-#lpjoutput2ncdf(lpjoutput)
-lpjoutput2ncdf(lpjoutput)
-nc<-open.ncdf("tempd.nc")
-var<-get.var.ncdf(nc,"wheat")
 
 
