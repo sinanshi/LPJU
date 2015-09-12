@@ -1,3 +1,8 @@
-File,Name of outfile,unit of origin,nbands,var name, unit of output, operation
-pft_harvest.pft.bin,LPJmL_npppft_gramC_Per_m2.nc,gramC_Per_m2,32,harvestpft,kgC_Per_m2,division by 1000
-cftfrac,LPJmL_landCoverFrac.nc,frac,32,landCoverFrac,frac,none
+File,Name of outfile,unit of origin,nbands,var name, unit of output, operation, comment on bands
+cft_npp.pft.bin,LPJmL_npppft.nc,gramC_Per_m2,41,npppft,kgC_Per_m2,division by 1000, natural vegetation + crops
+pft_harvest.pft.bin,LPJmL_harvestpft.nc,gramC_Per_m2,32,harvestpft,kgC_Per_m2,division by 1000, crops
+pft_rharvest.pft.bin,LPJmL_rharvestpft.nc,gramC_Per_m2,32,rharvestpft,kgC_Per_m2,division by 1000, crops
+cftfrac,LPJmL_landCoverFrac.nc,frac,32,landCoverFrac,frac,none, crops
+cft_nir.pft.bin,LPJmL_netirripft.nc,mm,32,irripft,kg_per_m2,none, crops
+cft_irrig.pft.bin,LPJmL_grossirripft.nc,mm,32,irripft,kg_per_m2,none, crops
+fpc.bin,LPJmL_lai.nc,frac,10,lai,frac,none, total frac of nveg + 9 pfts
