@@ -3,11 +3,11 @@ mrunoff,LPJmL_mrro.nc,mm,12,mrro, kg_per_m2, none, has to be added for the whole
 mevap,LPJmL_evspsblsoi.nc,mm,12,evspsblsoi, kg_per_m2, none, has to be added for the whole year
 mtransp,LPJmL_tran.nc,mm,12,tran, kg_per_m2, none, has to be added for the whole year
 minterc,LPJmL_evspsblveg.nc,mm,12,evspsblveg, kg_per_m2, none, has to be added for the whole year
-mfpar,LPJmL_mfpar.nc,w_Per_m2,12,mfpar, w_Per_m2, none, -
-mrh,LPJmL_rh.nc,gramC_Per_m2,12,rh,kgC_per_m2, division by 1000, -
-mgpp,LPJmL_gpp.nc,gramC_Per_m2,12,gpp,kgC_per_m2, division by 1000, -
 mwateramount,LPJmL_mwateramount.nc,mm,12,mwateramount,kg_per_m2, none, -
 mdischarge,LPJmL_mdischarge.nc,mm,12,mdischarge,kg_per_m2, none, -
 mswc1,LPJmL_msl1.nc,mm,12,msl1,kg_per_m2, none, has to be added for both soil layers (swc1 + swc2)
 mswc2,LPJmL_msl2.nc,mm,12,msl2,kg_per_m2, none, has to be added for both soil layers (swc1 + swc2)
+mrh,LPJmL_rh.nc,gramC_Per_m2,12,rh,kgC_per_m2, division by 1000, -
+mgpp,LPJmL_gpp.nc,gramC_Per_m2,12,gpp,kgC_per_m2, division by 1000, -
 mnpp,LPJmL_npp.nc,gramC_Per_m2,12,npp,kgC_per_m2, division by 1000, -
+mfpar,LPJmL_mfpar.nc,w_Per_m2,12,mfpar, w_Per_m2, none, -
