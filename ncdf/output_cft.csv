@@ -1,1 +1,3 @@
-File,Name of outfile,unit,nbands,var namepft_harvest.pft.bin,LPJmL_npppft_gramC_Per_m2.nc,gramC_Per_m2,32,harvestpftcftfrac,LPJmL_landCoverFrac.nc,frac,32,landCoverFrac
+File,Name of outfile,unit of origin,nbands,var name, unit of output, operation
+pft_harvest.pft.bin,LPJmL_npppft_gramC_Per_m2.nc,gramC_Per_m2,32,harvestpft,kgC_Per_m2,division by 1000
+cftfrac,LPJmL_landCoverFrac.nc,frac,32,landCoverFrac,frac,none
