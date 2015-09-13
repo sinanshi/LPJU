@@ -1,6 +1,6 @@
-source("array3d2ncdf.r")
-source("lpj2ncdf.r")
-
+#source("array3d2ncdf.r")
+#source("lpj2ncdf.r")
+library(lpjutil)
 
 gridpath <- "~/workspace/OT-Med/LPJU/data/grid_global.bin"
 output_csv<-read.csv("output_cft.csv")

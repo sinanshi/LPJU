@@ -1,6 +1,6 @@
-source("array3d2ncdf.r")
-source("lpj2ncdf.r")
-
+#source("array3d2ncdf.r")
+#source("lpj2ncdf.r")
+library(lpjutil)
 
 gridpath <- "~/workspace/OT-Med/LPJU/data/grid_global.bin"
 
@@ -53,23 +53,23 @@ nbands <- 1
 
 inpath <- paste(inputs,"out_2a_tr_1861-1900/",sep="")
 outpath <- "2a_tr_1861-1900/"
-#run_nc()
+run_nc()
 #2b
 inpath <- paste(inputs,"out_2b_tr_1861-1900/",sep="")
 outpath <- "2b_tr_1861-1900/"
-#run_nc()
+run_nc()
 #month 3
 start_year <- 1901
 time_start <- "1900-12-31"
 nyears <- 2013-1901+1
 inpath <- paste(inputs,"out_3a_tr_1901-2013/",sep="")
 outpath <- "3a_tr_1901-2013/"
-#run_nc()
+run_nc()
 
 #monthly 3b
 inpath <- paste(inputs,"out_3b_tr_1901-2013/",sep="")
 outpath <- "3b_tr_1901-2013/"
-#run_nc()
+run_nc()
 
 
 #--------------
