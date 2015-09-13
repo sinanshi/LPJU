@@ -1,1 +1,8 @@
-File,Name of outfile,unit,nbands,var name,unit of origincft_npp.pft,LPJmL_npppft.nc,kgC_Per_m2,41,npppft,gramC_Per_m2pft_harvest.pft,LPJmL_harvestpft.nc,kgC_Per_m2,32,harvestpft,gramC_Per_m2pft_rharvest.pft,LPJmL_rharvestpft.nc,kgC_Per_m2,32,rharvestpft,gramC_Per_m2cftfrac,LPJmL_landCoverFrac.nc,frac,32,landCoverFrac,fraccft_nir.pft,LPJmL_netirripft.nc,kg_per_m2,32,irripft,mmcft_irrig.pft,LPJmL_grossirripft.nc,kg_per_m2,32,irripft,mmfpc,LPJmL_lai.nc,frac,10,lai,frac
+File,Name of outfile,unit,nbands,var name,unit of origin
+pft_harvest.pft,LPJmL_harvestpft.nc,kgC_Per_m2,32,harvestpft,gramC_Per_m2
+pft_rharvest.pft,LPJmL_rharvestpft.nc,kgC_Per_m2,32,rharvestpft,gramC_Per_m2
+cftfrac,LPJmL_landCoverFrac.nc,frac,32,landCoverFrac,frac
+cft_nir.pft,LPJmL_netirripft.nc,kg_per_m2,32,irripft,mm
+cft_irrig.pft,LPJmL_grossirripft.nc,kg_per_m2,32,irripft,mm
+fpc,LPJmL_lai.nc,frac,10,lai,frac
+cft_npp.pft,LPJmL_npppft.nc,kgC_Per_m2,41,npppft,gramC_Per_m2

@@ -29,7 +29,6 @@ run_nc <- function(){
                         longname = var_name,
                         missval = 1e32)
 
-        cat("\n----------------\n")
         cat("writing ",lpjoutput[["filename"]], "-->", lpjoutput[["ncfile"]],"\n")
         cat("var:",lpjoutput[["var_name"]], "start_year:", lpjoutput[["start_year"]],
             "time_dim:",lpjoutput[["time_dim"]],"nyears:",lpjoutput[["nyears"]],
@@ -41,36 +40,36 @@ run_nc <- function(){
 
 
 
-inputs<-"/home/mfader/_AndereProjekte/Trendy4/submit/outputs/"
+inputs<-"~/Desktop/NelaData/"
 output_csv<-read.csv("output_yearly.csv")
 time_interval <- "years"
 
 #years 2
 #2a
 start_year <- 1861 # year should be one year less
-time_start <- "1861"
+time_start <- "1860-12-31"
 nyears <- 40
 nbands <- 1
 
 inpath <- paste(inputs,"out_2a_tr_1861-1900/",sep="")
 outpath <- "2a_tr_1861-1900/"
-run_nc()
+#run_nc()
 #2b
 inpath <- paste(inputs,"out_2b_tr_1861-1900/",sep="")
 outpath <- "2b_tr_1861-1900/"
-run_nc()
+#run_nc()
 #month 3
 start_year <- 1901
-time_start <- "1901"
+time_start <- "1900-12-31"
 nyears <- 2013-1901+1
 inpath <- paste(inputs,"out_3a_tr_1901-2013/",sep="")
 outpath <- "3a_tr_1901-2013/"
-run_nc()
+#run_nc()
 
 #monthly 3b
 inpath <- paste(inputs,"out_3b_tr_1901-2013/",sep="")
 outpath <- "3b_tr_1901-2013/"
-run_nc()
+#run_nc()
 
 
 #--------------
@@ -83,7 +82,7 @@ time_interval <- "months"
 #month 2
 #2a
 start_year <- 1861
-time_start <- "1861-1-15"
+time_start <- "1860-12-15"
 nyears <- 40
 nbands <- 12
 
@@ -96,7 +95,7 @@ outpath <- "2b_tr_1861-1900/"
 run_nc()
 #month 3
 start_year <- 1901
-time_start <- "1901-1-15"
+time_start <- "1900-12-15"
 nyears <- 2013-1901+1
 inpath <- paste(inputs,"out_3a_tr_1901-2013/",sep="")
 outpath <- "3a_tr_1901-2013/"

@@ -6,15 +6,27 @@ gridpath <- "~/workspace/OT-Med/LPJU/data/grid_global.bin"
 output_csv<-read.csv("output_cft.csv")
 time_interval <- "years"
 
-crop_names<-c("temperate_cereals", "rice","maize","tropical_cereals","pulses" ,"temperate_roots" ,"tropical_roots", 
-"sunflower","soybean" ,"groundnuts" ,"rapeseed","sugarcane" ,"others" ,"managed_grasslands",
-"bio_energy_grass","bio_energy_tree")
+crop_names<-c("temperate_cereals","rice","maize","tropical_cereals","pulses" ,"temperate_roots" ,"tropical_roots", 
+              "sunflower","soybean" ,"groundnuts" ,"rapeseed","sugarcane" ,"others" ,"managed_grasslands",
+              "bio_energy_grass","bio_energy_tree")
+
+nat_names<-c("tropical_broadleaved_evergreen_tree","tropical_broadleaved_raingreen_tree",
+             "temperate_needleleaved_evergreen_tree",
+             "temperate_broadleaved_evergreen_tree",
+             "temperate_broadleaved_summergreen_tree",
+             "boreal_needleleaved_evergreen_tree",
+             "boreal_broadleaved_summergreen_tree",
+             "C3_perennial_grass",
+             "C4_perennial_grass")
+
+
 lpj_band<- c(paste("rainfed_",crop_names,sep=""),paste("irrigated_",crop_names,sep=""))
 
+band32<-lpj_band
+band10<-c("total_natural_veg",nat_names)
+band41<-c(nat_names,lpj_band)
+
 band_names<-list()
-band_names[[1]]<-lpj_band
-band_names[[2]]<-lpj_band
-band_names[[3]]<-lpj_band
 
 
 
@@ -26,7 +38,14 @@ run_nc <- function(){
         outfile <- paste(outpath, output_csv$Name.of.outfile[i], sep = "")
         nbands <- output_csv$nbands[i]
         units <- rep(units, nbands)
-        var_name <- band_names[[i]]
+        if(nbands==41)
+            var_name <- band41
+        else if(nbands==32)
+            var_name <- band32
+        else if(nbands==10)
+            var_name <- band10
+        else
+            stop("band is ",nbands)
 
 
 
@@ -46,7 +65,6 @@ run_nc <- function(){
                         longname = var_name,
                         missval = 1e32)
 
-        cat("\n----------------\n")
         cat("writing ",lpjoutput[["filename"]], "-->", lpjoutput[["ncfile"]],"\n")
         cat("var:",lpjoutput[["var_name"]], "start_year:", lpjoutput[["start_year"]],
             "time_dim:",lpjoutput[["time_dim"]],"nyears:",lpjoutput[["nyears"]],
