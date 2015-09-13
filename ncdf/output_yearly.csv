@@ -1,7 +1,1 @@
-File,Name of outfile,unit of origin,nbands,var name, unit of output, operation, comment
-soilc,LPJmL_cSoil.nc,gramC_Per_m2,1,cSoil, kgC_Per_m2,division by 1000, -
-vegc,LPJmL_cVeg.nc,gramC_Per_m2,1,cVeg, kgC_Per_m2,division by 1000, -
-litc,LPJmL_cLitter.nc,gramC_Per_m2,1,cLitter, kgC_Per_m2,division by 1000, -
-flux_harvest,LPJmL_fHarvest.nc,gramC_Per_m2,1,fHarvest,kgC_Per_m2,division by 1000, -
-firec,LPJmL_fFire.nc,gramC_Per_m2,1,fFire,kgC_Per_m2,division by 1000, -
-flux_estab,LPJmL_fEstab.nc,gramC_Per_m2,1,fEstab,kgC_Per_m2,division by 1000, -
+File,Name of outfile,unit,nbands,var name,unit_origin, operation, commentsoilc,LPJmL_cSoil.nc, kgC_Per_m2,1,cSoil,gramC_Per_m2,division by 1000, -vegc,LPJmL_cVeg.nc, kgC_Per_m2,1,cVeg,gramC_Per_m2,division by 1000, -litc,LPJmL_cLitter.nc, kgC_Per_m2,1,cLitter,gramC_Per_m2,division by 1000, -flux_harvest,LPJmL_fHarvest.nc,kgC_Per_m2,1,fHarvest,gramC_Per_m2,division by 1000, -firec,LPJmL_fFire.nc,kgC_Per_m2,1,fFire,gramC_Per_m2,division by 1000, -flux_estab,LPJmL_fEstab.nc,kgC_Per_m2,1,fEstab,gramC_Per_m2,division by 1000, -
